@@ -1,0 +1,4 @@
+breathe
+recommonmark
+sphinx
+sphinx_theme

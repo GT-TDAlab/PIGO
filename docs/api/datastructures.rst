@@ -1,0 +1,8 @@
+Datastructures
+==========
+
+..  toctree::
+    :glob:
+
+    datastructures/*
+
