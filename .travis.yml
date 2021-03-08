@@ -2,18 +2,11 @@ language: cpp
 os: linux
 dist: focal
 
-addons:
-  apt:
-    packages:
-      - g++-9
-      - cmake-data
-      - cmake
+compiler: gcc
 
 jobs:
   include:
-    # Docs
-    - os: linux
-      language: python
+    - language: python
       python: "3.7"
       addons:
         apt:
@@ -33,4 +26,10 @@ jobs:
         local_dir: ./build/docs/sphinx
         token: $KASIMIR_GH_TOKEN
         verbose: true
-        skip_cleanup: true
+    - before_script:
+        - mkdir -p ${TRAVIS_BUILD_DIR}/build-test
+        - cd ${TRAVIS_BUILD_DIR}/build-test
+        - cmake ..
+      script:
+        - make -j 8
+        - make test
