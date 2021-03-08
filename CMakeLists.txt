@@ -12,6 +12,8 @@ project(
     DESCRIPTION "A parallel graph and matrix IO and preprocessing library"
     )
 
+set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+
 # ----------------------------------------------------------------------------
 # Require OpenMP packages
 find_package(OpenMP REQUIRED)
@@ -45,10 +47,7 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 
     # ------------------------------------------------------------------------
     # Add in documentation as a target
-    find_package(Doxygen)
-    if(Doxygen_FOUND)
-        add_subdirectory(docs)
-    endif()
+    add_subdirectory(docs)
 
     # ------------------------------------------------------------------------
     # Enable ctest

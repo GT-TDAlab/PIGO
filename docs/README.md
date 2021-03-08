@@ -10,7 +10,8 @@ designed to be simple to integrate into many projects.
 
 ## Quick Start Guide
 
-First, download the PIGO release `pigo.hpp`. To compile a PIGO
+First, download the PIGO rele../README.md
+ase `pigo.hpp`. To compile a PIGO
 application, you'll need to use OpenMP and ensure `pigo.hpp` is in
 a directory where the compiler can find it.
 
@@ -67,13 +68,8 @@ vertex 0's neighbors:
 
 ## Documentation
 
-* [Python 3](https://www.python.org/downloads/)
-* [Pip](https://pip.pypa.io/en/stable/installing/)
-* [Doxygen](https://www.doxygen.nl/download.html)
-
-Additionally run `pip install -r docs/requirements.txt` for python dependencies in the project root.
-
-Now running `make docs` in build directory will create documentations under `build/docs/sphinx`
+Documentation is available by running `cd build; cmake ..; make docs`. The
+documentation is then available in `build/docs/html/`.
 
 ## Running Tests
 

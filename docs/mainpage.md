@@ -1,1 +1,0 @@
-PIGO documentation
