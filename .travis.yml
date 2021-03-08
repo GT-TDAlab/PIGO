@@ -1,4 +1,5 @@
 language: cpp
+os: linux
 dist: focal
 
 addons:
@@ -30,5 +31,6 @@ jobs:
       deploy:
         provider: pages
         local_dir: ./build/docs/sphinx
-        token: $GITHUB_TOKEN
+        token: $KASIMIR_GH_TOKEN
         verbose: true
+        skip_cleanup: true
