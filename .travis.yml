@@ -22,9 +22,9 @@ jobs:
       install:
         - pip3 install -r docs/requirements.txt
       script:
-        - mkdir ${TRAVIS_BUILD_DIR}/build
+        - mkdir -p ${TRAVIS_BUILD_DIR}/build
         - cd ${TRAVIS_BUILD_DIR}/build
-        - cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" ..
+        - cmake ..
         - make -i docs
         - cd ${TRAVIS_BUILD_DIR}
       deploy:
