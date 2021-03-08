@@ -25,7 +25,7 @@ jobs:
         - mkdir ${TRAVIS_BUILD_DIR}/build
         - cd ${TRAVIS_BUILD_DIR}/build
         - cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" ..
-        - make docs
+        - make -i docs
         - cd ${TRAVIS_BUILD_DIR}
       deploy:
         provider: pages
