@@ -27,6 +27,7 @@ jobs:
         local_dir: ./build/docs/sphinx
         token: $KASIMIR_GH_TOKEN
         verbose: true
+        skip_cleanup: true
         cleanup: false
     - before_script:
         - mkdir -p ${TRAVIS_BUILD_DIR}/build-test
@@ -35,3 +36,12 @@ jobs:
       script:
         - make -j 8
         - make test
+    - before_script:
+        - brew install libomp
+        - mkdir -p ${TRAVIS_BUILD_DIR}/build-test
+        - cd ${TRAVIS_BUILD_DIR}/build-test
+        - cmake ..
+      script:
+        - make -j 8
+        - make test
+      os: osx
