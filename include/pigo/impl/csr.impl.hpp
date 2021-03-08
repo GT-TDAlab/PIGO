@@ -8,23 +8,38 @@
 #include <string>
 
 namespace pigo {
-    template<class L, class O, class LS, class OS>
-    CSR<L,O,LS,OS>::CSR(std::string fn) : CSR(fn, AUTO) { }
+    template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
+    CSR<L,O,LS,OS,wgt,W,WS>::CSR(std::string fn) : CSR(fn, AUTO) { }
 
-    template<class L, class O, class LS, class OS>
-    CSR<L,O,LS,OS>::CSR(std::string fn, FileType ft) {
+    template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
+    CSR<L,O,LS,OS,wgt,W,WS>::CSR(std::string fn, FileType ft) {
         // Open the file for reading
         ROFile f {fn};
         read_(f, ft);
     }
 
-    template<class L, class O, class LS, class OS>
-    CSR<L,O,LS,OS>::CSR(File& f, FileType ft) {
+    template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
+    CSR<L,O,LS,OS,wgt,W,WS>::CSR(File& f, FileType ft) {
         read_(f, ft);
     }
 
-    template<class L, class O, class LS, class OS>
-    void CSR<L,O,LS,OS>::read_(File& f, FileType ft) {
+    namespace detail {
+        template<bool wgt>
+        struct fail_if_weighted_i_ { static void op_() {} };
+        template<>
+        struct fail_if_weighted_i_<true> {
+            static void op_() {
+                throw NotYetImplemented("Not yet implemented for weights.");
+            }
+        };
+        template<bool wgt>
+        void fail_if_weighted() {
+            fail_if_weighted_i_<wgt>::op_();
+        }
+    }
+
+    template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
+    void CSR<L,O,LS,OS,wgt,W,WS>::read_(File& f, FileType ft) {
         FileType ft_used = ft;
         // If the file type is AUTO, then try to detect it
         if (ft_used == AUTO) {
@@ -34,34 +49,68 @@ namespace pigo {
         if (ft_used == MATRIX_MARKET || ft_used == EDGE_LIST ||
                 ft_used == PIGO_COO_BIN) {
             // First build a COO, then load here
-            COO<L,O,L*> coo { f, ft_used };
+            COO<L,O,L*, false, false, false, false, wgt, W, WS> coo { f, ft_used };
             convert_coo_(coo);
             coo.free();
         } else if (ft_used == PIGO_CSR_BIN) {
             read_bin_(f);
         } else if (ft_used == GRAPH) {
+            detail::fail_if_weighted<wgt>();
             FileReader r = f.reader();
             read_graph_(r);
         } else
             throw NotYetImplemented("This file type is not yet supported");
     }
 
-    template<class L, class O, class LS, class OS>
-    void CSR<L,O,LS,OS>::allocate_() {
-        allocate_mem_<LS>(endpoints_, m_);
-        allocate_mem_<OS>(offsets_, n_+1);
+    template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
+    void CSR<L,O,LS,OS,wgt,W,WS>::allocate_() {
+        detail::allocate_mem_<LS>(endpoints_, m_);
+        detail::allocate_mem_<WS,wgt>(weights_, m_);
+        detail::allocate_mem_<OS>(offsets_, n_+1);
+    }
+    namespace detail {
+        template<bool wgt, class W, class WS, class COOW, class COOWS, class O>
+        struct copy_weight_i_ {
+            static void op_(WS&, O, COOWS&, O) {}
+        };
+
+        template<class W, class WS, class COOW, class COOWS, class O>
+        struct copy_weight_i_<true, W, WS, COOW, COOWS, O> {
+            static void op_(WS& w, O p, COOWS& coow, O coop) {
+                COOW val = get_value_<COOWS, COOW>(coow, coop);
+                set_value_<WS, W>(w, p, (W)val);
+            }
+        };
+
+        template<bool wgt, class W, class WS, class COOW, class COOWS, class O>
+        void copy_weight(WS& w, O offset, COOWS& coo_w, O coo_pos) {
+            copy_weight_i_<wgt, W, WS, COOW, COOWS, O>::op_(w, offset,
+                    coo_w, coo_pos);
+        }
     }
 
-    template<class L, class O, class LS, class OS> template<class COOStorage>
-    CSR<L,O,LS,OS>::CSR(COO<L,O,COOStorage> &coo) {
+    template<class L, class O, class LS, class OS, bool wgt, class W,
+        class WS> template<class COOL, class COOO, class COOStorage, bool
+            COOsym, bool COOut, bool COOsl, bool COOme, class COOW, class
+            COOWS>
+    CSR<L,O,LS,OS,wgt,W,WS>::CSR(COO<COOL,COOO,COOStorage,COOsym,
+            COOut,COOsl,COOme,wgt,COOW,COOWS>
+            &coo) {
         convert_coo_(coo);
     }
 
-    template<class L, class O, class LS, class OS> template<class COOStorage>
-    void CSR<L,O,LS,OS>::convert_coo_(COO<L, O, COOStorage>& coo) {
+    template<class L, class O, class LS, class OS, bool wgt, class W,
+        class WS> template<class COOL, class COOO, class COOStorage,
+        bool COOsym, bool COOut, bool COOsl, bool COOme,
+        class COOW, class COOWS>
+    void CSR<L,O,LS,OS,wgt,W,WS>::convert_coo_(COO<
+            COOL,COOO,COOStorage,COOsym,COOut,COOsl,COOme,wgt,COOW,COOWS>&
+            coo) {
         // Set the sizes first
         n_ = coo.n();
         m_ = coo.m();
+        nrows_ = coo.nrows();
+        ncols_ = coo.ncols();
 
         // Allocate the offsets and endpoints
         allocate_();
@@ -107,10 +156,11 @@ namespace pigo {
 
             auto coo_x = coo.x();
             auto coo_y = coo.y();
+            auto coo_w = coo.w();
 
             #pragma omp for
             for (O x_id = 0; x_id < m_; ++x_id) {
-                size_t deg_inc = coo_x[x_id];
+                size_t deg_inc = detail::get_value_<COOStorage, L>(coo_x, x_id);
                 #pragma omp atomic
                 ++all_degs[deg_inc];
             }
@@ -150,14 +200,14 @@ namespace pigo {
 
             // Now, assign the offsets to each label
             for (L c = v_start; c < v_end; ++c) {
-                set_value_(offsets_, c, cur_offset);
+                detail::set_value_(offsets_, c, cur_offset);
                 cur_offset += label_degs[c];
             }
             #pragma omp single
             {
                 // Patch the last offset to the end, making for easier
                 // degree computation and iteration
-                set_value_(offsets_, n_, m_);
+                detail::set_value_(offsets_, n_, m_);
             }
 
             #pragma omp barrier
@@ -170,8 +220,8 @@ namespace pigo {
             // Finally, copy over the actual endpoints
             #pragma omp for
             for (O coo_pos = 0; coo_pos < m_; ++coo_pos) {
-                L src = coo_x[coo_pos];
-                L dst = coo_y[coo_pos];
+                L src = detail::get_value_<COOStorage, L>(coo_x, coo_pos);
+                L dst = detail::get_value_<COOStorage, L>(coo_y, coo_pos);
 
                 O this_offset_pos;
                 #pragma omp atomic capture
@@ -179,8 +229,9 @@ namespace pigo {
                     this_offset_pos = label_degs[src];
                     label_degs[src]--;
                 }
-                O this_offset = get_value_<OS, O>(offsets_, src+1) - this_offset_pos;
-                set_value_(endpoints_, this_offset, dst);
+                O this_offset = detail::get_value_<OS, O>(offsets_, src+1) - this_offset_pos;
+                detail::set_value_(endpoints_, this_offset, dst);
+                detail::copy_weight<wgt,W,WS,COOW,COOWS>(weights_, this_offset, coo_w, coo_pos);
             }
 
         }
@@ -191,8 +242,8 @@ namespace pigo {
 
     }
 
-    template<class L, class O, class LS, class OS>
-    void CSR<L,O,LS,OS>::read_graph_(FileReader &r) {
+    template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
+    void CSR<L,O,LS,OS,wgt,W,WS>::read_graph_(FileReader &r) {
         // Get the number of threads
         omp_set_dynamic(0);
         size_t num_threads = 0;
@@ -220,7 +271,10 @@ namespace pigo {
 
         std::vector<size_t> nl_offsets(num_threads);
         std::vector<size_t> int_offsets(num_threads);
-        #pragma omp parallel
+        std::vector<L> max_labels(num_threads);
+        std::vector<bool> have_zeros(num_threads, false);
+        bool have_zero;
+        #pragma omp parallel shared(have_zero) shared(have_zeros)
         {
             size_t tid = omp_get_thread_num();
 
@@ -246,13 +300,36 @@ namespace pigo {
             FileReader rs_p1 = rs;
             size_t tid_nls = 0;
             size_t tid_ints = 0;
+            bool my_have_zero = false;
             while (rs_p1.good()) {
                 if (rs_p1.at_nl_or_eol())
                     ++tid_nls;
                 else
                     ++tid_ints;
+                // Determine if this is a 0
+                if (rs_p1.at_zero() && !my_have_zero)
+                    my_have_zero = true;
+
                 rs_p1.move_to_next_int_or_nl();
             }
+            if (my_have_zero) {
+                have_zeros[tid] = true;
+            }
+
+            #pragma omp barrier
+            #pragma omp single
+            {
+                bool found_zero = false;
+                for (size_t tid = 0; tid < num_threads; ++tid) {
+                    if (have_zeros[tid]) {
+                        found_zero = true;
+                        break;
+                    }
+                }
+                if (found_zero) have_zero = true;
+                else have_zero = false;
+            }
+            #pragma omp barrier
 
             nl_offsets[tid] = tid_nls;
             int_offsets[tid] = tid_ints;
@@ -261,7 +338,7 @@ namespace pigo {
             #pragma omp barrier
             #pragma omp single
             {
-                size_t sum_nl = 0;
+                size_t sum_nl = (have_zero) ? 0 : 1;
                 size_t sum_ints = 0;
                 for (size_t tid = 0; tid < num_threads; ++tid) {
                     sum_nl += nl_offsets[tid];
@@ -274,21 +351,26 @@ namespace pigo {
                 // Now, allocate the space appropriately
                 m_ = int_offsets[num_threads-1];
                 n_ = nl_offsets[num_threads-1];
+                nrows_ = n_;
                 allocate_();
-                set_value_(offsets_, 0, 0);
-                set_value_(offsets_, n_, m_);
+                detail::set_value_(offsets_, 0, 0);
+                if (!have_zero)
+                    detail::set_value_(offsets_, 1, 0);
+                detail::set_value_(offsets_, n_, m_);
             }
             #pragma omp barrier
 
             // Pass 2: iterate through again, but now copy out the values
             // to the appropriate position in the endpoints / offsets
+            L my_max = 0;
             FileReader rs_p2 = rs;
             O endpoint_pos = 0;
             L offset_pos = 0;
             if (tid > 0) {
                 offset_pos = nl_offsets[tid-1];
                 endpoint_pos = int_offsets[tid-1];
-            }
+            } else if (!have_zero)
+                offset_pos = 1;
 
             while (rs_p2.good()) {
                 // Ignore any trailing data in the file
@@ -297,16 +379,19 @@ namespace pigo {
                 // Copy and set the endpoint
                 if (rs_p2.at_nl_or_eol()) {
                     // Set the offset to the current endpoint position
-                    set_value_(offsets_, ++offset_pos, endpoint_pos);
+                    detail::set_value_(offsets_, ++offset_pos, endpoint_pos);
                     rs_p2.move_to_next_int_or_nl();
                 } else {
                     // Set the actual value
                     L endpoint = rs_p2.read_int<L>();
-                    set_value_(endpoints_, endpoint_pos++, endpoint);
+                    if (endpoint > my_max)
+                        my_max = endpoint;
+                    detail::set_value_(endpoints_, endpoint_pos++, endpoint);
                     if (!rs_p2.at_nl_or_eol())
                         rs_p2.move_to_next_int_or_nl();
                 }
             }
+            max_labels[tid] = my_max;
         }
 
         if (m_ == 2*read_m) {}
@@ -314,10 +399,16 @@ namespace pigo {
         if (n_ < read_n) throw Error("Mismatch in CSR newlines and header");
         else n_ = read_n;
 
+        L col_max = max_labels[0];
+        for (size_t thread = 1; thread < num_threads; ++thread) {
+            if (max_labels[thread] > col_max)
+                col_max = max_labels[thread];
+        }
+        ncols_ = col_max+1;
     }
 
-    template<class L, class O, class LS, class OS>
-    void CSR<L,O,LS,OS>::save(std::string fn) {
+    template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
+    void CSR<L,O,LS,OS,wgt,W,WS>::save(std::string fn) {
         // Before creating the file, we need to find the size
         size_t out_size = 0;
         std::string cfh { csr_file_header };
@@ -329,7 +420,8 @@ namespace pigo {
         // Finally, find the actual CSR size
         size_t voff_size = sizeof(O)*(n_+1);
         size_t vend_size = sizeof(L)*m_;
-        out_size += voff_size + vend_size;
+        size_t w_size = detail::weight_size_<wgt, W, O>(m_);
+        out_size += voff_size + vend_size + w_size;
 
         // Create the output file
         WFile w {fn, out_size};
@@ -348,15 +440,20 @@ namespace pigo {
         w.write(m_);
 
         // Output the data
-        char* voff = get_raw_data_<OS>(offsets_);
+        char* voff = detail::get_raw_data_<OS>(offsets_);
         w.parallel_write(voff, voff_size);
 
-        char* vend = get_raw_data_<LS>(endpoints_);
+        char* vend = detail::get_raw_data_<LS>(endpoints_);
         w.parallel_write(vend, vend_size);
+
+        if (w_size > 0) {
+            char* wend = detail::get_raw_data_<WS>(weights_);
+            w.parallel_write(wend, w_size);
+        }
     }
 
-    template<class L, class O, class LS, class OS>
-    void CSR<L,O,LS,OS>::read_bin_(File& f) {
+    template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
+    void CSR<L,O,LS,OS,wgt,W,WS>::read_bin_(File& f) {
         // Read and confirm the header
         f.read(csr_file_header);
 
@@ -379,11 +476,17 @@ namespace pigo {
         size_t vend_size = sizeof(L)*m_;
 
         // Read out the vectors
-        char* voff = get_raw_data_<OS>(offsets_);
+        char* voff = detail::get_raw_data_<OS>(offsets_);
         f.parallel_read(voff, voff_size);
 
-        char* vend = get_raw_data_<LS>(endpoints_);
+        char* vend = detail::get_raw_data_<LS>(endpoints_);
         f.parallel_read(vend, vend_size);
+
+        size_t w_size = detail::weight_size_<wgt, W, O>(m_);
+        if (w_size > 0) {
+            char* wend = detail::get_raw_data_<WS>(weights_);
+            f.parallel_read(wend, w_size);
+        }
     }
 
 }

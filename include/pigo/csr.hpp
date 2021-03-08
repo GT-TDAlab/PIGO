@@ -37,12 +37,22 @@ namespace pigo {
      *         This can either be vector (std::vector<Ordinal>),
      *         a pointer (Ordinal*), or a shared_ptr
      *         (std::shared_ptr<Ordinal>).
+     * @tparam weighted if true, support and use weights
+     * @tparam Weight the weight data type. This type needs to be able to
+     *         support the largest value read inside of the COO. In
+     *         a graph this is the largest vertex ID.
+     * @tparam WeightStorage the storage type for the weights. This can be
+     *         a raw pointer (Weight*), a std::vector
+     *         (std::vector<Weight>), or a std::shared_ptr<Weight>.
      */
     template<
         class Label=uint32_t,
         class Ordinal=Label,
         class LabelStorage=Label*,
-        class OrdinalStorage=Ordinal*
+        class OrdinalStorage=Ordinal*,
+        bool weighted=false,
+        class Weight=float,
+        class WeightStorage=Weight*
     >
     class CSR {
         protected:
@@ -52,12 +62,21 @@ namespace pigo {
             /** The offsets into the endpoints */
             OrdinalStorage offsets_;
 
+            /** The weight values */
+            WeightStorage weights_;
+
         private:
             /** The number of labels */
             Label n_;
 
             /** The number of endpoints */
             Ordinal m_;
+
+            /** The number of rows */
+            Label nrows_;
+
+            /** The number of columns */
+            Label ncols_;
 
             /** @brief Read the CSR from the given file and format
              *
@@ -89,11 +108,23 @@ namespace pigo {
 
             /** @brief Convert a COO into this CSR
              *
+             * @tparam COOLabel the label for the COO format
+             * @tparam COOOrdinal the ordinal for the COO format
              * @tparam COOStorage the storage format of the COO
+             * @tparam COOsym whether the COO is symmetrized
+             * @tparam COOut whether the COO only keeps the upper triangle
+             * @tparam COOsl whether the COO removes self loops
+             * @tparam COOme whether the COO removes multiple edges
+             * @tparam COOW the weight type of the COO
+             * @tparam COOWS the weight storage type of the COO
              * @param coo the COO to load from
              */
-            template <class COOStorage>
-            void convert_coo_(COO<Label, Ordinal, COOStorage>& coo);
+            template <class COOLabel, class COOOrdinal, class COOStorage,
+                     bool COOsym, bool COOut, bool COOsl, bool COOme,
+                     class COOW, class COOWS>
+            void convert_coo_(COO<COOLabel, COOOrdinal, COOStorage,
+                    COOsym, COOut, COOsl, COOme, weighted, COOW, COOWS>&
+                    coo);
         public:
             /** @brief Initialize from a COO
              *
@@ -102,11 +133,22 @@ namespace pigo {
              * Note that this will densely fill in all labels, so if there
              * are many empty rows there will be unnecessary space used.
              *
+             * @tparam COOLabel the label for the COO format
+             * @tparam COOOrdinal the ordinal for the COO format
              * @tparam COOStorage the storage format of the COO
+             * @tparam COOsym whether the COO is symmetrized
+             * @tparam COOut whether the COO only keeps the upper triangle
+             * @tparam COOsl whether the COO removes self loops
+             * @tparam COOme whether the COO removes multiple edges
+             * @tparam COOW the weight type of the COO
+             * @tparam COOWS the weight storage type of the COO
              * @param coo the COO object to load the CSR from
              */
-            template <class COOStorage>
-            CSR(COO<Label, Ordinal, COOStorage>& coo);
+            template <class COOLabel, class COOOrdinal, class COOStorage,
+                     bool COOsym, bool COOut, bool COOsl, bool COOme,
+                     class COOW, class COOWS>
+            CSR(COO<COOLabel, COOOrdinal, COOStorage, COOsym, COOut,
+                    COOsl, COOme, weighted, COOW, COOWS>& coo);
 
             /** @brief Initialize from a file
              *
@@ -134,7 +176,7 @@ namespace pigo {
              *
              * @return the endpoints in the LabelStorage format
              */
-            LabelStorage endpoints() { return endpoints_; }
+            LabelStorage& endpoints() { return endpoints_; }
 
             /** @brief Return the offsets
              *
@@ -143,7 +185,16 @@ namespace pigo {
              *
              * @return the offsets in the OrdinalStorage format
              */
-            OrdinalStorage offsets() { return offsets_; }
+            OrdinalStorage& offsets() { return offsets_; }
+
+            /** @brief Return the weights, if available
+             *
+             * This returns the WeightStorage for the weights, if the CSR
+             * is weighted.
+             *
+             * @return the weights in the WeightStorage format
+             */
+            WeightStorage& weights() { return weights_; }
 
             /** @brief Retrieves the number of endpoints in the CSR
              *
@@ -159,6 +210,18 @@ namespace pigo {
              */
             Label n() { return n_; }
 
+            /** @brief Retrieves the number of rows in the COO
+             *
+             * @return the number of rows
+             */
+            Label nrows() { return nrows_; }
+
+            /** @brief Retrieves the number of columns in the COO
+             *
+             * @return the number of columns
+             */
+            Label ncols() { return ncols_; }
+
             /** @brief Utility to free consumed memory
              *
              * As an IO library, PIGO generally leaves memory cleanup to
@@ -167,8 +230,9 @@ namespace pigo {
              * cleanup directly and then this can be used.
              */
             void free() {
-                free_mem_(endpoints_);
-                free_mem_(offsets_);
+                detail::free_mem_(endpoints_);
+                detail::free_mem_(offsets_);
+                detail::free_mem_<WeightStorage, weighted>(weights_);
             }
 
             /** @brief Save the loaded CSR as a PIGO binary file
@@ -182,6 +246,24 @@ namespace pigo {
             /** The output file header for reading/writing */
             static constexpr const char* csr_file_header = "PIGO-CSR-v1";
     };
+
+    /** @brief Holds a pointer based weighted CSR
+     *
+     * For template parameters, please see CSR.
+     */
+    template<
+        class Label=uint32_t,
+        class Ordinal=Label,
+        class Weight=float
+    >
+    using WCSRPtr = CSR<
+        Label,
+        Ordinal,
+        Label*,
+        Ordinal*,
+        true,
+        Weight,
+        Weight*>;
 
 }
 

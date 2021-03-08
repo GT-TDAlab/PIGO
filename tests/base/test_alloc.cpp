@@ -19,7 +19,7 @@ using namespace pigo;
 int wrong_allocator() {
     try {
         float x;
-        allocate_mem_(x, 1);
+        detail::allocate_mem_(x, 1);
         EQ(1, 0);
     } catch (Error&) {
     }

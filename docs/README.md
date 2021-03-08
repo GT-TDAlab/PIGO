@@ -8,10 +8,12 @@ saving results and intermediate representations.
 PIGO is built in C++ and its releases are single header-only files.  It is
 designed to be simple to integrate into many projects.
 
+💻 **Source Code:** [http://github.com/GT-TDAlab/PIGO]  
+📘 **Documentation:** [http://gt-tdalab.github.io/PIGO/]
+
 ## Quick Start Guide
 
-First, download the PIGO rele../README.md
-ase `pigo.hpp`. To compile a PIGO
+First, download the PIGO release `pigo.hpp`. To compile a PIGO
 application, you'll need to use OpenMP and ensure `pigo.hpp` is in
 a directory where the compiler can find it.
 
@@ -24,7 +26,7 @@ the same directory as `pigo.hpp`. Add the following to it:
 using namespace std;
 using namespace pigo;
 int main(int argc, char** argv) {
-    if (argc != 1) {
+    if (argc != 2) {
     	cerr << "Usage: " << argv[0] << " filename" << endl;
     	return 1;
     }
@@ -68,8 +70,13 @@ vertex 0's neighbors:
 
 ## Documentation
 
-Documentation is available by running `cd build; cmake ..; make docs`. The
-documentation is then available in `build/docs/html/`.
+* [Python 3](https://www.python.org/downloads/)
+* [Pip](https://pip.pypa.io/en/stable/installing/)
+* [Doxygen](https://www.doxygen.nl/download.html)
+
+Additionally run `pip install -r docs/requirements.txt` for python dependencies in the project root.
+
+Now running `make docs` in build directory will create the documentation under `build/docs/sphinx`.
 
 ## Running Tests
 

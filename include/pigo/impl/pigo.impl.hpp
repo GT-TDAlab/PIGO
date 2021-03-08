@@ -3,6 +3,7 @@
  * Copyright (c) 2021 GT-TDALab
  */
 
+#include <cmath>
 #include <stdlib.h>
 #include <sys/mman.h>
 #include <sys/types.h>
@@ -197,6 +198,49 @@ namespace pigo {
         return res;
     }
 
+    template<typename T>
+    inline
+    T FileReader::read_fp() {
+        T res = 0.0;
+        while (d < end && !((*d >= '0' && *d <= '9') || *d == 'e' ||
+                    *d == 'E' || *d == '-' || *d == '+' || *d == '.')) ++d;
+        // Read the size
+        bool positive = true;
+        if (*d == '-') {
+            positive = false;
+            ++d;
+        } else if (*d == '+') ++d;
+
+        // Support a simple form of floating point integers
+        // Note: this is not the most accurate or fastest strategy
+        // (+-)AAA.BBB(eE)(+-)ZZ.YY
+        // Read the 'A' part
+        while (d < end && (*d >= '0' && *d <= '9')) {
+            res = res*10. + (T)(*d-'0');
+            ++d;
+        }
+        if (*d == '.') {
+            ++d;
+            T fraction = 0.;
+            size_t fraction_count = 0;
+            // Read the 'B' part
+            while (d < end && (*d >= '0' && *d <= '9')) {
+                fraction = fraction*10. + (T)(*d-'0');
+                ++d;
+                ++fraction_count;
+            }
+            res += fraction / std::pow(10., fraction_count);
+        }
+        if (*d == 'e' || *d == 'E') {
+            ++d;
+            T exp = read_fp<T>();
+            res *= std::pow(10., exp);
+        }
+
+        if (!positive) res *= -1;
+        return res;
+    }
+
     inline
     bool FileReader::at_end_of_line() {
         FilePos td = d;
@@ -211,6 +255,18 @@ namespace pigo {
     inline
     void FileReader::move_to_non_int() {
         while (d < end && (*d >= '0' && *d <= '9')) ++d;
+    }
+
+    inline
+    void FileReader::move_to_non_fp() {
+        while (d < end && ((*d >= '0' && *d <= '9') || *d == 'e' ||
+                    *d == 'E' || *d == '-' || *d == '+' || *d == '.')) ++d;
+    }
+
+    inline
+    void FileReader::move_to_fp() {
+        while (d < end && !((*d >= '0' && *d <= '9') || *d == 'e' ||
+                    *d == 'E' || *d == '-' || *d == '+' || *d == '.')) ++d;
     }
 
     inline
@@ -230,6 +286,19 @@ namespace pigo {
 
         // Move through the non-ints to the next int
         move_to_first_int();
+    }
+
+    inline
+    void FileReader::move_to_next_signed_int() {
+        if (*d == '+' || *d == '-') ++d;
+        move_to_non_int();
+
+        // Move to the next integer or signed integral value
+        if (*d == '%' || *d == '#') skip_comments();
+        while (d < end && (*d < '0' || *d > '9') && *d != '+' && *d != '-') {
+            ++d;
+            if (*d == '%' || *d == '#') skip_comments();
+        }
     }
 
     inline
@@ -318,4 +387,31 @@ namespace pigo {
         fp += v_size;
     }
 
+    namespace detail {
+        template <bool wgt, class W, class O>
+        struct weight_size_i_ {
+            static size_t op_(O) { return 0; }
+        };
+        template <class W, class O>
+        struct weight_size_i_<true, W, O> {
+            static size_t op_(O m) { return sizeof(W)*m; }
+        };
+        template <bool wgt, class W, class O>
+        size_t weight_size_(O m) {
+            return weight_size_i_<wgt, W, O>::op_(m);
+        }
+
+        template <bool B>
+        struct if_true_i_ {
+            static bool op_() { return false; }
+        };
+        template <>
+        struct if_true_i_<true> {
+            static bool op_() { return true; }
+        };
+        template <bool B>
+        bool if_true_() {
+            return if_true_i_<B>::op_();
+        }
+    }
 }

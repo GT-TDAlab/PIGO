@@ -14,7 +14,7 @@
 namespace pigo {
 
     // We include the prototype here to support converting from CSR
-    template<class Label, class Ordinal, class LabelStorage, class OrdinalStorage>
+    template<class Label, class Ordinal, class LabelStorage, class OrdinalStorage, bool weighted, class Weight, class WeightStorage>
     class CSR;
 
     /** @brief Holds coordinate-addressed matrices or graphs
@@ -59,6 +59,13 @@ namespace pigo {
      * @tparam remove_multi_edges whether to remove multiple edges.
      *         If set to true, any multi-edges will be detected and removed.
      *         These are repeat edges, with (x,y,val) == (x,y,val)
+     * @tparam weighted if true, support and use weights
+     * @tparam Weight the weight data type. This type needs to be able to
+     *         support the largest value read inside of the COO. In
+     *         a graph this is the largest vertex ID.
+     * @tparam WeightStorage the storage type for the weights. This can be
+     *         a raw pointer (Weight*), a std::vector
+     *         (std::vector<Weight>), or a std::shared_ptr<Weight>.
      */
     template<
         class Label=uint32_t,
@@ -67,7 +74,10 @@ namespace pigo {
         bool symmetric=false,
         bool keep_upper_triangle_only=false,
         bool remove_self_loops=false,
-        bool remove_multi_edges=false
+        bool remove_multi_edges=false,
+        bool weighted=false,
+        class Weight=float,
+        class WeightStorage=Weight*
     >
     class COO {
         private:
@@ -76,6 +86,9 @@ namespace pigo {
 
             /** The Y value of the coordinate */
             Storage y_;
+
+            /** The weight values */
+            WeightStorage w_;
 
             /** The number of labels in the matrix represented */
             Label n_;
@@ -125,19 +138,23 @@ namespace pigo {
              *
              * Allocates the memory for the COO to fit the storage format
              * requested.
-             * 
+             *
              * Note that m_ must be set before this is called.
              */
             void allocate_();
 
             /** @brief Convert a CSR into this COO
              *
+             * @tparam CL the label type of the CSR
+             * @tparam CO the ordinal type of the CSR
              * @tparam LStorage the label storage of the CSR
              * @tparam OStorage the ordinal storage of the CSR
+             * @tparam CW the weight type of the CSR
+             * @tparam CWS the weight storage type of the CSR
              * @param csr the CSR to load from
              */
-            template <class LStorage, class OStorage>
-            void convert_csr_(CSR<Label, Ordinal, LStorage, OStorage>& csr);
+            template <class CL, class CO, class LStorage, class OStorage, class CW, class CWS>
+            void convert_csr_(CSR<CL, CO, LStorage, OStorage, weighted, CW, CWS>& csr);
 
             /** @brief Read an entry into the appropriate coordinate
              *
@@ -153,13 +170,13 @@ namespace pigo {
              * @param[in,out] max_col the current maxmium col label seen.
              *                If reading a label that is larger than the
              *                max label, this value will be updated.
-             * @param count_only if true, will not set values and will
+             * @tparam count_only if true, will not set values and will
              *                only assist in counting by moving through
              *                what would have been read.
              */
+            template <bool count_only>
             void read_coord_entry_(size_t &coord_pos, FileReader &r,
-                    Label &max_row, Label &max_col,
-                    bool count_only=false);
+                    Label &max_row, Label &max_col);
 
         public:
             /** @brief Initialize a COO from a file
@@ -186,10 +203,10 @@ namespace pigo {
 
             /** @brief Initialize from a CSR
              *
-             * @param csr the CSR to convert from 
+             * @param csr the CSR to convert from
              */
-            template<typename LabelStorage, typename OrdinalStorage>
-            COO(CSR<Label, Ordinal, LabelStorage, OrdinalStorage>& csr);
+            template<class CL, class CO, typename LabelStorage, typename OrdinalStorage, class CW, class CWS>
+            COO(CSR<CL, CO, LabelStorage, OrdinalStorage, weighted, CW, CWS>& csr);
 
             /** @brief Retrieve the X coordinate array
              *
@@ -202,6 +219,12 @@ namespace pigo {
              * @return the Y array in the format Storage
              */
             Storage& y() { return y_; }
+
+            /** @brief Retrieve the weight array
+             *
+             * @return the weight array in the format WeightStorage
+             */
+            WeightStorage& w() { return w_; }
 
             /** @brief Retrieves the number of entries in the COO
              *
@@ -241,13 +264,64 @@ namespace pigo {
              * cleanup directly and then this can be used.
              */
             void free() {
-                free_mem_(x_);
-                free_mem_(y_);
+                detail::free_mem_(x_);
+                detail::free_mem_(y_);
+                detail::free_mem_<WeightStorage, weighted>(w_);
             }
 
             /** The output file header for reading/writing */
             static constexpr const char* coo_file_header = "PIGO-COO-v1";
     };
+
+    /** @brief Holds weighted coordinate-addressed matrices or graphs
+     *
+     * WCOO is an extension of COO that is able to hold weights alongside
+     * the coordinates. This is used either with weighted graphs or
+     * non-binary matrices.
+     *
+     * This is a wrapper around a COO with weight flags set.  For template
+     * parameter deatils, see COO.
+     */
+    template<
+        class Label=uint32_t,
+        class Ordinal=Label,
+        class Storage=Label*,
+        class Weight=float,
+        class WeightStorage=Weight*,
+        bool symmetric=false,
+        bool keep_upper_triangle_only=false,
+        bool remove_self_loops=false,
+        bool remove_multi_edges=false
+    >
+    using WCOO = COO<Label, Ordinal, Storage,
+        symmetric, keep_upper_triangle_only,
+        remove_self_loops, remove_multi_edges,
+        true, Weight, WeightStorage>;
+
+    /** @brief Holds a pointer based weighted COO
+     *
+     * For template parameters, please see COO.
+     */
+    template<
+        class Label=uint32_t,
+        class Ordinal=Label,
+        class Weight=float,
+        bool symmetric=false,
+        bool keep_upper_triangle_only=false,
+        bool remove_self_loops=false,
+        bool remove_multi_edges=false
+    >
+    using WCOOPtr = COO<
+        Label,
+        Ordinal,
+        Label*,
+        symmetric,
+        keep_upper_triangle_only,
+        remove_self_loops,
+        remove_multi_edges,
+        true,
+        Weight,
+        Weight*>;
 
 }
 

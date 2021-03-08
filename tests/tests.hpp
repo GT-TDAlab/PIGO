@@ -5,8 +5,9 @@
  * A simple test system, support equality checking and test execution
  */
 
+#include <cstdlib>
+#include <cmath>
 #include <iostream>
-#include <stdlib.h>
 
 /**
  * @file tests.hpp
@@ -25,9 +26,18 @@
             }                                                                           \
     } while(0);
 
+#define NOPRINT_EQ(x,y)                                                                 \
+    do {                                                                                \
+        if ((x) != (y)) {                                                               \
+            std::cerr << "FAILURE: values not equal"                                    \
+                << " for " << #x << " in " << __FILE__ << ":" << __LINE__ << std::endl; \
+            return 1;                                                                   \
+            }                                                                           \
+    } while(0);
+
 #define FEQ(x,y)                                                                        \
     do {                                                                                \
-        if ((x) - (y) > F_EPS) {                                                        \
+        if (std::fabs((x) - (y)) > F_EPS) {                                             \
             std::cerr << "FAILURE: Expected " << (y) << " instead got " << (x)          \
                 << " for " << #x << " in " << __FILE__ << ":" << __LINE__ << std::endl; \
             return 1;                                                                   \

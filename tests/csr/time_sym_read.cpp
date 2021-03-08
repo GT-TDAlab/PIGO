@@ -2,7 +2,8 @@
  * PIGO: a parallel graph and matrix I/O and preprocessing library
  * Copyright (c) 2021 GT-TDALab
  *
- * This file contains a test harness for timing COO into CSR reads
+ * This file contains a test harness for timing COO into CSR reads when
+ * symmetrizing
  */
 
 #include "pigo.hpp"
@@ -22,9 +23,9 @@ int main(int argc, char **argv) {
     string input_file = string(argv[1]);
 
     double start = omp_get_wtime();
-    COO<> c { input_file };
+    COO<uint32_t, uint32_t, uint32_t*, true> c { input_file };
     double end = omp_get_wtime();
-    cerr << "[COO read] " << (end-start) << " sec" << endl;
+    cerr << "[symCOO read] " << (end-start) << " sec" << endl;
 
     start = omp_get_wtime();
     CSR<> csr { c };

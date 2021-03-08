@@ -106,6 +106,15 @@ namespace pigo {
              */
             edge_ctr_t neighbor_end(vertex_t v);
 
+            /** @brief Return the number of neighbors (degree) of a vertex
+             *
+             * @param v the vertex to return the degree of
+             * @return the number of neighbors of the vertex
+             */
+            edge_ctr_t degree(vertex_t v) {
+                return neighbor_end(v)-neighbor_start(v);
+            }
+
             /** @brief Return an iterator for the neighbors the vertex
              *
              * @param v the vertex to iterate over the neighbors of

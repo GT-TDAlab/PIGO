@@ -66,10 +66,31 @@ namespace pigo {
             *
             * Note: this reads integers in base 10 only
             *
-            * @return the newly reader integer
+            * @return the newly read integer
             */
             template<typename T>
             T read_int();
+
+            /** @brief Read a floating point value from the file
+            *
+            * @return the newly read floating point
+            */
+            template<typename T>
+            T read_fp();
+
+            /** @brief Read the sign value from an integer
+             *
+             * Reads out either + or -, as appropriate, from the given file
+             * position. The file position is the incremented.
+             *
+             * @tparam T the type of the integer sign to return
+             * @return a T value of either 1 or -1 as appropriate
+             */
+            template<typename T>
+            T read_sign() {
+                if (*d == '-') return (T)(-1);
+                return (T)1;
+            }
 
             /** @brief Determine if only spaces remain before the line
             *
@@ -81,6 +102,12 @@ namespace pigo {
 
             /** @brief Move the reader to the next non-int */
             void move_to_non_int();
+
+            /** @brief Move the reader to the next non-floating point */
+            void move_to_non_fp();
+
+            /** @brief Move the reader to the next floating point */
+            void move_to_fp();
 
             /** @brief Move to the first integer
              *
@@ -95,6 +122,15 @@ namespace pigo {
             * any non-integer character to get to the next integer
             */
             void move_to_next_int();
+
+            /** @brief Move to the next signed integer
+            *
+            * Note: this will move through the current integer and then through
+            * any non-integer character to get to the next integer
+            *
+            * These integers are signed and so can start with + or -
+            */
+            void move_to_next_signed_int();
 
             /** @brief Move to the next integer or newline
             *
@@ -173,6 +209,17 @@ namespace pigo {
             bool at_nl_or_eol() {
                 if (d == end) return true;
                 return (*d == '\n' || *d == '%' || *d == '#');
+            }
+
+            /** @brief Return whether the reader is at a '0' integer
+             *
+             * @return true if the reader is at a '0' integer
+             */
+            bool at_zero() {
+                if (d >= end+1) return false;
+                if (*d != '0') return false;
+                if (*(d+1) >= '0' && *(d+1) <= '9') return false;
+                return true;
             }
     };
 
@@ -364,229 +411,243 @@ namespace pigo {
      */
     template<class T> void write(FilePos &fp, T val);
 
-    /** A holder for allocation implementations */
-    template<typename T, bool ptr_flag, bool vec_flag, bool sptr_flag>
-    struct allocate_impl_ {
-        static void op_(T&, size_t) {
-            throw Error("Invalid allocation strategy");
+    namespace detail {
+
+        /** A holder for allocation implementations */
+        template<bool do_alloc, typename T, bool ptr_flag, bool vec_flag, bool sptr_flag>
+        struct allocate_impl_ {
+            static void op_(T&, size_t) {
+                throw Error("Invalid allocation strategy");
+            }
+        };
+
+        /** The implementation that will not allocate */
+        template<typename T, bool ptr_flag, bool vec_flag, bool sptr_flag>
+        struct allocate_impl_<false, T, ptr_flag, vec_flag, sptr_flag> {
+            static void op_(T&, size_t) { }
+        };
+
+        /** The raw pointer allocation implementation */
+        template<typename T>
+        struct allocate_impl_<true, T, true, false, false> {
+            static void op_(T& it, size_t nmemb) {
+                it = static_cast<T>(malloc(sizeof(*(T){nullptr})*nmemb));
+                if (it == NULL)
+                    throw Error("Unable to allocate");
+            }
+        };
+
+        /** The vector allocation implementation */
+        template<typename T>
+        struct allocate_impl_<true, T, false, true, false> {
+            static void op_(T& it, size_t nmemb) {
+                it.resize(nmemb);
+            }
+        };
+
+        /** The shared_ptr allocation implementation */
+        template<typename T>
+        struct allocate_impl_<true, T, false, false, true> {
+            static void op_(T& it, size_t nmemb) {
+                it = std::shared_ptr<typename T::element_type>(
+                        new typename T::element_type[nmemb],
+                        std::default_delete<typename T::element_type []>()
+                        );
+            }
+        };
+
+        /** @brief Allocates the given item appropriately
+        *
+        * @tparam T the storage type
+        * @tparam do_alloc whether to allocate or not
+        * @param[out] it the item that will be allocated
+        * @param nmemb the number of members to allocate
+        */
+        template<class T, bool do_alloc=true>
+        inline
+        void allocate_mem_(T& it, size_t nmemb) {
+            // Use the appropriate allocation strategy
+            allocate_impl_<do_alloc, T,
+                std::is_pointer<T>::value,
+                is_vector<T>::value,
+                is_sptr<T>::value
+            >::op_(it, nmemb);
         }
-    };
 
-    /** The raw pointer allocation implementation */
-    template<typename T>
-    struct allocate_impl_<T, true, false, false> {
-        static void op_(T& it, size_t nmemb) {
-            it = static_cast<T>(malloc(sizeof(*(T){nullptr})*nmemb));
-            if (it == NULL)
-                throw Error("Unable to allocate");
+        /** A holder for freeing implementations */
+        template<bool do_free, typename T, bool ptr_flag, bool vec_flag, bool sptr_flag>
+        struct free_impl_ {
+            static void op_(T&) { };
+        };
+
+        /** The raw pointer allocation implementation */
+        template<typename T>
+        struct free_impl_<true, T, true, false, false> {
+            static void op_(T& it) {
+                free(it);
+            }
+        };
+
+        /** The vector allocation implementation */
+        template<typename T>
+        struct free_impl_<true, T, false, true, false> {
+            static void op_(T&) { }
+        };
+
+        /** The shared_ptr allocation implementation */
+        template<typename T>
+        struct free_impl_<true, T, false, false, true> {
+            static void op_(T&) { }
+        };
+
+        /** @brief Frees the allocated item if the template parameter is true
+        *
+        * @tparam T the storage type
+        * @tparam do_free whether to free the storage item or not
+        * @param[out] it the item that will be allocated
+        */
+        template<class T, bool do_free=true>
+        inline
+        void free_mem_(T& it) {
+            // Use the appropriate allocation strategy
+            free_impl_<do_free, T,
+                std::is_pointer<T>::value,
+                is_vector<T>::value,
+                is_sptr<T>::value
+            >::op_(it);
         }
-    };
 
-    /** The vector allocation implementation */
-    template<typename T>
-    struct allocate_impl_<T, false, true, false> {
-        static void op_(T& it, size_t nmemb) {
-            it.resize(nmemb);
+        /** The raw data retrieval implementation */
+        template<typename T, bool ptr_flag, bool vec_flag, bool sptr_flag>
+        struct get_raw_data_impl_;
+
+        /** The raw pointer implementation */
+        template<typename T>
+        struct get_raw_data_impl_<T, true, false, false> {
+            static char* op_(T& v) { return (char*)(v); }
+        };
+
+        /** The vector implementation */
+        template<typename T>
+        struct get_raw_data_impl_<T, false, true, false> {
+            static char* op_(T& v) { return (char*)(v.data()); }
+        };
+
+        /** The shared_ptr implementation */
+        template<typename T>
+        struct get_raw_data_impl_<T, false, false, true> {
+            static char* op_(T& v) { return (char*)(v.get()); }
+        };
+
+        /** @brief Returns a pointer to the raw data in an allocation
+        *
+        * @tparam T the storage type
+        * @param v the storage item to get the raw data pointer of
+        * @return a char pointer to the raw data
+        */
+        template<class T>
+        inline
+        char* get_raw_data_(T& v) {
+            return get_raw_data_impl_<T,
+                std::is_pointer<T>::value,
+                is_vector<T>::value,
+                is_sptr<T>::value
+            >::op_(v);
         }
-    };
 
-    /** The shared_ptr allocation implementation */
-    template<typename T>
-    struct allocate_impl_<T, false, false, true> {
-        static void op_(T& it, size_t nmemb) {
-            it = std::shared_ptr<typename T::element_type>(
-                    new typename T::element_type[nmemb],
-                    std::default_delete<typename T::element_type []>()
-                    );
+        /** A holder for the storage location setting implementation */
+        template<class S, class T, bool ptr_flag, bool vec_flag, bool sptr_flag>
+        struct set_value_impl_;
+
+        /** The raw pointer value setting implementation */
+        template<class S, class T>
+        struct set_value_impl_<S, T, true, false, false> {
+            static void op_(S &space, size_t offset, T val) {
+                space[offset] = val;
+            }
+        };
+
+        /** The vector value setting implementation */
+        template<class S, class T>
+        struct set_value_impl_<S, T, false, true, false> {
+            static void op_(S &space, size_t offset, T val) {
+                space[offset] = val;
+            }
+        };
+
+        /** The shared_ptr value setting implementation */
+        template<class S, class T>
+        struct set_value_impl_<S, T, false, false, true> {
+            static void op_(S &space, size_t offset, T val) {
+                space.get()[offset] = val;
+            }
+        };
+
+        /** @brief Set the given storage location to the specified value
+        *
+        * @param space the space to set a value in (raw pointer, vector,
+        *        smart pointer)
+        * @param offset the offset to set the value at
+        * @param value the value to set
+        */
+        template<class S, class T>
+        inline
+        void set_value_(S &space, size_t offset, T val) {
+            // Use the appropriate strategy based on the space type
+            set_value_impl_<S, T,
+                std::is_pointer<S>::value,
+                is_vector<S>::value,
+                is_sptr<S>::value
+            >::op_(space, offset, val);
         }
-    };
 
-    /** @brief Allocates the given item appropriately
-     *
-     * @tparam T the storage type
-     * @param[out] it the item that will be allocated
-     * @param nmemb the number of members to allocate
-     */
-    template<class T>
-    inline __attribute__((always_inline))
-    void allocate_mem_(T& it, size_t nmemb) {
-        // Use the appropriate allocation strategy
-        allocate_impl_<T,
-            std::is_pointer<T>::value,
-            is_vector<T>::value,
-            is_sptr<T>::value
-        >::op_(it, nmemb);
-    }
+        /** A holder for the getting storage implementation */
+        template<class S, class T, bool ptr_flag, bool vec_flag, bool sptr_flag>
+        struct get_value_impl_;
 
-    /** A holder for freeing implementations */
-    template<typename T, bool ptr_flag, bool vec_flag, bool sptr_flag>
-    struct free_impl_;
+        /** The raw pointer get implementation */
+        template<class S, class T>
+        struct get_value_impl_<S, T, true, false, false> {
+            static T op_(S &space, size_t offset) {
+                return space[offset];
+            }
+        };
 
-    /** The raw pointer allocation implementation */
-    template<typename T>
-    struct free_impl_<T, true, false, false> {
-        static void op_(T& it) {
-            free(it);
+        /** The vector get implementation */
+        template<class S, class T>
+        struct get_value_impl_<S, T, false, true, false> {
+            static T op_(S &space, size_t offset) {
+                return space[offset];
+            }
+        };
+
+        /** The shared_ptr get implementation */
+        template<class S, class T>
+        struct get_value_impl_<S, T, false, false, true> {
+            static T op_(S &space, size_t offset) {
+                return space.get()[offset];
+            }
+        };
+
+        /** @brief Set the given storage location to the specified value
+        *
+        * @tparam S the storage type
+        * @tparam T the underlying value type
+        * @param space the space to get a value in (raw pointer, vector,
+        *        smart pointer)
+        * @param offset the offset to get the value at
+        */
+        template<class S, class T>
+        inline
+        T get_value_(S &space, size_t offset) {
+            // Use the appropriate strategy based on the space type
+            return get_value_impl_<S, T,
+                std::is_pointer<S>::value,
+                is_vector<S>::value,
+                is_sptr<S>::value
+            >::op_(space, offset);
         }
-    };
 
-    /** The vector allocation implementation */
-    template<typename T>
-    struct free_impl_<T, false, true, false> {
-        static void op_(T&) { }
-    };
-
-    /** The shared_ptr allocation implementation */
-    template<typename T>
-    struct free_impl_<T, false, false, true> {
-        static void op_(T&) { }
-    };
-
-    /** @brief Frees the allocated item
-     *
-     * @tparam T the storage type
-     * @param[out] it the item that will be allocated
-     */
-    template<class T>
-    inline
-    void free_mem_(T& it) {
-        // Use the appropriate allocation strategy
-        free_impl_<T,
-            std::is_pointer<T>::value,
-            is_vector<T>::value,
-            is_sptr<T>::value
-        >::op_(it);
-    }
-
-    /** The raw data retrieval implementation */
-    template<typename T, bool ptr_flag, bool vec_flag, bool sptr_flag>
-    struct get_raw_data_impl_;
-
-    /** The raw pointer implementation */
-    template<typename T>
-    struct get_raw_data_impl_<T, true, false, false> {
-        static char* op_(T& v) { return (char*)(v); }
-    };
-
-    /** The vector implementation */
-    template<typename T>
-    struct get_raw_data_impl_<T, false, true, false> {
-        static char* op_(T& v) { return (char*)(v.data()); }
-    };
-
-    /** The shared_ptr implementation */
-    template<typename T>
-    struct get_raw_data_impl_<T, false, false, true> {
-        static char* op_(T& v) { return (char*)(v.get()); }
-    };
-
-    /** @brief Returns a pointer to the raw data in an allocation
-     *
-     * @tparam T the storage type
-     * @param v the storage item to get the raw data pointer of
-     * @return a char pointer to the raw data
-     */
-    template<class T>
-    inline
-    char* get_raw_data_(T& v) {
-        return get_raw_data_impl_<T,
-            std::is_pointer<T>::value,
-            is_vector<T>::value,
-            is_sptr<T>::value
-        >::op_(v);
-    }
-
-    /** A holder for the storage location setting implementation */
-    template<class S, class T, bool ptr_flag, bool vec_flag, bool sptr_flag>
-    struct set_value_impl_;
-
-    /** The raw pointer value setting implementation */
-    template<class S, class T>
-    struct set_value_impl_<S, T, true, false, false> {
-        static void op_(S &space, size_t offset, T val) {
-            space[offset] = val;
-        }
-    };
-
-    /** The vector value setting implementation */
-    template<class S, class T>
-    struct set_value_impl_<S, T, false, true, false> {
-        static void op_(S &space, size_t offset, T val) {
-            space[offset] = val;
-        }
-    };
-
-    /** The shared_ptr value setting implementation */
-    template<class S, class T>
-    struct set_value_impl_<S, T, false, false, true> {
-        static void op_(S &space, size_t offset, T val) {
-            space.get()[offset] = val;
-        }
-    };
-
-    /** @brief Set the given storage location to the specified value
-     *
-     * @param space the space to set a value in (raw pointer, vector,
-     *        smart pointer)
-     * @param offset the offset to set the value at
-     * @param value the value to set
-     */
-    template<class S, class T>
-    inline
-    void set_value_(S &space, size_t offset, T val) {
-        // Use the appropriate strategy based on the space type
-        set_value_impl_<S, T,
-            std::is_pointer<S>::value,
-            is_vector<S>::value,
-            is_sptr<S>::value
-        >::op_(space, offset, val);
-    }
-
-    /** A holder for the getting storage implementation */
-    template<class S, class T, bool ptr_flag, bool vec_flag, bool sptr_flag>
-    struct get_value_impl_;
-
-    /** The raw pointer get implementation */
-    template<class S, class T>
-    struct get_value_impl_<S, T, true, false, false> {
-        static T op_(S &space, size_t offset) {
-            return space[offset];
-        }
-    };
-
-    /** The vector get implementation */
-    template<class S, class T>
-    struct get_value_impl_<S, T, false, true, false> {
-        static T op_(S &space, size_t offset) {
-            return space[offset];
-        }
-    };
-
-    /** The shared_ptr get implementation */
-    template<class S, class T>
-    struct get_value_impl_<S, T, false, false, true> {
-        static T op_(S &space, size_t offset) {
-            return space.get()[offset];
-        }
-    };
-
-    /** @brief Set the given storage location to the specified value
-     *
-     * @tparam S the storage type
-     * @tparam T the underlying value type
-     * @param space the space to get a value in (raw pointer, vector,
-     *        smart pointer)
-     * @param offset the offset to get the value at
-     */
-    template<class S, class T>
-    inline
-    T get_value_(S &space, size_t offset) {
-        // Use the appropriate strategy based on the space type
-        return get_value_impl_<S, T,
-            std::is_pointer<S>::value,
-            is_vector<S>::value,
-            is_sptr<S>::value
-        >::op_(space, offset);
     }
 
     /** @brief Write a binary region in parallel

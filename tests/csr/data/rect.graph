@@ -1,0 +1,8 @@
+% this is a rectangular graph
+% header below is:
+% <num vertices> <num *edges*> <weight type>
+% vertices start at 1, and num edges does not count the sum of degrees
+2 7 0
+# just another comment
+1 3 5
+1 3 4 5

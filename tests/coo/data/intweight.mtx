@@ -1,0 +1,7 @@
+%%MatrixMarket matrix coordinate integer symmetric
+5 5 5
+5 1 4
+4 1         +1
+4 2 asdf        \ 3
+4 1 12
+2 1 ff  -10
