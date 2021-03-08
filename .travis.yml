@@ -1,0 +1,34 @@
+language: cpp
+dist: focal
+
+addons:
+  apt:
+    packages:
+      - g++-9
+      - cmake-data
+      - cmake
+
+jobs:
+  include:
+    # Docs
+    - os: linux
+      language: python
+      python: "3.7"
+      addons:
+        apt:
+          packages:
+            - doxygen
+            - graphviz
+      install:
+        - pip3 install -r docs/requirements.txt
+      script:
+        - mkdir ${TRAVIS_BUILD_DIR}/build && cd ${TRAVIS_BUILD_DIR}/build
+        - cmake -DCMAKE_BUILD_TYPE=Release -G "CodeBlocks - Unix Makefiles" ..
+        - make docs
+        - cd ${TRAVIS_BUILD_DIR}
+      deploy:
+        edge: true
+        provider: pages:git
+        local_dir: ./build/docs/sphinx
+        token: $GITHUB_TOKEN
+        verbose: true
