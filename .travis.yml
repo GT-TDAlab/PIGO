@@ -27,6 +27,7 @@ jobs:
         local_dir: ./build/docs/sphinx
         token: $KASIMIR_GH_TOKEN
         verbose: true
+        cleanup: false
     - before_script:
         - mkdir -p ${TRAVIS_BUILD_DIR}/build-test
         - cd ${TRAVIS_BUILD_DIR}/build-test
