@@ -22,6 +22,7 @@ jobs:
         - make -i docs
         - cd ${TRAVIS_BUILD_DIR}
       deploy:
+        strategy: git
         provider: pages
         local_dir: ./build/docs/sphinx
         token: $KASIMIR_GH_TOKEN
