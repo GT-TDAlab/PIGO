@@ -1,0 +1,458 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>CSR &mdash; PIGO 0.5.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/css/side_color.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="PIGO 0.5.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Datastructures" href="../datastructures.html"/>
+        <link rel="next" title="Graph" href="graph.html"/>
+        <link rel="prev" title="COO" href="coo.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> PIGO
+          
+
+          
+            
+            <img src="../../_static/logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">PIGO: a Parallel Graph Input and Output library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../datastructures.html">Datastructures</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="coo.html">COO</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CSR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph.html">Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix.html">Matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pigo.html">Utilities</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Site Map</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">PIGO</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../datastructures.html">Datastructures</a> &raquo;</li>
+        
+      <li>CSR</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/GT-TDALab/PIGO/blob/master/docs/api/datastructures/csr.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="csr">
+<h1>CSR<a class="headerlink" href="#csr" title="Permalink to this headline">¶</a></h1>
+<p>Defined in <a class="reference external" href="https://github.com/GT-TDAlab/PIGO/blob/master/include/pigo/csr.hpp">csr.hpp</a></p>
+<dl class="cpp class">
+<dt id="_CPPv4I0000_b00EN4pigo3CSRE">
+<span id="_CPPv3I0000_b00EN4pigo3CSRE"></span><span id="_CPPv2I0000_b00EN4pigo3CSRE"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">Label</span></code> <span class="pre">=</span> <span class="pre">uint32_t</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">Ordinal</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR::Label"><span class="pre">Label</span></a><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">LabelStorage</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR::Label"><span class="pre">Label</span></a><span class="pre">*</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">OrdinalStorage</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR::Ordinal"><span class="pre">Ordinal</span></a><span class="pre">*</span><span class="pre">,</span> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">weighted</span></code> <span class="pre">=</span> <span class="pre">false</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">Weight</span></code> <span class="pre">=</span> <span class="pre">float</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">WeightStorage</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR::Weight"><span class="pre">Weight</span></a><span class="pre">*</span><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1CSR"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><a class="reference internal" href="../pigo.html#_CPPv44pigo" title="pigo"><span class="pre">pigo</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">CSR</span></code><a class="headerlink" href="#_CPPv4I0000_b00EN4pigo3CSRE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Holds compressed sparse row matrices or graphs. </p>
+<p>This is a fundamental object in PIGO. It is used to represent sparse matrices and graphs. It can be loaded directly from files that are in adjacency formats, such as CHACO/METIS files.</p>
+<p>In many cases, this is the desired format for a graph or matrix in memory. When sparse graphs or matrices are delivered in <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> formats, such as matrix market or edge lists, they are frequently converted to <a class="reference internal" href="#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a>. This class can automatically handle such conversions internally.</p>
+<p><dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Label</span></code>: the label data type. This type needs to be able to support the largest value read inside of the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. In a graph this is the largest vertex ID. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Ordinal</span></code>: the ordinal data type. This type needs to support large enough values to hold the number of endpoints or rows in the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. It defaults to the same type as the label type. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LabelStorage</span></code>: the storage type of the endpoints of the <a class="reference internal" href="#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a>. This can either be vector (std::vector&lt;Label&gt;), a pointer (Label*), or a shared_ptr (std::shared_ptr&lt;Label&gt;). </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">OrdinalStorage</span></code>: the storage type of the offsets of the <a class="reference internal" href="#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a>. This can either be vector (std::vector&lt;Ordinal&gt;), a pointer (Ordinal*), or a shared_ptr (std::shared_ptr&lt;Ordinal&gt;). </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weighted</span></code>: if true, support and use weights </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Weight</span></code>: the weight data type. This type needs to be able to support the largest value read inside of the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. In a graph this is the largest vertex ID. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WeightStorage</span></code>: the storage type for the weights. This can be a raw pointer (Weight*), a std::vector (std::vector&lt;Weight&gt;), or a std::shared_ptr&lt;Weight&gt;. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo3CSR3CSREv">
+<span id="_CPPv3N4pigo3CSR3CSREv"></span><span id="_CPPv2N4pigo3CSR3CSREv"></span><span id="pigo::CSR::CSR"></span><span class="target" id="classpigo_1_1CSR_1a0680aa02d2455a39fab26bdfec6f077b"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">CSR</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3CSR3CSREv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize an empty <a class="reference internal" href="#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4I000_b_b_b_b00EN4pigo3CSR3CSRER3COOI8COOLabel10COOOrdinal10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE">
+<span id="_CPPv3I000_b_b_b_b00EN4pigo3CSR3CSRER3COOI8COOLabel10COOOrdinal10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE"></span><span id="_CPPv2I000_b_b_b_b00EN4pigo3CSR3CSRER3COOI8COOLabel10COOOrdinal10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">COOLabel</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">COOOrdinal</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">COOStorage</span></code><span class="pre">,</span> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">COOsym</span></code><span class="pre">,</span> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">COOut</span></code><span class="pre">,</span> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">COOsl</span></code><span class="pre">,</span> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">COOme</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">COOW</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">COOWS</span></code><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1CSR_1abab833780754abe1511a880217f12854"></span><code class="sig-name descname"><span class="pre">CSR</span></code><span class="sig-paren">(</span><a class="reference internal" href="coo.html#_CPPv4I000_b_b_b_b_b00EN4pigo3COOE" title="pigo::COO"><span class="pre">COO</span></a><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3CSR3CSRER3COOI8COOLabel10COOOrdinal10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::CSR::CSR::COOLabel"><span class="pre">COOLabel</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3CSR3CSRER3COOI8COOLabel10COOOrdinal10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::CSR::CSR::COOOrdinal"><span class="pre">COOOrdinal</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3CSR3CSRER3COOI8COOLabel10COOOrdinal10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::CSR::CSR::COOStorage"><span class="pre">COOStorage</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3CSR3CSRER3COOI8COOLabel10COOOrdinal10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::CSR::CSR::COOsym"><span class="pre">COOsym</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3CSR3CSRER3COOI8COOLabel10COOOrdinal10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::CSR::CSR::COOut"><span class="pre">COOut</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3CSR3CSRER3COOI8COOLabel10COOOrdinal10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::CSR::CSR::COOsl"><span class="pre">COOsl</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3CSR3CSRER3COOI8COOLabel10COOOrdinal10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::CSR::CSR::COOme"><span class="pre">COOme</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR::weighted"><span class="pre">weighted</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3CSR3CSRER3COOI8COOLabel10COOOrdinal10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::CSR::CSR::COOW"><span class="pre">COOW</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3CSR3CSRER3COOI8COOLabel10COOOrdinal10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::CSR::CSR::COOWS"><span class="pre">COOWS</span></a><span class="pre">&gt;</span> <span class="pre">&amp;</span><em><span class="pre">coo</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I000_b_b_b_b00EN4pigo3CSR3CSRER3COOI8COOLabel10COOOrdinal10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize from a <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. </p>
+<p>This creates a <a class="reference internal" href="#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a> from an already-loaded <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a>.</p>
+<p>Note that this will densely fill in all labels, so if there are many empty rows there will be unnecessary space used.</p>
+<p><dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">COOLabel</span></code>: the label for the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> format </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COOOrdinal</span></code>: the ordinal for the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> format </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COOStorage</span></code>: the storage format of the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COOsym</span></code>: whether the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> is symmetrized </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COOut</span></code>: whether the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> only keeps the upper triangle </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COOsl</span></code>: whether the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> removes self loops </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COOme</span></code>: whether the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> removes multiple edges </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COOW</span></code>: the weight type of the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">COOWS</span></code>: the weight storage type of the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">coo</span></code>: the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> object to load the <a class="reference internal" href="#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a> from </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo3CSR3CSRENSt6stringE">
+<span id="_CPPv3N4pigo3CSR3CSRENSt6stringE"></span><span id="_CPPv2N4pigo3CSR3CSRENSt6stringE"></span><span id="pigo::CSR::CSR__ss"></span><span class="target" id="classpigo_1_1CSR_1a6d2f1479e91ceb4d8a3bdbb118566ddf"></span><code class="sig-name descname"><span class="pre">CSR</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">fn</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3CSR3CSRENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize from a file. </p>
+<p>The file type will attempt to be determined automatically.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fn</span></code>: the filename to open </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo3CSR3CSRENSt6stringE8FileType">
+<span id="_CPPv3N4pigo3CSR3CSRENSt6stringE8FileType"></span><span id="_CPPv2N4pigo3CSR3CSRENSt6stringE8FileType"></span><span id="pigo::CSR::CSR__ss.FileType"></span><span class="target" id="classpigo_1_1CSR_1a5f4464b2324ba865a61de9f21037714e"></span><code class="sig-name descname"><span class="pre">CSR</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">fn</span></em>, <a class="reference internal" href="../pigo.html#_CPPv4N4pigo8FileTypeE" title="pigo::FileType"><span class="pre">FileType</span></a> <em><span class="pre">ft</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3CSR3CSRENSt6stringE8FileType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize from a file with a specific type. </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fn</span></code>: the filename to open </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ft</span></code>: the FileType to use </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo3CSR3CSRER4File8FileType">
+<span id="_CPPv3N4pigo3CSR3CSRER4File8FileType"></span><span id="_CPPv2N4pigo3CSR3CSRER4File8FileType"></span><span id="pigo::CSR::CSR__FileR.FileType"></span><span class="target" id="classpigo_1_1CSR_1af24134eac2492fac1eceffe7bb722653"></span><code class="sig-name descname"><span class="pre">CSR</span></code><span class="sig-paren">(</span><a class="reference internal" href="../pigo.html#_CPPv4N4pigo4FileE" title="pigo::File"><span class="pre">File</span></a> <span class="pre">&amp;</span><em><span class="pre">f</span></em>, <a class="reference internal" href="../pigo.html#_CPPv4N4pigo8FileTypeE" title="pigo::FileType"><span class="pre">FileType</span></a> <em><span class="pre">ft</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3CSR3CSRER4File8FileType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize from an open file with a specific type. </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code>: the open <a class="reference internal" href="../pigo.html#classpigo_1_1File"><span class="std std-ref">File</span></a> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ft</span></code>: the FileType to use </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo3CSR9endpointsEv">
+<span id="_CPPv3N4pigo3CSR9endpointsEv"></span><span id="_CPPv2N4pigo3CSR9endpointsEv"></span><span id="pigo::CSR::endpoints"></span><span class="target" id="classpigo_1_1CSR_1ac9c8b826e2d5fd355e02554e7699b84a"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR::LabelStorage"><span class="pre">LabelStorage</span></a> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">endpoints</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3CSR9endpointsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the endpoints. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>the endpoints in the LabelStorage format </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo3CSR7offsetsEv">
+<span id="_CPPv3N4pigo3CSR7offsetsEv"></span><span id="_CPPv2N4pigo3CSR7offsetsEv"></span><span id="pigo::CSR::offsets"></span><span class="target" id="classpigo_1_1CSR_1ac5a1c654e24e6a3e0c54d2f70cb605de"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR::OrdinalStorage"><span class="pre">OrdinalStorage</span></a> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">offsets</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3CSR7offsetsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the offsets. </p>
+<p>These contain Ordinals that show the offset for the current label into the endpoints. These are not pointers directly.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>the offsets in the OrdinalStorage format </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo3CSR7weightsEv">
+<span id="_CPPv3N4pigo3CSR7weightsEv"></span><span id="_CPPv2N4pigo3CSR7weightsEv"></span><span id="pigo::CSR::weights"></span><span class="target" id="classpigo_1_1CSR_1aec625668efc6b55dde5f491af8e6cda5"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR::WeightStorage"><span class="pre">WeightStorage</span></a> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">weights</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3CSR7weightsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the weights, if available. </p>
+<p>This returns the WeightStorage for the weights, if the <a class="reference internal" href="#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a> is weighted.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>the weights in the WeightStorage format </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo3CSR1mEv">
+<span id="_CPPv3N4pigo3CSR1mEv"></span><span id="_CPPv2N4pigo3CSR1mEv"></span><span id="pigo::CSR::m"></span><span class="target" id="classpigo_1_1CSR_1ac5d4c1de08359e39ab045f7ac5576d42"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR::Ordinal"><span class="pre">Ordinal</span></a> <code class="sig-name descname"><span class="pre">m</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3CSR1mEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Retrieves the number of endpoints in the <a class="reference internal" href="#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a>. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>the count of endpoints </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo3CSR1nEv">
+<span id="_CPPv3N4pigo3CSR1nEv"></span><span id="_CPPv2N4pigo3CSR1nEv"></span><span id="pigo::CSR::n"></span><span class="target" id="classpigo_1_1CSR_1a5c6c1270a11c00ec1b5011b65d500ebc"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR::Label"><span class="pre">Label</span></a> <code class="sig-name descname"><span class="pre">n</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3CSR1nEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Retrieves the number of labels the <a class="reference internal" href="#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a> contains. </p>
+<p>Note that this includes labels with no endpoints.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>the number of labels </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo3CSR5nrowsEv">
+<span id="_CPPv3N4pigo3CSR5nrowsEv"></span><span id="_CPPv2N4pigo3CSR5nrowsEv"></span><span id="pigo::CSR::nrows"></span><span class="target" id="classpigo_1_1CSR_1ac475a464baa6861f621e9e3577100970"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR::Label"><span class="pre">Label</span></a> <code class="sig-name descname"><span class="pre">nrows</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3CSR5nrowsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Retrieves the number of rows in the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>the number of rows </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo3CSR5ncolsEv">
+<span id="_CPPv3N4pigo3CSR5ncolsEv"></span><span id="_CPPv2N4pigo3CSR5ncolsEv"></span><span id="pigo::CSR::ncols"></span><span class="target" id="classpigo_1_1CSR_1ae03e772b3cb46d3933b9ce6bfdf2793c"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR::Label"><span class="pre">Label</span></a> <code class="sig-name descname"><span class="pre">ncols</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3CSR5ncolsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Retrieves the number of columns in the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>the number of columns </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo3CSR4freeEv">
+<span id="_CPPv3N4pigo3CSR4freeEv"></span><span id="_CPPv2N4pigo3CSR4freeEv"></span><span id="pigo::CSR::free"></span><span class="target" id="classpigo_1_1CSR_1aae7469350809baa65cbed6c18ea05a0a"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">free</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3CSR4freeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Utility to free consumed memory. </p>
+<p>As an IO library, PIGO generally leaves memory cleanup to downstream applications and does not always deallocate in destructors. In some cases it is helpful for PIGO to cleanup directly and then this can be used. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo3CSR4saveENSt6stringE">
+<span id="_CPPv3N4pigo3CSR4saveENSt6stringE"></span><span id="_CPPv2N4pigo3CSR4saveENSt6stringE"></span><span id="pigo::CSR::save__ss"></span><span class="target" id="classpigo_1_1CSR_1a02e45317edafdd2d3badcea71d73d536"></span><span class="pre">void</span> <code class="sig-name descname"><span class="pre">save</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">fn</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3CSR4saveENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Save the loaded <a class="reference internal" href="#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a> as a PIGO binary file. </p>
+<p>This saves the current <a class="reference internal" href="#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a> to disk</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fn</span></code>: the filename to save as </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Attributes</p>
+<dl class="cpp var">
+<dt id="_CPPv4N4pigo3CSR15csr_file_headerE">
+<span id="_CPPv3N4pigo3CSR15csr_file_headerE"></span><span id="_CPPv2N4pigo3CSR15csr_file_headerE"></span><span id="pigo::CSR::csr_file_header__cCP"></span><span class="target" id="classpigo_1_1CSR_1a089e43ae10b4b7dbeb6a2b7fdfa0b827"></span><em class="property"><span class="pre">static</span></em> <em class="property"><span class="pre">constexpr</span></em> <em class="property"><span class="pre">const</span></em> <span class="pre">char</span> <span class="pre">*</span><code class="sig-name descname"><span class="pre">csr_file_header</span></code> <span class="pre">=</span> <span class="pre">&quot;PIGO-CSR-v1&quot;</span><a class="headerlink" href="#_CPPv4N4pigo3CSR15csr_file_headerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The output file header for reading/writing </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="graph.html" class="btn btn-neutral float-right" title="Graph" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="coo.html" class="btn btn-neutral" title="COO" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, GT-TDAlab.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> and ❤️  using a custom <a href="https://github.com/LinxiFan/Sphinx-theme">theme</a> based on <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.5.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

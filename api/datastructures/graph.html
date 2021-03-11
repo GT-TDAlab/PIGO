@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Graph &mdash; PIGO 0.5.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/css/side_color.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="PIGO 0.5.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Datastructures" href="../datastructures.html"/>
+        <link rel="next" title="Matrix" href="matrix.html"/>
+        <link rel="prev" title="CSR" href="csr.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> PIGO
+          
+
+          
+            
+            <img src="../../_static/logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">PIGO: a Parallel Graph Input and Output library</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../datastructures.html">Datastructures</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="coo.html">COO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="csr.html">CSR</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix.html">Matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pigo.html">Utilities</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Site Map</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">PIGO</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../datastructures.html">Datastructures</a> &raquo;</li>
+        
+      <li>Graph</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/GT-TDALab/PIGO/blob/master/docs/api/datastructures/graph.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="graph">
+<h1>Graph<a class="headerlink" href="#graph" title="Permalink to this headline">¶</a></h1>
+<p>Defined in <a class="reference external" href="https://github.com/GT-TDAlab/PIGO/blob/master/include/pigo/graph.hpp">graph.hpp</a></p>
+<dl class="cpp class">
+<dt id="_CPPv4I0000_b00EN4pigo9BaseGraphE">
+<span id="_CPPv3I0000_b00EN4pigo9BaseGraphE"></span><span id="_CPPv2I0000_b00EN4pigo9BaseGraphE"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">vertex_t</span></code> <span class="pre">=</span> <span class="pre">uint32_t</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">edge_ctr_t</span></code> <span class="pre">=</span> <span class="pre">uint32_t</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">edge_storage</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="pre">vertex_t</span></a><span class="pre">*</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">edge_ctr_storage</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a><span class="pre">*</span><span class="pre">,</span> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">weighted</span></code> <span class="pre">=</span> <span class="pre">false</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">Weight</span></code> <span class="pre">=</span> <span class="pre">float</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">WeightStorage</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::Weight"><span class="pre">Weight</span></a><span class="pre">*</span><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1BaseGraph"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><a class="reference internal" href="../pigo.html#_CPPv44pigo" title="pigo"><span class="pre">pigo</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">BaseGraph</span></code> <span class="pre">:</span> <em class="property"><span class="pre">public</span></em> <a class="reference internal" href="../pigo.html#_CPPv44pigo" title="pigo"><span class="pre">pigo</span></a><span class="pre">::</span><a class="reference internal" href="csr.html#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR"><span class="pre">CSR</span></a><span class="pre">&lt;</span><span class="pre">uint32_t</span><span class="pre">,</span> <span class="pre">uint32_t</span><span class="pre">,</span> <span class="pre">uint32_t</span><span class="pre">*</span><span class="pre">,</span> <span class="pre">uint32_t</span><span class="pre">*</span><span class="pre">,</span> <span class="pre">false</span><span class="pre">,</span> <span class="pre">float</span><span class="pre">,</span> <span class="pre">float</span><span class="pre">*</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Used to load graphs from disk. </p>
+<p>This class provides a graph-specific naming on top of CSRs.</p>
+<p><dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex_t</span></code>: the type to use for vertices </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edge_ctr_t</span></code>: the type to use for an edge counter </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edge_storage</span></code>: the storage type of the endpoints of the <a class="reference internal" href="csr.html#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a>. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edge_ctr_storage</span></code>: the storage type of the offsets of the <a class="reference internal" href="csr.html#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a>. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">weighted</span></code>: if true, support and use weights </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Weight</span></code>: the weight data type. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WeightStorage</span></code>: the storage type for the weights. This can be a raw pointer (Weight*), a std::vector (std::vector&lt;Weight&gt;), or a std::shared_ptr&lt;Weight&gt;. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo9BaseGraph14neighbor_startE8vertex_t">
+<span id="_CPPv3N4pigo9BaseGraph14neighbor_startE8vertex_t"></span><span id="_CPPv2N4pigo9BaseGraph14neighbor_startE8vertex_t"></span><span id="pigo::BaseGraph::neighbor_start__vertex_t"></span><span class="target" id="classpigo_1_1BaseGraph_1ac6d7115be4d77f15c5a4d8b6a21b5142"></span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a> <code class="sig-name descname"><span class="pre">neighbor_start</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="pre">vertex_t</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo9BaseGraph14neighbor_startE8vertex_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the neighbors of a vertex. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>an edge_ctr_t containing the neighbor start offset </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: the vertex to find the neighbors at </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo9BaseGraph12neighbor_endE8vertex_t">
+<span id="_CPPv3N4pigo9BaseGraph12neighbor_endE8vertex_t"></span><span id="_CPPv2N4pigo9BaseGraph12neighbor_endE8vertex_t"></span><span id="pigo::BaseGraph::neighbor_end__vertex_t"></span><span class="target" id="classpigo_1_1BaseGraph_1a28856944c6ffb0cb53ec7f79ba706663"></span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a> <code class="sig-name descname"><span class="pre">neighbor_end</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="pre">vertex_t</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo9BaseGraph12neighbor_endE8vertex_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return beyond the neighbors of a vertex. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>an edge_ctr_t just beyond the neighbor list </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: the vertex to end the neighbors at </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo9BaseGraph6degreeE8vertex_t">
+<span id="_CPPv3N4pigo9BaseGraph6degreeE8vertex_t"></span><span id="_CPPv2N4pigo9BaseGraph6degreeE8vertex_t"></span><span id="pigo::BaseGraph::degree__vertex_t"></span><span class="target" id="classpigo_1_1BaseGraph_1a226499bbd66797e10f47bd1ec66d623a"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a> <code class="sig-name descname"><span class="pre">degree</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="pre">vertex_t</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo9BaseGraph6degreeE8vertex_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the number of neighbors (degree) of a vertex. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>the number of neighbors of the vertex </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: the vertex to return the degree of </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo9BaseGraph9neighborsE8vertex_t">
+<span id="_CPPv3N4pigo9BaseGraph9neighborsE8vertex_t"></span><span id="_CPPv2N4pigo9BaseGraph9neighborsE8vertex_t"></span><span id="pigo::BaseGraph::neighbors__vertex_t"></span><span class="target" id="classpigo_1_1BaseGraph_1a933622090db7867586268873e0c2dd57"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt"><span class="pre">EdgeIt</span></a><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="pre">vertex_t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_storage"><span class="pre">edge_storage</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">neighbors</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="pre">vertex_t</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo9BaseGraph9neighborsE8vertex_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return an iterator for the neighbors the vertex. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>an edge iterator </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: the vertex to iterate over the neighbors of </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4I000EN4pigo7EdgeItTE">
+<span id="_CPPv3I000EN4pigo7EdgeItTE"></span><span id="_CPPv2I000EN4pigo7EdgeItTE"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">V</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">O</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">S</span></code><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1EdgeItT"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><a class="reference internal" href="../pigo.html#_CPPv44pigo" title="pigo"><span class="pre">pigo</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">EdgeItT</span></code><a class="headerlink" href="#_CPPv4I000EN4pigo7EdgeItTE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An iterator type for edges. </p>
+<p><dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">V</span></code>: the vertex ID type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">O</span></code>: the ordinal type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span></code>: the storage type for the edges </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo7EdgeItT7EdgeItTE1S1O">
+<span id="_CPPv3N4pigo7EdgeItT7EdgeItTE1S1O"></span><span id="_CPPv2N4pigo7EdgeItT7EdgeItTE1S1O"></span><span id="pigo::EdgeItT::EdgeItT__S.O"></span><span class="target" id="classpigo_1_1EdgeItT_1ab63233f437d4bed0cc1862269fc48c0a"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">EdgeItT</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I000EN4pigo7EdgeItTE" title="pigo::EdgeItT::S"><span class="pre">S</span></a> <em><span class="pre">s</span></em>, <a class="reference internal" href="#_CPPv4I000EN4pigo7EdgeItTE" title="pigo::EdgeItT::O"><span class="pre">O</span></a> <em><span class="pre">pos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7EdgeItT7EdgeItTE1S1O" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize the edge list iterator type. </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: the storage for the edge list endpoints </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pos</span></code>: the position in the storage </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+<dl class="cpp class">
+<dt id="_CPPv4I000EN4pigo6EdgeItE">
+<span id="_CPPv3I000EN4pigo6EdgeItE"></span><span id="_CPPv2I000EN4pigo6EdgeItE"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">V</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">O</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">S</span></code><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1EdgeIt"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><a class="reference internal" href="../pigo.html#_CPPv44pigo" title="pigo"><span class="pre">pigo</span></a><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">EdgeIt</span></code><a class="headerlink" href="#_CPPv4I000EN4pigo6EdgeItE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>An iterable edge list. </p>
+<p><dl class="simple">
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">V</span></code>: the vertex ID type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">O</span></code>: the ordinal type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">S</span></code>: the storage type for the edges </p></li>
+</ul>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">begin</span></code>: the starting offset </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">end</span></code>: one passed the starting offset </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo6EdgeIt6EdgeItE1O1O1S">
+<span id="_CPPv3N4pigo6EdgeIt6EdgeItE1O1O1S"></span><span id="_CPPv2N4pigo6EdgeIt6EdgeItE1O1O1S"></span><span id="pigo::EdgeIt::EdgeIt__O.O.S"></span><span class="target" id="classpigo_1_1EdgeIt_1a0d918d9bb54abd4a470e1368e6291e26"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">EdgeIt</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::O"><span class="pre">O</span></a> <em><span class="pre">begin</span></em>, <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::O"><span class="pre">O</span></a> <em><span class="pre">end</span></em>, <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::S"><span class="pre">S</span></a> <em><span class="pre">s</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6EdgeIt6EdgeItE1O1O1S" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct the edge iterator for the given offset values. </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">begin</span></code>: the starting offset </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">end</span></code>: the ending offset </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: the storage </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo6EdgeIt5beginEv">
+<span id="_CPPv3N4pigo6EdgeIt5beginEv"></span><span id="_CPPv2N4pigo6EdgeIt5beginEv"></span><span id="pigo::EdgeIt::begin"></span><span class="target" id="classpigo_1_1EdgeIt_1aa28581841f13c33ac3a8fda5e35d69c8"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I000EN4pigo7EdgeItTE" title="pigo::EdgeItT"><span class="pre">EdgeItT</span></a><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::V"><span class="pre">V</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::O"><span class="pre">O</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::S"><span class="pre">S</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">begin</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6EdgeIt5beginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the iterator start </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt id="_CPPv4N4pigo6EdgeIt3endEv">
+<span id="_CPPv3N4pigo6EdgeIt3endEv"></span><span id="_CPPv2N4pigo6EdgeIt3endEv"></span><span id="pigo::EdgeIt::end"></span><span class="target" id="classpigo_1_1EdgeIt_1aea6bda1a071b1f1433ec0b9726406ab2"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I000EN4pigo7EdgeItTE" title="pigo::EdgeItT"><span class="pre">EdgeItT</span></a><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::V"><span class="pre">V</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::O"><span class="pre">O</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::S"><span class="pre">S</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">end</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6EdgeIt3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Return the iterator end </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="matrix.html" class="btn btn-neutral float-right" title="Matrix" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="csr.html" class="btn btn-neutral" title="CSR" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, GT-TDAlab.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> and ❤️  using a custom <a href="https://github.com/LinxiFan/Sphinx-theme">theme</a> based on <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.5.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
