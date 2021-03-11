@@ -25,7 +25,9 @@ jobs:
         strategy: git
         provider: pages
         local_dir: ./build/docs/sphinx
-        token: $KASIMIR_GH_TOKEN
+        token: ${KASIMIR_GH_TOKEN}
+        github_token: ${KASIMIR_GH_TOKEN}
+        keep_history: true
         verbose: true
         skip_cleanup: true
         cleanup: false
