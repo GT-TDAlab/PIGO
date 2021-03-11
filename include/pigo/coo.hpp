@@ -60,9 +60,7 @@ namespace pigo {
      *         If set to true, any multi-edges will be detected and removed.
      *         These are repeat edges, with (x,y,val) == (x,y,val)
      * @tparam weighted if true, support and use weights
-     * @tparam Weight the weight data type. This type needs to be able to
-     *         support the largest value read inside of the COO. In
-     *         a graph this is the largest vertex ID.
+     * @tparam Weight the weight data type.
      * @tparam WeightStorage the storage type for the weights. This can be
      *         a raw pointer (Weight*), a std::vector
      *         (std::vector<Weight>), or a std::shared_ptr<Weight>.
@@ -178,6 +176,32 @@ namespace pigo {
             void read_coord_entry_(size_t &coord_pos, FileReader &r,
                     Label &max_row, Label &max_col);
 
+            /** @brief Copies the COO values from the other COO */
+            void copy_(const COO& other) {
+                #pragma omp parallel for
+                for (Ordinal pos = 0; pos < m_; ++pos) {
+                    Label x_val = detail::get_value_<
+                                Storage,
+                                Label
+                            >((Storage&)(other.x_), pos);
+                    detail::set_value_(x_, pos, x_val);
+                    Label y_val = detail::get_value_<
+                                Storage,
+                                Label
+                            >((Storage&)(other.y_), pos);
+                    detail::set_value_(y_, pos, y_val);
+                }
+                if (detail::if_true_<weighted>()) {
+                    #pragma omp parallel for
+                    for (Ordinal pos = 0; pos < m_; ++pos) {
+                        Weight w_val = detail::get_value_<
+                                    WeightStorage,
+                                    Weight
+                                >((WeightStorage&)(other.w_), pos);
+                        detail::set_value_(w_, pos, w_val);
+                    }
+                }
+            }
         public:
             /** @brief Initialize a COO from a file
              *
@@ -207,6 +231,9 @@ namespace pigo {
              */
             template<class CL, class CO, typename LabelStorage, typename OrdinalStorage, class CW, class CWS>
             COO(CSR<CL, CO, LabelStorage, OrdinalStorage, weighted, CW, CWS>& csr);
+
+            /** @brief Initialize an empty COO */
+            COO() : n_(0), nrows_(0), ncols_(0), m_(0) { }
 
             /** @brief Retrieve the X coordinate array
              *
@@ -264,9 +291,40 @@ namespace pigo {
              * cleanup directly and then this can be used.
              */
             void free() {
-                detail::free_mem_(x_);
-                detail::free_mem_(y_);
-                detail::free_mem_<WeightStorage, weighted>(w_);
+                if (m_ > 0) {
+                    detail::free_mem_(x_);
+                    detail::free_mem_(y_);
+                    detail::free_mem_<WeightStorage, weighted>(w_);
+                    m_ = 0;
+                }
+            }
+
+            /** @brief The copy constructor for creating a new COO */
+            COO(const COO& other) : n_(other.n_), nrows_(other.nrows_),
+                    ncols_(other.ncols_), m_(other.m_) {
+                allocate_();
+                copy_(other);
+            }
+
+            /** @brief The copy assignment operator */
+            COO& operator=(const COO& other) {
+                if (&other != this) {
+                    free();
+                    n_ = other.n_;
+                    nrows_ = other.nrows_;
+                    ncols_ = other.ncols_;
+                    m_ = other.m_;
+                    allocate_();
+                    copy_(other);
+                }
+
+                return *this;
+            }
+
+            /** @brief Transpose the COO, swapping x and y */
+            COO& transpose() {
+                std::swap(x_, y_);
+                return *this;
             }
 
             /** The output file header for reading/writing */

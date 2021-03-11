@@ -126,6 +126,9 @@ namespace pigo {
                     COOsym, COOut, COOsl, COOme, weighted, COOW, COOWS>&
                     coo);
         public:
+            /** @brief Initialize an empty CSR */
+            CSR() : n_(0), m_(0), nrows_(0), ncols_(0) { }
+            
             /** @brief Initialize from a COO
              *
              * This creates a CSR from an already-loaded COO.
@@ -264,6 +267,62 @@ namespace pigo {
         true,
         Weight,
         Weight*>;
+
+    /** @brief A compressed sparse column representation
+     *
+     * This is a transposed CSR.
+     *
+     * @tparam Label the label data type. This type needs to be able to
+     *         support the largest value read inside of the CSR. In
+     *         a graph this is the largest vertex ID.
+     * @tparam Ordinal the ordinal data type. This type needs to
+     *         support large enough values to hold the number of endpoints
+     *         or rows in the CSR. It defaults to the same type as the
+     *         label type.
+     * @tparam LabelStorage the storage type of the endpoints of the CSR.
+     *         This can either be vector (std::vector<Label>),
+     *         a pointer (Label*), or a shared_ptr
+     *         (std::shared_ptr<Label>).
+     * @tparam OrdinalStorage the storage type of the offsets of the CSR.
+     *         This can either be vector (std::vector<Ordinal>),
+     *         a pointer (Ordinal*), or a shared_ptr
+     *         (std::shared_ptr<Ordinal>).
+     * @tparam weighted if true, support and use weights
+     * @tparam Weight the weight data type.
+     * @tparam WeightStorage the storage type for the weights. This can be
+     *         a raw pointer (Weight*), a std::vector
+     *         (std::vector<Weight>), or a std::shared_ptr<Weight>.
+     */
+    template<
+        class Label=uint32_t,
+        class Ordinal=Label,
+        class LabelStorage=Label*,
+        class OrdinalStorage=Ordinal*,
+        bool weighted=false,
+        class Weight=float,
+        class WeightStorage=Weight*
+    >
+    class CSC : public CSR<
+                Label,
+                Ordinal,
+                LabelStorage,
+                OrdinalStorage,
+                weighted,
+                Weight,
+                WeightStorage
+            > {
+        public:
+            using CSR<
+                Label,
+                Ordinal,
+                LabelStorage,
+                OrdinalStorage,
+                weighted,
+                Weight,
+                WeightStorage
+            >::CSR;
+    };
+
 
 }
 

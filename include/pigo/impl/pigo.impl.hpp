@@ -400,18 +400,5 @@ namespace pigo {
         size_t weight_size_(O m) {
             return weight_size_i_<wgt, W, O>::op_(m);
         }
-
-        template <bool B>
-        struct if_true_i_ {
-            static bool op_() { return false; }
-        };
-        template <>
-        struct if_true_i_<true> {
-            static bool op_() { return true; }
-        };
-        template <bool B>
-        bool if_true_() {
-            return if_true_i_<B>::op_();
-        }
     }
 }

@@ -80,17 +80,33 @@ namespace pigo {
      * @tparam edge_storage the storage type of the endpoints of the CSR.
      * @tparam edge_ctr_storage the storage type of the offsets of the
      *         CSR.
+     * @tparam weighted if true, support and use weights
+     * @tparam Weight the weight data type.
+     * @tparam WeightStorage the storage type for the weights. This can be
+     *         a raw pointer (Weight*), a std::vector
+     *         (std::vector<Weight>), or a std::shared_ptr<Weight>.
      */
     template<
         class vertex_t=uint32_t,
         class edge_ctr_t=uint32_t,
         class edge_storage=vertex_t*,
-        class edge_ctr_storage=edge_ctr_t*
+        class edge_ctr_storage=edge_ctr_t*,
+        bool weighted=false,
+        class Weight=float,
+        class WeightStorage=Weight*
     >
-    class BaseGraph : public CSR<vertex_t, edge_ctr_t,
-            edge_storage, edge_ctr_storage> {
+    class BaseGraph : public CSR<
+                        vertex_t,
+                        edge_ctr_t,
+                        edge_storage,
+                        edge_ctr_storage,
+                        weighted,
+                        Weight,
+                        WeightStorage
+                    > {
         public:
-            using CSR<vertex_t, edge_ctr_t, edge_storage, edge_ctr_storage>::CSR;
+            using CSR<vertex_t, edge_ctr_t, edge_storage, edge_ctr_storage,
+                  weighted, Weight, WeightStorage>::CSR;
 
             /** @brief Return the neighbors of a vertex
              *
@@ -131,6 +147,168 @@ namespace pigo {
 
     /** @brief A Graph suitable for large graphs requiring 64-bit ids */
     using BigGraph = BaseGraph<uint64_t, uint64_t>;
+
+    /** @brief Used to load directed graphs from disk
+     *
+     * This class provides a graph-specific naming on top of non-symmetric
+     * matrices (Matrix).
+     *
+     * @tparam vertex_t the type to use for vertices
+     * @tparam edge_ctr_t the type to use for an edge counter
+     * @tparam edge_storage the storage type of the endpoints of the
+     *         CSR/CSC.
+     * @tparam edge_ctr_storage the storage type of the offsets of the
+     *         CSR/CSC.
+     * @tparam weighted if true, support and use weights
+     * @tparam Weight the weight data type.
+     * @tparam WeightStorage the storage type for the weights. This can be
+     *         a raw pointer (Weight*), a std::vector
+     *         (std::vector<Weight>), or a std::shared_ptr<Weight>.
+     */
+    template<
+        class vertex_t=uint32_t,
+        class edge_ctr_t=uint32_t,
+        class edge_storage=vertex_t*,
+        class edge_ctr_storage=edge_ctr_t*,
+        bool weighted=false,
+        class Weight=float,
+        class WeightStorage=Weight*
+    >
+    class DiGraph {
+        private:
+            /** Holds the in-edges */
+            BaseGraph<
+                    vertex_t,
+                    edge_ctr_t,
+                    edge_storage,
+                    edge_ctr_storage,
+                    weighted,
+                    Weight,
+                    WeightStorage
+                > in_;
+
+            /** Holds the out-edges */
+            BaseGraph<
+                    vertex_t,
+                    edge_ctr_t,
+                    edge_storage,
+                    edge_ctr_storage,
+                    weighted,
+                    Weight,
+                    WeightStorage
+                > out_;
+
+            /** @build a DiGraph from a COO */
+            template <class COOvertex_t, class COOedge_ctr_t, class COOStorage,
+                     bool COOsym, bool COOut, bool COOsl, bool COOme,
+                     class COOW, class COOWS>
+            void from_coo_(COO<COOvertex_t, COOedge_ctr_t, COOStorage, COOsym, COOut,
+                    COOsl, COOme, weighted, COOW, COOWS>& coo) {
+                auto coo_copy = coo;
+                coo_copy.transpose();
+
+                in_ = BaseGraph<
+                            vertex_t,
+                            edge_ctr_t,
+                            edge_storage,
+                            edge_ctr_storage,
+                            weighted,
+                            Weight,
+                            WeightStorage
+                        > { coo_copy };
+                coo_copy.free();
+
+                out_ = BaseGraph<
+                            vertex_t,
+                            edge_ctr_t,
+                            edge_storage,
+                            edge_ctr_storage,
+                            weighted,
+                            Weight,
+                            WeightStorage
+                        > { coo };
+            }
+
+
+        public:
+            /** @brief Initialize from a COO
+             *
+             * This creates a DiGraph from an already-loaded COO.
+             *
+             * This first copies the COO and transposes the copy, setting
+             * that as the in-edges.
+             * The out-edges are the original COO.
+             *
+             * @tparam COOvertex_t the label for the COO format
+             * @tparam COOedge_ctr_t the ordinal for the COO format
+             * @tparam COOStorage the storage format of the COO
+             * @tparam COOsym whether the COO is symmetrized
+             * @tparam COOut whether the COO only keeps the upper triangle
+             * @tparam COOsl whether the COO removes self loops
+             * @tparam COOme whether the COO removes multiple edges
+             * @tparam COOW the weight type of the COO
+             * @tparam COOWS the weight storage type of the COO
+             * @param coo the COO object to load the CSR from
+             */
+            template <class COOvertex_t, class COOedge_ctr_t, class COOStorage,
+                     bool COOsym, bool COOut, bool COOsl, bool COOme,
+                     class COOW, class COOWS>
+            DiGraph(COO<COOvertex_t, COOedge_ctr_t, COOStorage, COOsym, COOut,
+                    COOsl, COOme, weighted, COOW, COOWS>& coo) {
+                from_coo_(coo);
+            }
+
+            /** @brief Create a DiGraph from a file */
+            DiGraph(std::string filename) {
+                COO<
+                    vertex_t, edge_ctr_t, edge_storage,
+                    false, false, false, false,
+                    weighted, Weight, WeightStorage
+                > coo { filename };
+                from_coo_(coo);
+                coo.free();
+            }
+
+            /** @brief Free the associated memory */
+            void free() {
+                in_.free();
+                out_.free();
+            }
+
+            /** @brief Return the number of non-zeros or edges */
+            edge_ctr_t m() { return out_.m(); }
+
+            /** @brief Return the number of vertices */
+            edge_ctr_t n() { return out_.n(); }
+
+            /** @brief Return the number of rows */
+            edge_ctr_t nrows() { return out_.nrows(); }
+
+            /** @brief Return the number of columns */
+            edge_ctr_t ncols() { return out_.ncols(); }
+
+            /** @brief Return the out-edges */
+            BaseGraph<
+                vertex_t,
+                edge_ctr_t,
+                edge_storage,
+                edge_ctr_storage,
+                weighted,
+                Weight,
+                WeightStorage
+            >& out() { return out_; }
+
+            /** @brief Return the in-edges */
+            BaseGraph<
+                vertex_t,
+                edge_ctr_t,
+                edge_storage,
+                edge_ctr_storage,
+                weighted,
+                Weight,
+                WeightStorage
+            >& in() { return in_; }
+    };
 
 }
 

@@ -72,18 +72,23 @@ vertex 0's neighbors:
 
 ## Documentation
 
+The documentation relies on the following dependencies:
 * [Python 3](https://www.python.org/downloads/)
 * [Pip](https://pip.pypa.io/en/stable/installing/)
 * [Doxygen](https://www.doxygen.nl/download.html)
 
-Additionally run `pip install -r docs/requirements.txt` for python dependencies in the project root.
+To install additional Python dependencies, run
+`pip install -r docs/requirements.txt`.
 
-Now running `make docs` in build directory will create the documentation under `build/docs/sphinx`.
+Next, the documentation can be built by running
+`cd build && cmake .. && make docs`.
+The documentation will then be in `build/docs/sphinx`.
 
 ## Running Tests
 
 Unit tests are controlled using CMake. To use them, you will need a modern
-version of CMake. You can do the following: `cd build; cmake ..; ctest`.
+version of CMake. You can do the following:
+`cd build && cmake .. && make -j 8 && ctest`.
 
 ## License
 

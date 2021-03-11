@@ -648,6 +648,25 @@ namespace pigo {
             >::op_(space, offset);
         }
 
+        /** @brief Implementation for false template parameters */
+        template <bool B>
+        struct if_true_i_ {
+            static bool op_() { return false; }
+        };
+        /** @brief Implementation for true template parameters */
+        template <>
+        struct if_true_i_<true> {
+            static bool op_() { return true; }
+        };
+        /** @brief Structure that returns bool template parameters
+         *
+         * @tparam B the boolean template parameter
+         */
+        template <bool B>
+        bool if_true_() {
+            return if_true_i_<B>::op_();
+        }
+
     }
 
     /** @brief Write a binary region in parallel
@@ -673,8 +692,8 @@ namespace pigo {
 // Load the rest of PIGO
 #include "pigo/coo.hpp"
 #include "pigo/csr.hpp"
-#include "pigo/graph.hpp"
 #include "pigo/matrix.hpp"
+#include "pigo/graph.hpp"
 
 // Load the implementations
 #include "pigo/impl/pigo.impl.hpp"
