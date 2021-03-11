@@ -1,40 +1,40 @@
 language: cpp
 os: linux
 dist: focal
-
 compiler: gcc
-
 jobs:
   include:
-    - language: python
-      python: "3.7"
-      addons:
-        apt:
-          packages:
-            - doxygen
-            - graphviz
-      install:
-        - pip3 install -r docs/requirements.txt
-      script:
-        - mkdir -p ${TRAVIS_BUILD_DIR}/build
-        - cd ${TRAVIS_BUILD_DIR}/build
-        - cmake ..
-        - make -i docs
-        - cd ${TRAVIS_BUILD_DIR}
-      deploy:
-        strategy: git
-        provider: pages
-        local_dir: ./build/docs/sphinx
-        token: $KASIMIR_GH_TOKEN
-        github_token: $KASIMIR_GH_TOKEN
-        keep_history: true
-        verbose: true
-        skip_cleanup: true
-        cleanup: false
-    - before_script:
-        - mkdir -p ${TRAVIS_BUILD_DIR}/build-test
-        - cd ${TRAVIS_BUILD_DIR}/build-test
-        - cmake ..
-      script:
-        - make -j 8
-        - make test
+  - language: python
+    python: '3.7'
+    addons:
+      apt:
+        packages:
+        - doxygen
+        - graphviz
+    install:
+    - pip3 install -r docs/requirements.txt
+    script:
+    - mkdir -p ${TRAVIS_BUILD_DIR}/build
+    - cd ${TRAVIS_BUILD_DIR}/build
+    - cmake ..
+    - make -i docs
+    - cd ${TRAVIS_BUILD_DIR}
+    deploy:
+      strategy: git
+      provider: pages
+      local_dir: "./build/docs/sphinx"
+      github_token: "$GH_PAGES"
+      keep_history: true
+      verbose: true
+      skip_cleanup: true
+      cleanup: false
+  - before_script:
+    - mkdir -p ${TRAVIS_BUILD_DIR}/build-test
+    - cd ${TRAVIS_BUILD_DIR}/build-test
+    - cmake ..
+    script:
+    - make -j 8
+    - make test
+env:
+  global:
+    secure: G3Eb+3cPsq7HWHio9lAkD0gm/RdAqELB/x3piT2Tkh0BfRIm8u0blGyLD2YAEO2lKcf6VO5t+e839WgHHzhHYEUIp47IBUt2lj+AnA9TMsxGurOkqwELU3D6OKVolGrakQhKug3qWBTOWlUoC+cglM1wknI4e7WKzriaEeAD5UiGfQK+MgW4uqhKmbfnrcTJ9CpYqlvtJ9L1Cg+/ICAGBbivgUYp8xZdljmcuhjI3UxRZQkGYpfXzH+lLXtb+86/M6MjLywdDufNuiI5xTP6rBPIjBTzTHVdK4cZPyR5Y68Rerty1ssfITi9J3SqJ7TlxzT2WpqmbUx4n5fjFqAvrq70lYebPesW4LxrqvAUrumiK4vL27MgDNiDcsVI7P1RqYWnrVaUSxIRJkQx/VL4aAfsP3f4jY4OyhKeltLU3eIrqMoCyW+D8R2v2puWYnUiXrAKAPYWiYMUu0BB819sspJ0JXWHuPu4bkISyiAzpogx4WSJaaMbKm4wJLc8kHbHEbOVjmNzH3Y9EpFOQOTsxDKjxPzrwtuuH8baKVaZgPmCQJ/cKwtGK16KOUFEcvWV+q/Wv/fX6nlhQr3Pzak85Uw3/WTKnJS45xfiPfZd76iuNgroB7A6fDtT0kekOxQTyxbKAVRkwSJ5zPE4s0dvYOSnqtX1uHUnM0XfApeoCS8=
