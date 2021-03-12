@@ -1,9 +1,12 @@
 Graph
-==========
+=====
 
 Defined in :source:`graph.hpp <include/pigo/graph.hpp>`
 
 .. doxygenclass:: pigo::BaseGraph
+    :members:
+
+.. doxygenclass:: pigo::DiGraph
     :members:
 
 .. doxygenclass:: pigo::EdgeItT
@@ -11,3 +14,7 @@ Defined in :source:`graph.hpp <include/pigo/graph.hpp>`
 
 .. doxygenclass:: pigo::EdgeIt
     :members:
+
+.. cpp:type:: pigo::Graph
+
+.. cpp:type:: pigo::BigGraph

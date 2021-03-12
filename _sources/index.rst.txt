@@ -24,4 +24,6 @@ Welcome to PIGO's documentation!
    :caption: Other
    :maxdepth: 2
 
+   LICENSE
+
    genindex
