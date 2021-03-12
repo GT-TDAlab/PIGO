@@ -333,12 +333,12 @@ namespace pigo {
 
     /** @brief Holds weighted coordinate-addressed matrices or graphs
      *
-     * WCOO is an extension of COO that is able to hold weights alongside
+     * WCOO is a wrapper around COO that is able to hold weights alongside
      * the coordinates. This is used either with weighted graphs or
      * non-binary matrices.
      *
-     * This is a wrapper around a COO with weight flags set.  For template
-     * parameter deatils, see COO.
+     * This differs from COO by always setting the weighted flag.
+     * For template parameter deatils, see COO.
      */
     template<
         class Label=uint32_t,

@@ -1,5 +1,5 @@
 Datastructures
-==========
+==============
 
 ..  toctree::
     :glob:
