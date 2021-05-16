@@ -33,6 +33,37 @@ int read_simple(string dir_path) {
     return 0;
 }
 
+int change_labs(string dir_path) {
+    COO<> c { dir_path + "/sparse.mtx"  };
+
+    // Ensure that the count is correct
+    EQ(c.m(), 3);
+    EQ(c.n(), 4);
+    EQ(c.nrows(), 3);
+    EQ(c.ncols(), 4);
+
+    auto x = c.x();
+    auto y = c.y();
+
+    size_t ctr = 0;
+    EQ(x[ctr], 1); EQ(y[ctr++], 3);
+    EQ(x[ctr], 2); EQ(y[ctr++], 3);
+    EQ(x[ctr], 2); EQ(y[ctr++], 1);
+
+    c.set_n(3);
+    c.set_nrows(2);
+    c.set_ncols(3);
+
+    EQ(c.m(), 3);
+    EQ(c.n(), 3);
+    EQ(c.nrows(), 2);
+    EQ(c.ncols(), 3);
+
+    c.free();
+
+    return 0;
+}
+
 int fail_bad_label(string dir_path) {
     try {
         COO<> c { dir_path + "/sparse-bad.mtx", MATRIX_MARKET };
@@ -57,6 +88,15 @@ int fail_read_dense(string dir_path) {
     return 0;
 }
 
+int bigger_labs(string dir_path) {
+    COO<> c { dir_path + "/bigger.mtx" };
+    EQ(c.n(), 601);
+    EQ(c.nrows(), 501);
+    EQ(c.ncols(), 601);
+    c.free();
+    return 0;
+}
+
 int main(int argc, char **argv) {
     int pass = 0;
 
@@ -70,6 +110,8 @@ int main(int argc, char **argv) {
     TEST(read_simple, dir_path);
     TEST(fail_bad_label, dir_path);
     TEST(fail_read_dense, dir_path);
+    TEST(change_labs, dir_path);
+    TEST(bigger_labs, dir_path);
 
     return pass;
 }

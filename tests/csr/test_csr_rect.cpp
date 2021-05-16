@@ -31,6 +31,17 @@ int rect_coo(string dir_path) {
     return 0;
 }
 
+int bigempty(string dir_path) {
+    CSR<> g { dir_path + "/bigempty.mtx" };
+    EQ(g.nrows(), 5001);
+    EQ(g.ncols(), 5001);
+    EQ(g.n(), 5001);
+    EQ(g.m(), 1);
+
+    g.free();
+    return 0;
+}
+
 int main(int argc, char **argv) {
     int pass = 0;
 
@@ -43,6 +54,7 @@ int main(int argc, char **argv) {
 
     TEST(rect_csr, dir_path);
     TEST(rect_coo, dir_path);
+    TEST(bigempty, dir_path);
 
     return pass;
 }

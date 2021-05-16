@@ -238,7 +238,7 @@ namespace pigo {
                 if (!coo_read_rsl_i_<L, sl>::op_(x, y)) {
                     return read_coord_entry_i_<L,O,S,sym,ut,sl,me,wgt,W,WS,true>::op_(x_, y_, w_, coord_pos, r, max_row, max_col);
                 }
-                if (coo_read_sym_i_<sym>::op_()) ++coord_pos;
+                if (coo_read_sym_i_<sym>::op_() && x != y) ++coord_pos;
                 ++coord_pos;
             }
         };
@@ -260,7 +260,11 @@ namespace pigo {
                 set_value_(x_, coord_pos, x);
                 set_value_(y_, coord_pos, y);
                 ++coord_pos;
-                if (coo_read_sym_i_<sym>::op_()) {
+                if (coo_read_sym_i_<sym>::op_() && x != y) {
+                    if (if_true_<wgt>()) {
+                        auto w = get_value_<WS, W>(w_, coord_pos-1);
+                        set_value_(w_, coord_pos, w);
+                    }
                     set_value_(y_, coord_pos, x);
                     set_value_(x_, coord_pos, y);
                     ++coord_pos;
@@ -346,10 +350,25 @@ namespace pigo {
             free();
             throw Error("Too many col labels in file contradicting header");
         }
-        if (nnz != m_) {
-            free();
-            throw Error("Header contradicts number of read non-zeros");
+        if (detail::if_true_<sym>()) {
+            if (nnz > 2*m_) {
+                free();
+                throw Error("Header wants more non-zeros than found");
+            }
+        } else if (detail::if_true_<sl>()) {
+            if (nnz > m_) {
+                free();
+                throw Error("Header wants more non-zeros than read");
+            }
+        } else {
+            if (nnz != m_) {
+                free();
+                throw Error("Header contradicts number of read non-zeros");
+            }
         }
+
+        if (nrows_ > ncols_) n_ = nrows_;
+        else n_ = ncols_;
     }
 
     template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>

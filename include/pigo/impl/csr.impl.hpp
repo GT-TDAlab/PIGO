@@ -408,25 +408,39 @@ namespace pigo {
     }
 
     template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
-    void CSR<L,O,LS,OS,wgt,W,WS>::save(std::string fn) {
-        // Before creating the file, we need to find the size
+    size_t CSR<L,O,LS,OS,wgt,W,WS>::save_size() const {
         size_t out_size = 0;
         std::string cfh { csr_file_header };
         out_size += cfh.size();
         // Find the template sizes
         out_size += sizeof(uint8_t)*2;
         // Find the size of the size of the CSR
-        out_size += sizeof(L)+sizeof(O);
+        out_size += sizeof(L)*3+sizeof(O);
         // Finally, find the actual CSR size
         size_t voff_size = sizeof(O)*(n_+1);
         size_t vend_size = sizeof(L)*m_;
         size_t w_size = detail::weight_size_<wgt, W, O>(m_);
         out_size += voff_size + vend_size + w_size;
 
+        return out_size;
+    }
+
+    template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
+    void CSR<L,O,LS,OS,wgt,W,WS>::save(std::string fn) {
+        // Before creating the file, we need to find the size
+        size_t out_size = save_size();
+
         // Create the output file
         WFile w {fn, out_size};
 
+        // Now, perform the actual save
+        save(w);
+    }
+
+    template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
+    void CSR<L,O,LS,OS,wgt,W,WS>::save(File& w) {
         // Output the file header
+        std::string cfh { csr_file_header };
         w.write(cfh);
 
         // Output the template sizes
@@ -438,6 +452,12 @@ namespace pigo {
         // Output the sizes and data
         w.write(n_);
         w.write(m_);
+        w.write(nrows_);
+        w.write(ncols_);
+
+        size_t voff_size = sizeof(O)*(n_+1);
+        size_t vend_size = sizeof(L)*m_;
+        size_t w_size = detail::weight_size_<wgt, W, O>(m_);
 
         // Output the data
         char* voff = detail::get_raw_data_<OS>(offsets_);
@@ -468,6 +488,8 @@ namespace pigo {
         // Read the sizes
         n_ = f.read<L>();
         m_ = f.read<O>();
+        nrows_ = f.read<L>();
+        ncols_ = f.read<L>();
 
         // Allocate space
         allocate_();

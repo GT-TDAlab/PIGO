@@ -198,6 +198,13 @@ namespace pigo {
                     WeightStorage
                 > out_;
 
+            /** @brief Read the DiGraph from the given file and format
+             *
+             * @param f the File to read from
+             * @param ft the FileFormat to use to read
+             */
+            void read_(File& f, FileType ft);
+
             /** @build a DiGraph from a COO */
             template <class COOvertex_t, class COOedge_ctr_t, class COOStorage,
                      bool COOsym, bool COOut, bool COOsl, bool COOme,
@@ -258,16 +265,27 @@ namespace pigo {
                 from_coo_(coo);
             }
 
-            /** @brief Create a DiGraph from a file */
-            DiGraph(std::string filename) {
-                COO<
-                    vertex_t, edge_ctr_t, edge_storage,
-                    false, false, false, false,
-                    weighted, Weight, WeightStorage
-                > coo { filename };
-                from_coo_(coo);
-                coo.free();
-            }
+            /** @brief Initialize from a file
+             *
+             * The file type will attempt to be determined automatically.
+             *
+             * @param fn the filename to open
+             */
+            DiGraph(std::string fn);
+
+            /** @brief Initialize from a file with a specific type
+             *
+             * @param fn the filename to open
+             * @param ft the FileType to use
+             */
+            DiGraph(std::string fn, FileType ft);
+
+            /** @brief Initialize from an open file with a specific type
+             *
+             * @param f the open File
+             * @param ft the FileType to use
+             */
+            DiGraph(File& f, FileType ft);
 
             /** @brief Free the associated memory */
             void free() {
@@ -308,6 +326,17 @@ namespace pigo {
                 Weight,
                 WeightStorage
             >& in() { return in_; }
+
+            /** @brief Save the loaded DiGraph as a PIGO binary file
+             *
+             * This saves the current DiGraph to disk
+             *
+             * @param fn the filename to save as
+             */
+            void save(std::string fn);
+
+            /** The output file header for reading/writing */
+            static constexpr const char* digraph_file_header = "PIGO-DiGraph-v1";
     };
 
 }

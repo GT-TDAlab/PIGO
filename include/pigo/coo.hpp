@@ -268,6 +268,15 @@ namespace pigo {
              */
             Label n() { return n_; }
 
+            /** @brief Update the largest label */
+            void set_n(Label new_n) { n_ = new_n; }
+
+            /** @brief Update the number of rows in the matrix */
+            void set_nrows(Label new_nrows) { nrows_ = new_nrows; }
+
+            /** @brief Update the number of cols in the matrix */
+            void set_ncols(Label new_ncols) { ncols_ = new_ncols; }
+
             /** @brief Retrieves the number of rows in the COO
              *
              * @return the number of rows

@@ -235,6 +235,8 @@ namespace pigo {
         PIGO_COO_BIN,
         /** A binary format storing a PIGO CSR */
         PIGO_CSR_BIN,
+        /** A binary format storing a PIGO DiGraph */
+        PIGO_DIGRAPH_BIN,
         /** A file with a head and where each line contains an adjacency
          * list */
         GRAPH,
@@ -364,7 +366,7 @@ namespace pigo {
              * @return returns a new FileReader object for this file
              */
             FileReader reader() {
-                return FileReader {data_, data_+size_};
+                return FileReader {fp_, data_+size_};
             }
     };
     /** @brief Opens a read-only file for use in PIGO */

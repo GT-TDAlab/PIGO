@@ -128,7 +128,7 @@ namespace pigo {
         public:
             /** @brief Initialize an empty CSR */
             CSR() : n_(0), m_(0), nrows_(0), ncols_(0) { }
-            
+
             /** @brief Initialize from a COO
              *
              * This creates a CSR from an already-loaded COO.
@@ -238,6 +238,13 @@ namespace pigo {
                 detail::free_mem_<WeightStorage, weighted>(weights_);
             }
 
+            /** @brief Return the size of the binary save file
+             *
+             * @return size_t containing the binary file size
+             */
+            size_t save_size () const;
+
+
             /** @brief Save the loaded CSR as a PIGO binary file
              *
              * This saves the current CSR to disk
@@ -246,8 +253,16 @@ namespace pigo {
              */
             void save(std::string fn);
 
+            /** @brief Save the loaded CSR as a PIGO binary file
+             *
+             * This saves the current CSR to an open file
+             *
+             * @param w the File to save to
+             */
+            void save(File& w);
+
             /** The output file header for reading/writing */
-            static constexpr const char* csr_file_header = "PIGO-CSR-v1";
+            static constexpr const char* csr_file_header = "PIGO-CSR-v2";
     };
 
     /** @brief Holds a pointer based weighted CSR

@@ -20,14 +20,20 @@ This file documents PIGO's changes.
 - Support for transposing COOs
 - Support for copying COOs
 - Support for (weighted) graphs
+- Support for changing the number of rows, cols, and labels in COOs
+- Support for reading and writing binary directed graphs
 
 ### Breaking changes (minor)
 - Removed the Matrix alias due to adding full (non-symmetric) Matrix
   support
+- Changed symmetrizing to not introduce multiedge diagonals
 
 ### Fixed
 - Fixed support for converting from shared_ptr COOs to CSRs
 - Fixed passing template arguments from CSR to COOs
+- Fixed setting n for matrix market files instead of just nrows/ncols
+- Fixed symmetrizing with weights
+- Fixed a bug where nrows and ncols were not saved in CSR binary files
 
 ## [0.4] - 2021-02-17
 Initial public release.
