@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Utilities &mdash; PIGO 0.5.0 documentation</title>
@@ -28,6 +29,10 @@
   
 
   
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="../_static/css/side_color.css" type="text/css" />
   
 
@@ -36,7 +41,7 @@
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="PIGO 0.5.0 documentation" href="../index.html"/>
-        <link rel="next" title="License" href="../LICENSE.html"/>
+        <link rel="next" title="PIGO: a Parallel Graph Input and Output library" href="../README.html"/>
         <link rel="prev" title="Matrix" href="datastructures/matrix.html"/> 
 
   
@@ -88,7 +93,7 @@
             
                 <p class="caption"><span class="caption-text">Introduction</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../README.html">PIGO: a Parallel Graph Input and Output library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">PIGO Tutorial</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Reference</span></p>
 <ul class="current">
@@ -97,6 +102,7 @@
 </ul>
 <p class="caption"><span class="caption-text">Other</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">PIGO: a Parallel Graph Input and Output library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../genindex.html">Site Map</a></li>
 </ul>
@@ -164,305 +170,307 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="utilities">
+  <section id="utilities">
 <h1>Utilities<a class="headerlink" href="#utilities" title="Permalink to this headline">¶</a></h1>
 <p>Defined in <a class="reference external" href="https://github.com/GT-TDAlab/PIGO/blob/master/include/pigo.hpp">pigo.hpp</a></p>
 <dl class="cpp enum">
-<dt id="_CPPv4N4pigo8FileTypeE">
-<span id="_CPPv3N4pigo8FileTypeE"></span><span id="_CPPv2N4pigo8FileTypeE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158"></span><em class="property"><span class="pre">enum</span> </em><code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">FileType</span></code><a class="headerlink" href="#_CPPv4N4pigo8FileTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo8FileTypeE">
+<span id="_CPPv3N4pigo8FileTypeE"></span><span id="_CPPv2N4pigo8FileTypeE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">FileType</span></span></span><a class="headerlink" href="#_CPPv4N4pigo8FileTypeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Contains the supported file types. </p>
 <p><em>Values:</em></p>
 <dl class="cpp enumerator">
-<dt id="_CPPv4N4pigo8FileType13MATRIX_MARKETE">
-<span id="_CPPv3N4pigo8FileType13MATRIX_MARKETE"></span><span id="_CPPv2N4pigo8FileType13MATRIX_MARKETE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158a2888557a2c49e5fa42e5a3a2ef0c4d90"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">MATRIX_MARKET</span></code><a class="headerlink" href="#_CPPv4N4pigo8FileType13MATRIX_MARKETE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo8FileType13MATRIX_MARKETE">
+<span id="_CPPv3N4pigo8FileType13MATRIX_MARKETE"></span><span id="_CPPv2N4pigo8FileType13MATRIX_MARKETE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158a2888557a2c49e5fa42e5a3a2ef0c4d90"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MATRIX_MARKET</span></span></span><a class="headerlink" href="#_CPPv4N4pigo8FileType13MATRIX_MARKETE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>An edge list with size, typically .mtx files </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N4pigo8FileType9EDGE_LISTE">
-<span id="_CPPv3N4pigo8FileType9EDGE_LISTE"></span><span id="_CPPv2N4pigo8FileType9EDGE_LISTE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158a2d7fadc94c9c7fae6f572b3f85169354"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">EDGE_LIST</span></code><a class="headerlink" href="#_CPPv4N4pigo8FileType9EDGE_LISTE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo8FileType9EDGE_LISTE">
+<span id="_CPPv3N4pigo8FileType9EDGE_LISTE"></span><span id="_CPPv2N4pigo8FileType9EDGE_LISTE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158a2d7fadc94c9c7fae6f572b3f85169354"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EDGE_LIST</span></span></span><a class="headerlink" href="#_CPPv4N4pigo8FileType9EDGE_LISTE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>A file where each line is an edge. This is the simplest format PIGO supports. Each line is <code class="docutils literal notranslate"><span class="pre">src</span> <span class="pre">dst</span></code> if it is unweighted, or <code class="docutils literal notranslate"><span class="pre">src</span> <span class="pre">dst</span> <span class="pre">weight</span></code> if weighted. </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N4pigo8FileType12PIGO_COO_BINE">
-<span id="_CPPv3N4pigo8FileType12PIGO_COO_BINE"></span><span id="_CPPv2N4pigo8FileType12PIGO_COO_BINE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158ac40018881f988d04c5bd844b1d4440fa"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">PIGO_COO_BIN</span></code><a class="headerlink" href="#_CPPv4N4pigo8FileType12PIGO_COO_BINE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo8FileType12PIGO_COO_BINE">
+<span id="_CPPv3N4pigo8FileType12PIGO_COO_BINE"></span><span id="_CPPv2N4pigo8FileType12PIGO_COO_BINE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158ac40018881f988d04c5bd844b1d4440fa"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PIGO_COO_BIN</span></span></span><a class="headerlink" href="#_CPPv4N4pigo8FileType12PIGO_COO_BINE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>A binary format storing a PIGO <a class="reference internal" href="datastructures/coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N4pigo8FileType12PIGO_CSR_BINE">
-<span id="_CPPv3N4pigo8FileType12PIGO_CSR_BINE"></span><span id="_CPPv2N4pigo8FileType12PIGO_CSR_BINE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158a47e56c95ecf566650ff824b5d67068aa"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">PIGO_CSR_BIN</span></code><a class="headerlink" href="#_CPPv4N4pigo8FileType12PIGO_CSR_BINE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo8FileType12PIGO_CSR_BINE">
+<span id="_CPPv3N4pigo8FileType12PIGO_CSR_BINE"></span><span id="_CPPv2N4pigo8FileType12PIGO_CSR_BINE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158a47e56c95ecf566650ff824b5d67068aa"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PIGO_CSR_BIN</span></span></span><a class="headerlink" href="#_CPPv4N4pigo8FileType12PIGO_CSR_BINE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>A binary format storing a PIGO <a class="reference internal" href="datastructures/csr.html#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a> </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N4pigo8FileType5GRAPHE">
-<span id="_CPPv3N4pigo8FileType5GRAPHE"></span><span id="_CPPv2N4pigo8FileType5GRAPHE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158afdf659d40ec53b3594e2860d79b7707e"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">GRAPH</span></code><a class="headerlink" href="#_CPPv4N4pigo8FileType5GRAPHE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo8FileType16PIGO_DIGRAPH_BINE">
+<span id="_CPPv3N4pigo8FileType16PIGO_DIGRAPH_BINE"></span><span id="_CPPv2N4pigo8FileType16PIGO_DIGRAPH_BINE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158a2ec4f7a181ef84e669fe3cb57bbb0089"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PIGO_DIGRAPH_BIN</span></span></span><a class="headerlink" href="#_CPPv4N4pigo8FileType16PIGO_DIGRAPH_BINE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>A binary format storing a PIGO <a class="reference internal" href="datastructures/graph.html#classpigo_1_1DiGraph"><span class="std std-ref">DiGraph</span></a> </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo8FileType5GRAPHE">
+<span id="_CPPv3N4pigo8FileType5GRAPHE"></span><span id="_CPPv2N4pigo8FileType5GRAPHE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158afdf659d40ec53b3594e2860d79b7707e"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GRAPH</span></span></span><a class="headerlink" href="#_CPPv4N4pigo8FileType5GRAPHE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>A file with a head and where each line contains an adjacency list </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N4pigo8FileType4AUTOE">
-<span id="_CPPv3N4pigo8FileType4AUTOE"></span><span id="_CPPv2N4pigo8FileType4AUTOE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158a4d16bb27bad81135e9ee4b34aad43ac8"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">AUTO</span></code><a class="headerlink" href="#_CPPv4N4pigo8FileType4AUTOE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo8FileType4AUTOE">
+<span id="_CPPv3N4pigo8FileType4AUTOE"></span><span id="_CPPv2N4pigo8FileType4AUTOE"></span><span class="target" id="namespacepigo_1ab814dbeab8ec060a418c135c62a30158a4d16bb27bad81135e9ee4b34aad43ac8"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AUTO</span></span></span><a class="headerlink" href="#_CPPv4N4pigo8FileType4AUTOE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>A special format where PIGO will try to detect the input </p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="cpp enum">
-<dt id="_CPPv4N4pigo8OpenModeE">
-<span id="_CPPv3N4pigo8OpenModeE"></span><span id="_CPPv2N4pigo8OpenModeE"></span><span class="target" id="namespacepigo_1a9152dcc5b8c20cbd394d17e5f2cae5c7"></span><em class="property"><span class="pre">enum</span> </em><code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">OpenMode</span></code><a class="headerlink" href="#_CPPv4N4pigo8OpenModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo8OpenModeE">
+<span id="_CPPv3N4pigo8OpenModeE"></span><span id="_CPPv2N4pigo8OpenModeE"></span><span class="target" id="namespacepigo_1a9152dcc5b8c20cbd394d17e5f2cae5c7"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">OpenMode</span></span></span><a class="headerlink" href="#_CPPv4N4pigo8OpenModeE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The support PIGO file opening modes. </p>
 <p>READ indicates read-only, whereas WRITE indicates read and write, but on opening will create a new file (removing any old file.) </p>
 <p><em>Values:</em></p>
 <dl class="cpp enumerator">
-<dt id="_CPPv4N4pigo8OpenMode4READE">
-<span id="_CPPv3N4pigo8OpenMode4READE"></span><span id="_CPPv2N4pigo8OpenMode4READE"></span><span class="target" id="namespacepigo_1a9152dcc5b8c20cbd394d17e5f2cae5c7a382c333f04c3e72d7cbd08e0703ea03d"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">READ</span></code><a class="headerlink" href="#_CPPv4N4pigo8OpenMode4READE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo8OpenMode4READE">
+<span id="_CPPv3N4pigo8OpenMode4READE"></span><span id="_CPPv2N4pigo8OpenMode4READE"></span><span class="target" id="namespacepigo_1a9152dcc5b8c20cbd394d17e5f2cae5c7a382c333f04c3e72d7cbd08e0703ea03d"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">READ</span></span></span><a class="headerlink" href="#_CPPv4N4pigo8OpenMode4READE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Indicates a read-only file </p>
 </dd></dl>
 
 <dl class="cpp enumerator">
-<dt id="_CPPv4N4pigo8OpenMode5WRITEE">
-<span id="_CPPv3N4pigo8OpenMode5WRITEE"></span><span id="_CPPv2N4pigo8OpenMode5WRITEE"></span><span class="target" id="namespacepigo_1a9152dcc5b8c20cbd394d17e5f2cae5c7ab75e2e02debc17f010071d9d8f76ff5b"></span><em class="property"><span class="pre">enumerator</span> </em><code class="sig-name descname"><span class="pre">WRITE</span></code><a class="headerlink" href="#_CPPv4N4pigo8OpenMode5WRITEE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo8OpenMode5WRITEE">
+<span id="_CPPv3N4pigo8OpenMode5WRITEE"></span><span id="_CPPv2N4pigo8OpenMode5WRITEE"></span><span class="target" id="namespacepigo_1a9152dcc5b8c20cbd394d17e5f2cae5c7ab75e2e02debc17f010071d9d8f76ff5b"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WRITE</span></span></span><a class="headerlink" href="#_CPPv4N4pigo8OpenMode5WRITEE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Indicates a writeable file, existing files will be removed </p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="cpp class">
-<dt id="_CPPv4N4pigo10FileReaderE">
-<span id="_CPPv3N4pigo10FileReaderE"></span><span id="_CPPv2N4pigo10FileReaderE"></span><span id="pigo::FileReader"></span><span class="target" id="classpigo_1_1FileReader"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">FileReader</span></code><a class="headerlink" href="#_CPPv4N4pigo10FileReaderE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReaderE">
+<span id="_CPPv3N4pigo10FileReaderE"></span><span id="_CPPv2N4pigo10FileReaderE"></span><span id="pigo::FileReader"></span><span class="target" id="classpigo_1_1FileReader"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">FileReader</span></span></span><a class="headerlink" href="#_CPPv4N4pigo10FileReaderE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Performs actions on an opened PIGO file. </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader10FileReaderE7FilePos7FilePos">
-<span id="_CPPv3N4pigo10FileReader10FileReaderE7FilePos7FilePos"></span><span id="_CPPv2N4pigo10FileReader10FileReaderE7FilePos7FilePos"></span><span id="pigo::FileReader::FileReader__FilePos.FilePos"></span><span class="target" id="classpigo_1_1FileReader_1ac64c52674cea9b5dd79303676077fcfc"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">FileReader</span></code><span class="sig-paren">(</span><span class="pre">FilePos</span> <em><span class="pre">d</span></em>, <span class="pre">FilePos</span> <em><span class="pre">end</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader10FileReaderE7FilePos7FilePos" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader10FileReaderE7FilePos7FilePos">
+<span id="_CPPv3N4pigo10FileReader10FileReaderE7FilePos7FilePos"></span><span id="_CPPv2N4pigo10FileReader10FileReaderE7FilePos7FilePos"></span><span id="pigo::FileReader::FileReader__FilePos.FilePos"></span><span class="target" id="classpigo_1_1FileReader_1ac64c52674cea9b5dd79303676077fcfc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FileReader</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">FilePos</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">d</span></span>, <span class="n"><span class="pre">FilePos</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">end</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader10FileReaderE7FilePos7FilePos" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Initialize a new <a class="reference internal" href="#classpigo_1_1FileReader"><span class="std std-ref">FileReader</span></a>. </p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">d</span></code>: the current position of the reader </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">end</span></code>: one beyond the last valid position </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>d</strong> – the current position of the reader </p></li>
+<li><p><strong>end</strong> – one beyond the last valid position </p></li>
 </ul>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader13skip_commentsEv">
-<span id="_CPPv3N4pigo10FileReader13skip_commentsEv"></span><span id="_CPPv2N4pigo10FileReader13skip_commentsEv"></span><span id="pigo::FileReader::skip_comments"></span><span class="target" id="classpigo_1_1FileReader_1ab0d2a7e65a73f49ae0f8e3855894c7e6"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">skip_comments</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader13skip_commentsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader13skip_commentsEv">
+<span id="_CPPv3N4pigo10FileReader13skip_commentsEv"></span><span id="_CPPv2N4pigo10FileReader13skip_commentsEv"></span><span id="pigo::FileReader::skip_comments"></span><span class="target" id="classpigo_1_1FileReader_1ab0d2a7e65a73f49ae0f8e3855894c7e6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">skip_comments</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader13skip_commentsEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Move the reader pass any comment lines. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN4pigo10FileReader8read_intE1Tv">
-<span id="_CPPv3I0EN4pigo10FileReader8read_intEv"></span><span id="_CPPv2I0EN4pigo10FileReader8read_intEv"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">T</span></code><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1FileReader_1a2422b84d1922045643b5fa2794ee09d6"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0EN4pigo10FileReader8read_intE1Tv" title="pigo::FileReader::read_int::T"><span class="pre">T</span></a> <code class="sig-name descname"><span class="pre">read_int</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo10FileReader8read_intE1Tv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0EN4pigo10FileReader8read_intE1Tv">
+<span id="_CPPv3I0EN4pigo10FileReader8read_intEv"></span><span id="_CPPv2I0EN4pigo10FileReader8read_intEv"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpigo_1_1FileReader_1a2422b84d1922045643b5fa2794ee09d6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN4pigo10FileReader8read_intE1Tv" title="pigo::FileReader::read_int::T"><span class="n"><span class="pre">T</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">read_int</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo10FileReader8read_intE1Tv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Read an integer from the file. </p>
 <p>Note: this reads integers in base 10 only</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>the newly read integer </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the newly read integer </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN4pigo10FileReader7read_fpE1Tv">
-<span id="_CPPv3I0EN4pigo10FileReader7read_fpEv"></span><span id="_CPPv2I0EN4pigo10FileReader7read_fpEv"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">T</span></code><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1FileReader_1a0e9cc8885587df3d39969f76a8304945"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0EN4pigo10FileReader7read_fpE1Tv" title="pigo::FileReader::read_fp::T"><span class="pre">T</span></a> <code class="sig-name descname"><span class="pre">read_fp</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo10FileReader7read_fpE1Tv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0EN4pigo10FileReader7read_fpE1Tv">
+<span id="_CPPv3I0EN4pigo10FileReader7read_fpEv"></span><span id="_CPPv2I0EN4pigo10FileReader7read_fpEv"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpigo_1_1FileReader_1a0e9cc8885587df3d39969f76a8304945"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN4pigo10FileReader7read_fpE1Tv" title="pigo::FileReader::read_fp::T"><span class="n"><span class="pre">T</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">read_fp</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo10FileReader7read_fpE1Tv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Read a floating point value from the file. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>the newly read floating point </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the newly read floating point </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN4pigo10FileReader9read_signE1Tv">
-<span id="_CPPv3I0EN4pigo10FileReader9read_signEv"></span><span id="_CPPv2I0EN4pigo10FileReader9read_signEv"></span><span class="pre">template&lt;</span><span class="pre">typename</span> <code class="sig-name descname"><span class="pre">T</span></code><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1FileReader_1ad3c90a8b6747309c910398151f9b9a2f"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0EN4pigo10FileReader9read_signE1Tv" title="pigo::FileReader::read_sign::T"><span class="pre">T</span></a> <code class="sig-name descname"><span class="pre">read_sign</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo10FileReader9read_signE1Tv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0EN4pigo10FileReader9read_signE1Tv">
+<span id="_CPPv3I0EN4pigo10FileReader9read_signEv"></span><span id="_CPPv2I0EN4pigo10FileReader9read_signEv"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">typename</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpigo_1_1FileReader_1ad3c90a8b6747309c910398151f9b9a2f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN4pigo10FileReader9read_signE1Tv" title="pigo::FileReader::read_sign::T"><span class="n"><span class="pre">T</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">read_sign</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo10FileReader9read_signE1Tv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Read the sign value from an integer. </p>
 <p>Reads out either + or -, as appropriate, from the given file position. The file position is the incremented.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>a T value of either 1 or -1 as appropriate </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters</dt>
+<dd class="field-odd"><p><strong>T</strong> – the type of the integer sign to return </p>
 </dd>
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>: the type of the integer sign to return </p></li>
-</ul>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a T value of either 1 or -1 as appropriate </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader14at_end_of_lineEv">
-<span id="_CPPv3N4pigo10FileReader14at_end_of_lineEv"></span><span id="_CPPv2N4pigo10FileReader14at_end_of_lineEv"></span><span id="pigo::FileReader::at_end_of_line"></span><span class="target" id="classpigo_1_1FileReader_1a9fe2c4bc96ab2de8fc5a2c48e4482d71"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">at_end_of_line</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader14at_end_of_lineEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader14at_end_of_lineEv">
+<span id="_CPPv3N4pigo10FileReader14at_end_of_lineEv"></span><span id="_CPPv2N4pigo10FileReader14at_end_of_lineEv"></span><span id="pigo::FileReader::at_end_of_line"></span><span class="target" id="classpigo_1_1FileReader_1a9fe2c4bc96ab2de8fc5a2c48e4482d71"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">at_end_of_line</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader14at_end_of_lineEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Determine if only spaces remain before the line. </p>
 <p>Note that this does not increment the current position.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>true if there are only spaces, false otherwise </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if there are only spaces, false otherwise </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader15move_to_non_intEv">
-<span id="_CPPv3N4pigo10FileReader15move_to_non_intEv"></span><span id="_CPPv2N4pigo10FileReader15move_to_non_intEv"></span><span id="pigo::FileReader::move_to_non_int"></span><span class="target" id="classpigo_1_1FileReader_1a1a4c4a7b3354aa591a053ba6657c66d6"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">move_to_non_int</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader15move_to_non_intEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader15move_to_non_intEv">
+<span id="_CPPv3N4pigo10FileReader15move_to_non_intEv"></span><span id="_CPPv2N4pigo10FileReader15move_to_non_intEv"></span><span id="pigo::FileReader::move_to_non_int"></span><span class="target" id="classpigo_1_1FileReader_1a1a4c4a7b3354aa591a053ba6657c66d6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">move_to_non_int</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader15move_to_non_intEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Move the reader to the next non-int. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader14move_to_non_fpEv">
-<span id="_CPPv3N4pigo10FileReader14move_to_non_fpEv"></span><span id="_CPPv2N4pigo10FileReader14move_to_non_fpEv"></span><span id="pigo::FileReader::move_to_non_fp"></span><span class="target" id="classpigo_1_1FileReader_1ac8aae10b042ac7c41cc9ce720052cafe"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">move_to_non_fp</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader14move_to_non_fpEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader14move_to_non_fpEv">
+<span id="_CPPv3N4pigo10FileReader14move_to_non_fpEv"></span><span id="_CPPv2N4pigo10FileReader14move_to_non_fpEv"></span><span id="pigo::FileReader::move_to_non_fp"></span><span class="target" id="classpigo_1_1FileReader_1ac8aae10b042ac7c41cc9ce720052cafe"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">move_to_non_fp</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader14move_to_non_fpEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Move the reader to the next non-floating point. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader10move_to_fpEv">
-<span id="_CPPv3N4pigo10FileReader10move_to_fpEv"></span><span id="_CPPv2N4pigo10FileReader10move_to_fpEv"></span><span id="pigo::FileReader::move_to_fp"></span><span class="target" id="classpigo_1_1FileReader_1afe1ee53f58120cfddb1f7468c7a3f9b5"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">move_to_fp</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader10move_to_fpEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader10move_to_fpEv">
+<span id="_CPPv3N4pigo10FileReader10move_to_fpEv"></span><span id="_CPPv2N4pigo10FileReader10move_to_fpEv"></span><span id="pigo::FileReader::move_to_fp"></span><span class="target" id="classpigo_1_1FileReader_1afe1ee53f58120cfddb1f7468c7a3f9b5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">move_to_fp</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader10move_to_fpEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Move the reader to the next floating point. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader17move_to_first_intEv">
-<span id="_CPPv3N4pigo10FileReader17move_to_first_intEv"></span><span id="_CPPv2N4pigo10FileReader17move_to_first_intEv"></span><span id="pigo::FileReader::move_to_first_int"></span><span class="target" id="classpigo_1_1FileReader_1ad4f3da3e0f20997cd371eed492217e8d"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">move_to_first_int</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader17move_to_first_intEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader17move_to_first_intEv">
+<span id="_CPPv3N4pigo10FileReader17move_to_first_intEv"></span><span id="_CPPv2N4pigo10FileReader17move_to_first_intEv"></span><span id="pigo::FileReader::move_to_first_int"></span><span class="target" id="classpigo_1_1FileReader_1ad4f3da3e0f20997cd371eed492217e8d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">move_to_first_int</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader17move_to_first_intEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Move to the first integer. </p>
 <p>This will move to the first found integer. If it is already on an integer, it will not move. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader16move_to_next_intEv">
-<span id="_CPPv3N4pigo10FileReader16move_to_next_intEv"></span><span id="_CPPv2N4pigo10FileReader16move_to_next_intEv"></span><span id="pigo::FileReader::move_to_next_int"></span><span class="target" id="classpigo_1_1FileReader_1a52202287c9c0ce0c2eb57916b2baa13e"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">move_to_next_int</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader16move_to_next_intEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader16move_to_next_intEv">
+<span id="_CPPv3N4pigo10FileReader16move_to_next_intEv"></span><span id="_CPPv2N4pigo10FileReader16move_to_next_intEv"></span><span id="pigo::FileReader::move_to_next_int"></span><span class="target" id="classpigo_1_1FileReader_1a52202287c9c0ce0c2eb57916b2baa13e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">move_to_next_int</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader16move_to_next_intEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Move to the next integer. </p>
 <p>Note: this will move through the current integer and then through any non-integer character to get to the next integer </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader23move_to_next_signed_intEv">
-<span id="_CPPv3N4pigo10FileReader23move_to_next_signed_intEv"></span><span id="_CPPv2N4pigo10FileReader23move_to_next_signed_intEv"></span><span id="pigo::FileReader::move_to_next_signed_int"></span><span class="target" id="classpigo_1_1FileReader_1a697d4ac310d5f98ff4dcbf695df772cf"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">move_to_next_signed_int</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader23move_to_next_signed_intEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader23move_to_next_signed_intEv">
+<span id="_CPPv3N4pigo10FileReader23move_to_next_signed_intEv"></span><span id="_CPPv2N4pigo10FileReader23move_to_next_signed_intEv"></span><span id="pigo::FileReader::move_to_next_signed_int"></span><span class="target" id="classpigo_1_1FileReader_1a697d4ac310d5f98ff4dcbf695df772cf"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">move_to_next_signed_int</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader23move_to_next_signed_intEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Move to the next signed integer. </p>
 <p>Note: this will move through the current integer and then through any non-integer character to get to the next integer</p>
 <p>These integers are signed and so can start with + or - </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader22move_to_next_int_or_nlEv">
-<span id="_CPPv3N4pigo10FileReader22move_to_next_int_or_nlEv"></span><span id="_CPPv2N4pigo10FileReader22move_to_next_int_or_nlEv"></span><span id="pigo::FileReader::move_to_next_int_or_nl"></span><span class="target" id="classpigo_1_1FileReader_1a1aa4cc8cd41a0fe469ecae86637ca48a"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">move_to_next_int_or_nl</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader22move_to_next_int_or_nlEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader22move_to_next_int_or_nlEv">
+<span id="_CPPv3N4pigo10FileReader22move_to_next_int_or_nlEv"></span><span id="_CPPv2N4pigo10FileReader22move_to_next_int_or_nlEv"></span><span id="pigo::FileReader::move_to_next_int_or_nl"></span><span class="target" id="classpigo_1_1FileReader_1a1aa4cc8cd41a0fe469ecae86637ca48a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">move_to_next_int_or_nl</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader22move_to_next_int_or_nlEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Move to the next integer or newline. </p>
 <p>Note: this will move through the current integer or newline and then through any other character to get to the next integer or newline </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader11move_to_eolEv">
-<span id="_CPPv3N4pigo10FileReader11move_to_eolEv"></span><span id="_CPPv2N4pigo10FileReader11move_to_eolEv"></span><span id="pigo::FileReader::move_to_eol"></span><span class="target" id="classpigo_1_1FileReader_1a9d6f01b0ab08c36478272287d21f2667"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">move_to_eol</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader11move_to_eolEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader11move_to_eolEv">
+<span id="_CPPv3N4pigo10FileReader11move_to_eolEv"></span><span id="_CPPv2N4pigo10FileReader11move_to_eolEv"></span><span id="pigo::FileReader::move_to_eol"></span><span class="target" id="classpigo_1_1FileReader_1a9d6f01b0ab08c36478272287d21f2667"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">move_to_eol</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader11move_to_eolEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Move to the end of the current line. </p>
 <p>This moves through the line and finishes on the newline character itself. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReaderplE6size_t">
-<span id="_CPPv3N4pigo10FileReaderplE6size_t"></span><span id="_CPPv2N4pigo10FileReaderplE6size_t"></span><span id="pigo::FileReader::add-operator__s"></span><span class="target" id="classpigo_1_1FileReader_1a5ecdd1c37a39c1b011330c2bc20ecd5a"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N4pigo10FileReaderE" title="pigo::FileReader"><span class="pre">FileReader</span></a> <code class="sig-name descname"><span class="pre">operator+</span></code><span class="sig-paren">(</span><span class="pre">size_t</span> <em><span class="pre">s</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReaderplE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReaderplE6size_t">
+<span id="_CPPv3N4pigo10FileReaderplE6size_t"></span><span id="_CPPv2N4pigo10FileReaderplE6size_t"></span><span id="pigo::FileReader::add-operator__s"></span><span class="target" id="classpigo_1_1FileReader_1a5ecdd1c37a39c1b011330c2bc20ecd5a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4pigo10FileReaderE" title="pigo::FileReader"><span class="n"><span class="pre">FileReader</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">+</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReaderplE6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Increment the file reader by a count. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReaderpLE6size_t">
-<span id="_CPPv3N4pigo10FileReaderpLE6size_t"></span><span id="_CPPv2N4pigo10FileReaderpLE6size_t"></span><span id="pigo::FileReader::add-assign-operator__s"></span><span class="target" id="classpigo_1_1FileReader_1a987430bfa8f5b839a13a1fc64dce812e"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N4pigo10FileReaderE" title="pigo::FileReader"><span class="pre">FileReader</span></a> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator+=</span></code><span class="sig-paren">(</span><span class="pre">size_t</span> <em><span class="pre">s</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReaderpLE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReaderpLE6size_t">
+<span id="_CPPv3N4pigo10FileReaderpLE6size_t"></span><span id="_CPPv2N4pigo10FileReaderpLE6size_t"></span><span id="pigo::FileReader::add-assign-operator__s"></span><span class="target" id="classpigo_1_1FileReader_1a987430bfa8f5b839a13a1fc64dce812e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4pigo10FileReaderE" title="pigo::FileReader"><span class="n"><span class="pre">FileReader</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">+=</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReaderpLE6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Increment the file reader by a count. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader11smaller_endER10FileReader">
-<span id="_CPPv3N4pigo10FileReader11smaller_endER10FileReader"></span><span id="_CPPv2N4pigo10FileReader11smaller_endER10FileReader"></span><span id="pigo::FileReader::smaller_end__FileReaderR"></span><span class="target" id="classpigo_1_1FileReader_1af20aced5ad3b51e0fb4189181afde2bb"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">smaller_end</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N4pigo10FileReaderE" title="pigo::FileReader"><span class="pre">FileReader</span></a> <span class="pre">&amp;</span><em><span class="pre">rhs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader11smaller_endER10FileReader" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader11smaller_endER10FileReader">
+<span id="_CPPv3N4pigo10FileReader11smaller_endER10FileReader"></span><span id="_CPPv2N4pigo10FileReader11smaller_endER10FileReader"></span><span id="pigo::FileReader::smaller_end__FileReaderR"></span><span class="target" id="classpigo_1_1FileReader_1af20aced5ad3b51e0fb4189181afde2bb"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">smaller_end</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N4pigo10FileReaderE" title="pigo::FileReader"><span class="n"><span class="pre">FileReader</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rhs</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader11smaller_endER10FileReader" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Set an additional, smaller end. </p>
 <p>This will either set a new end, if it is smaller than the current, or do nothing.</p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">new_end</span></code>: the new end to consider </p></li>
-</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>new_end</strong> – the new end to consider </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader4goodEv">
-<span id="_CPPv3N4pigo10FileReader4goodEv"></span><span id="_CPPv2N4pigo10FileReader4goodEv"></span><span id="pigo::FileReader::good"></span><span class="target" id="classpigo_1_1FileReader_1afd3d57b8878ac49073b7ece4a0e335ac"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">good</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader4goodEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader4goodEv">
+<span id="_CPPv3N4pigo10FileReader4goodEv"></span><span id="_CPPv2N4pigo10FileReader4goodEv"></span><span id="pigo::FileReader::good"></span><span class="target" id="classpigo_1_1FileReader_1afd3d57b8878ac49073b7ece4a0e335ac"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">good</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader4goodEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return if the reader is able to read. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>true if there are values to read, false otherwise </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if there are values to read, false otherwise </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader4sizeEv">
-<span id="_CPPv3N4pigo10FileReader4sizeEv"></span><span id="_CPPv2N4pigo10FileReader4sizeEv"></span><span id="pigo::FileReader::size"></span><span class="target" id="classpigo_1_1FileReader_1ad73efe9626465a22d97258cdec9c2988"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">size_t</span> <code class="sig-name descname"><span class="pre">size</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader4sizeEv">
+<span id="_CPPv3N4pigo10FileReader4sizeEv"></span><span id="_CPPv2N4pigo10FileReader4sizeEv"></span><span id="pigo::FileReader::size"></span><span class="target" id="classpigo_1_1FileReader_1ad73efe9626465a22d97258cdec9c2988"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">size</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the remaining size to be read. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>the number of bytes remaining </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the number of bytes remaining </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader6at_strENSt6stringE">
-<span id="_CPPv3N4pigo10FileReader6at_strENSt6stringE"></span><span id="_CPPv2N4pigo10FileReader6at_strENSt6stringE"></span><span id="pigo::FileReader::at_str__ss"></span><span class="target" id="classpigo_1_1FileReader_1a93a3721ed707d602971591cccc15e158"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">at_str</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">s</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader6at_strENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader6at_strENSt6stringE">
+<span id="_CPPv3N4pigo10FileReader6at_strENSt6stringE"></span><span id="_CPPv2N4pigo10FileReader6at_strENSt6stringE"></span><span id="pigo::FileReader::at_str__ss"></span><span class="target" id="classpigo_1_1FileReader_1a93a3721ed707d602971591cccc15e158"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">at_str</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader6at_strENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Check whether the reader is at the string. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>true if the string matches, false otherwise </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> – the string to check against </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: the string to check against </p></li>
-</ul>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>true if the string matches, false otherwise </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader4peekEv">
-<span id="_CPPv3N4pigo10FileReader4peekEv"></span><span id="_CPPv2N4pigo10FileReader4peekEv"></span><span id="pigo::FileReader::peek"></span><span class="target" id="classpigo_1_1FileReader_1aa0087c114db9f56012caeddcc5a4e5ea"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">char</span> <code class="sig-name descname"><span class="pre">peek</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader4peekEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader4peekEv">
+<span id="_CPPv3N4pigo10FileReader4peekEv"></span><span id="_CPPv2N4pigo10FileReader4peekEv"></span><span id="pigo::FileReader::peek"></span><span class="target" id="classpigo_1_1FileReader_1aa0087c114db9f56012caeddcc5a4e5ea"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">peek</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader4peekEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the current character of the reader. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>character the reader is at </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>character the reader is at </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader12at_nl_or_eolEv">
-<span id="_CPPv3N4pigo10FileReader12at_nl_or_eolEv"></span><span id="_CPPv2N4pigo10FileReader12at_nl_or_eolEv"></span><span id="pigo::FileReader::at_nl_or_eol"></span><span class="target" id="classpigo_1_1FileReader_1a5b91b71d27c476af9d179226996dd2ec"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">at_nl_or_eol</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader12at_nl_or_eolEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader12at_nl_or_eolEv">
+<span id="_CPPv3N4pigo10FileReader12at_nl_or_eolEv"></span><span id="_CPPv2N4pigo10FileReader12at_nl_or_eolEv"></span><span id="pigo::FileReader::at_nl_or_eol"></span><span class="target" id="classpigo_1_1FileReader_1a5b91b71d27c476af9d179226996dd2ec"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">at_nl_or_eol</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader12at_nl_or_eolEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return whether the reader is at a newline or EOL. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>true if the reader is at the end of a line, false otherwise </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if the reader is at the end of a line, false otherwise </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo10FileReader7at_zeroEv">
-<span id="_CPPv3N4pigo10FileReader7at_zeroEv"></span><span id="_CPPv2N4pigo10FileReader7at_zeroEv"></span><span id="pigo::FileReader::at_zero"></span><span class="target" id="classpigo_1_1FileReader_1aa8170a199469fae10beb9443a8a5fd29"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">at_zero</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader7at_zeroEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader7at_zeroEv">
+<span id="_CPPv3N4pigo10FileReader7at_zeroEv"></span><span id="_CPPv2N4pigo10FileReader7at_zeroEv"></span><span id="pigo::FileReader::at_zero"></span><span class="target" id="classpigo_1_1FileReader_1aa8170a199469fae10beb9443a8a5fd29"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">at_zero</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo10FileReader7at_zeroEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return whether the reader is at a ‘0’ integer. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>true if the reader is at a ‘0’ integer </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>true if the reader is at a ‘0’ integer </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Members</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
 <dl class="cpp var">
-<dt id="_CPPv4N4pigo10FileReader1dE">
-<span id="_CPPv3N4pigo10FileReader1dE"></span><span id="_CPPv2N4pigo10FileReader1dE"></span><span id="pigo::FileReader::d__FilePos"></span><span class="target" id="classpigo_1_1FileReader_1a6f09a39ea480e851076b95b71a13b770"></span><span class="pre">FilePos</span> <code class="sig-name descname"><span class="pre">d</span></code><a class="headerlink" href="#_CPPv4N4pigo10FileReader1dE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo10FileReader1dE">
+<span id="_CPPv3N4pigo10FileReader1dE"></span><span id="_CPPv2N4pigo10FileReader1dE"></span><span id="pigo::FileReader::d__FilePos"></span><span class="target" id="classpigo_1_1FileReader_1a6f09a39ea480e851076b95b71a13b770"></span><span class="n"><span class="pre">FilePos</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">d</span></span></span><a class="headerlink" href="#_CPPv4N4pigo10FileReader1dE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Keep track of the current position </p>
 </dd></dl>
 
@@ -470,225 +478,216 @@
 </dd></dl>
 
 <dl class="cpp class">
-<dt id="_CPPv4N4pigo4FileE">
-<span id="_CPPv3N4pigo4FileE"></span><span id="_CPPv2N4pigo4FileE"></span><span id="pigo::File"></span><span class="target" id="classpigo_1_1File"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">File</span></code><a class="headerlink" href="#_CPPv4N4pigo4FileE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4FileE">
+<span id="_CPPv3N4pigo4FileE"></span><span id="_CPPv2N4pigo4FileE"></span><span id="pigo::File"></span><span class="target" id="classpigo_1_1File"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">File</span></span></span><a class="headerlink" href="#_CPPv4N4pigo4FileE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Manages a file opened for parallel access. </p>
 <p>Subclassed by <a class="reference internal" href="#classpigo_1_1ROFile"><span class="std std-ref">pigo::ROFile</span></a>, <a class="reference internal" href="#classpigo_1_1WFile"><span class="std std-ref">pigo::WFile</span></a></p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4File4FileENSt6stringE8OpenMode6size_t">
-<span id="_CPPv3N4pigo4File4FileENSt6stringE8OpenMode6size_t"></span><span id="_CPPv2N4pigo4File4FileENSt6stringE8OpenMode6size_t"></span><span id="pigo::File::File__ss.OpenMode.s"></span><span class="target" id="classpigo_1_1File_1a1471cade928b152cf9e462faa83d69be"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">File</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">fn</span></em>, <a class="reference internal" href="#_CPPv4N4pigo8OpenModeE" title="pigo::OpenMode"><span class="pre">OpenMode</span></a> <em><span class="pre">mode</span></em>, <span class="pre">size_t</span> <em><span class="pre">max_size</span></em> <span class="pre">=</span> <span class="pre">0</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File4FileENSt6stringE8OpenMode6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4File4FileENSt6stringE8OpenMode6size_t">
+<span id="_CPPv3N4pigo4File4FileENSt6stringE8OpenMode6size_t"></span><span id="_CPPv2N4pigo4File4FileENSt6stringE8OpenMode6size_t"></span><span id="pigo::File::File__ss.OpenMode.s"></span><span class="target" id="classpigo_1_1File_1a1471cade928b152cf9e462faa83d69be"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">File</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span>, <a class="reference internal" href="#_CPPv4N4pigo8OpenModeE" title="pigo::OpenMode"><span class="n"><span class="pre">OpenMode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">max_size</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File4FileENSt6stringE8OpenMode6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Opens the given file. </p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">fn</span></code>: the file name to open </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code>: the mode to open the file in (READ, WRITE) </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_size</span></code>: (only used when mode=WRITE) the maximum size to allocate for the file </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn</strong> – the file name to open </p></li>
+<li><p><strong>mode</strong> – the mode to open the file in (READ, WRITE) </p></li>
+<li><p><strong>max_size</strong> – (only used when mode=WRITE) the maximum size to allocate for the file </p></li>
 </ul>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4FileD0Ev">
-<span id="_CPPv3N4pigo4FileD0Ev"></span><span id="_CPPv2N4pigo4FileD0Ev"></span><span id="pigo::File::~File"></span><span class="target" id="classpigo_1_1File_1a68e4f9245f83307fb99fcc43c586ec92"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">~File</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property"><span class="pre">noexcept</span></em><a class="headerlink" href="#_CPPv4N4pigo4FileD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4FileD0Ev">
+<span id="_CPPv3N4pigo4FileD0Ev"></span><span id="_CPPv2N4pigo4FileD0Ev"></span><span id="pigo::File::~File"></span><span class="target" id="classpigo_1_1File_1a68e4f9245f83307fb99fcc43c586ec92"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~File</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">noexcept</span></span><a class="headerlink" href="#_CPPv4N4pigo4FileD0Ev" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Closes the open file and removes related memory. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4File4FileERK4File">
-<span id="_CPPv3N4pigo4File4FileERK4File"></span><span id="_CPPv2N4pigo4File4FileERK4File"></span><span id="pigo::File::File__FileCR"></span><span class="target" id="classpigo_1_1File_1a41f4b1e9d1ae14053fb6a2bae4e7d6f6"></span><code class="sig-name descname"><span class="pre">File</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <a class="reference internal" href="#_CPPv4N4pigo4File4FileERK4File" title="pigo::File::File"><span class="pre">File</span></a><span class="pre">&amp;</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">delete</span><a class="headerlink" href="#_CPPv4N4pigo4File4FileERK4File" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4File4FileERK4File">
+<span id="_CPPv3N4pigo4File4FileERK4File"></span><span id="_CPPv2N4pigo4File4FileERK4File"></span><span id="pigo::File::File__FileCR"></span><span class="target" id="classpigo_1_1File_1a41f4b1e9d1ae14053fb6a2bae4e7d6f6"></span><span class="sig-name descname"><span class="n"><span class="pre">File</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4pigo4File4FileERK4File" title="pigo::File::File"><span class="n"><span class="pre">File</span></span></a><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">delete</span></span><a class="headerlink" href="#_CPPv4N4pigo4File4FileERK4File" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Copying <a class="reference internal" href="#classpigo_1_1File"><span class="std std-ref">File</span></a> is unavailable. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4FileaSERK4File">
-<span id="_CPPv3N4pigo4FileaSERK4File"></span><span id="_CPPv2N4pigo4FileaSERK4File"></span><span id="pigo::File::assign-operator__FileCR"></span><span class="target" id="classpigo_1_1File_1a748da01479b1d4aa3d434be99793efd4"></span><a class="reference internal" href="#_CPPv4N4pigo4FileE" title="pigo::File"><span class="pre">File</span></a> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <a class="reference internal" href="#_CPPv4N4pigo4FileE" title="pigo::File"><span class="pre">File</span></a><span class="pre">&amp;</span><span class="sig-paren">)</span> <span class="pre">=</span> <span class="pre">delete</span><a class="headerlink" href="#_CPPv4N4pigo4FileaSERK4File" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4FileaSERK4File">
+<span id="_CPPv3N4pigo4FileaSERK4File"></span><span id="_CPPv2N4pigo4FileaSERK4File"></span><span id="pigo::File::assign-operator__FileCR"></span><span class="target" id="classpigo_1_1File_1a748da01479b1d4aa3d434be99793efd4"></span><a class="reference internal" href="#_CPPv4N4pigo4FileE" title="pigo::File"><span class="n"><span class="pre">File</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4pigo4FileE" title="pigo::File"><span class="n"><span class="pre">File</span></span></a><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">delete</span></span><a class="headerlink" href="#_CPPv4N4pigo4FileaSERK4File" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Copying <a class="reference internal" href="#classpigo_1_1File"><span class="std std-ref">File</span></a> is unavailable. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4File4FileERR4File">
-<span id="_CPPv3N4pigo4File4FileERR4File"></span><span id="_CPPv2N4pigo4File4FileERR4File"></span><span id="pigo::File::File__FileRR"></span><span class="target" id="classpigo_1_1File_1ab38a2c3789f7da8b5d77811356f6a9c7"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">File</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N4pigo4File4FileERR4File" title="pigo::File::File"><span class="pre">File</span></a> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">o</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File4FileERR4File" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4File4FileERR4File">
+<span id="_CPPv3N4pigo4File4FileERR4File"></span><span id="_CPPv2N4pigo4File4FileERR4File"></span><span id="pigo::File::File__FileRR"></span><span class="target" id="classpigo_1_1File_1ab38a2c3789f7da8b5d77811356f6a9c7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">File</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N4pigo4File4FileERR4File" title="pigo::File::File"><span class="n"><span class="pre">File</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File4FileERR4File" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Move constructor. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4FileaSERR4File">
-<span id="_CPPv3N4pigo4FileaSERR4File"></span><span id="_CPPv2N4pigo4FileaSERR4File"></span><span id="pigo::File::assign-operator__FileRR"></span><span class="target" id="classpigo_1_1File_1a92796dd14dd1d84bd3d13a43e876b86f"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N4pigo4FileE" title="pigo::File"><span class="pre">File</span></a> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">operator=</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N4pigo4FileE" title="pigo::File"><span class="pre">File</span></a> <span class="pre">&amp;</span><span class="pre">&amp;</span><em><span class="pre">o</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4FileaSERR4File" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4FileaSERR4File">
+<span id="_CPPv3N4pigo4FileaSERR4File"></span><span id="_CPPv2N4pigo4FileaSERR4File"></span><span id="pigo::File::assign-operator__FileRR"></span><span class="target" id="classpigo_1_1File_1a92796dd14dd1d84bd3d13a43e876b86f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4pigo4FileE" title="pigo::File"><span class="n"><span class="pre">File</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N4pigo4FileE" title="pigo::File"><span class="n"><span class="pre">File</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">o</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4FileaSERR4File" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Move operator. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4File2fpEv">
-<span id="_CPPv3N4pigo4File2fpEv"></span><span id="_CPPv2N4pigo4File2fpEv"></span><span id="pigo::File::fp"></span><span class="target" id="classpigo_1_1File_1ae4fb604a3e4b6237f45a7b6617d2563b"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">FilePos</span> <code class="sig-name descname"><span class="pre">fp</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File2fpEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4File2fpEv">
+<span id="_CPPv3N4pigo4File2fpEv"></span><span id="_CPPv2N4pigo4File2fpEv"></span><span id="pigo::File::fp"></span><span class="target" id="classpigo_1_1File_1ae4fb604a3e4b6237f45a7b6617d2563b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">FilePos</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fp</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File2fpEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the current file position object. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4File4seekE6size_t">
-<span id="_CPPv3N4pigo4File4seekE6size_t"></span><span id="_CPPv2N4pigo4File4seekE6size_t"></span><span id="pigo::File::seek__s"></span><span class="target" id="classpigo_1_1File_1aafb74797845b220a1e4f92e7bcc88289"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">seek</span></code><span class="sig-paren">(</span><span class="pre">size_t</span> <em><span class="pre">pos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File4seekE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4File4seekE6size_t">
+<span id="_CPPv3N4pigo4File4seekE6size_t"></span><span id="_CPPv2N4pigo4File4seekE6size_t"></span><span id="pigo::File::seek__s"></span><span class="target" id="classpigo_1_1File_1aafb74797845b220a1e4f92e7bcc88289"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">seek</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">pos</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File4seekE6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Seek to the specified offset in the file. </p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">pos</span></code>: the position to seek to </p></li>
-</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pos</strong> – the position to seek to </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN4pigo4File4readE1Tv">
-<span id="_CPPv3I0EN4pigo4File4readEv"></span><span id="_CPPv2I0EN4pigo4File4readEv"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">T</span></code><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1File_1a25d1e929169ebde8657706c6ca3f9ec1"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0EN4pigo4File4readE1Tv" title="pigo::File::read::T"><span class="pre">T</span></a> <code class="sig-name descname"><span class="pre">read</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo4File4readE1Tv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0EN4pigo4File4readE1Tv">
+<span id="_CPPv3I0EN4pigo4File4readEv"></span><span id="_CPPv2I0EN4pigo4File4readEv"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpigo_1_1File_1a25d1e929169ebde8657706c6ca3f9ec1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN4pigo4File4readE1Tv" title="pigo::File::read::T"><span class="n"><span class="pre">T</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">read</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo4File4readE1Tv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Read the next value from the file. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>the resulting object </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters</dt>
+<dd class="field-odd"><p><strong>T</strong> – the type of object to read</p>
 </dd>
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>: the type of object to read</p></li>
-</ul>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the resulting object </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4File4readERKNSt6stringE">
-<span id="_CPPv3N4pigo4File4readERKNSt6stringE"></span><span id="_CPPv2N4pigo4File4readERKNSt6stringE"></span><span id="pigo::File::read__ssCR"></span><span class="target" id="classpigo_1_1File_1a90ee118cb02f07d82f68ee52b3bb9430"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">read</span></code><span class="sig-paren">(</span><em class="property"><span class="pre">const</span></em> <span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <span class="pre">&amp;</span><em><span class="pre">s</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File4readERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4File4readERKNSt6stringE">
+<span id="_CPPv3N4pigo4File4readERKNSt6stringE"></span><span id="_CPPv2N4pigo4File4readERKNSt6stringE"></span><span id="pigo::File::read__ssCR"></span><span class="target" id="classpigo_1_1File_1a90ee118cb02f07d82f68ee52b3bb9430"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">read</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File4readERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Read passed the given string. </p>
 <p>This will ensure that the string exists in the file and then read passed it. The file position will be at the first character after the string when it is done. An error will be throw if the string does not match.</p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: the string to compare and read </p></li>
-</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> – the string to compare and read </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN4pigo4File5writeEv1T">
-<span id="_CPPv3I0EN4pigo4File5writeE1T"></span><span id="_CPPv2I0EN4pigo4File5writeE1T"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">T</span></code><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1File_1a233c697078b5559d01abe5a991042bec"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">write</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN4pigo4File5writeEv1T" title="pigo::File::write::T"><span class="pre">T</span></a> <em><span class="pre">val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo4File5writeEv1T" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0EN4pigo4File5writeEv1T">
+<span id="_CPPv3I0EN4pigo4File5writeE1T"></span><span id="_CPPv2I0EN4pigo4File5writeE1T"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpigo_1_1File_1a233c697078b5559d01abe5a991042bec"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">write</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0EN4pigo4File5writeEv1T" title="pigo::File::write::T"><span class="n"><span class="pre">T</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">val</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo4File5writeEv1T" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Write the given value to the file. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>the resulting object </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters</dt>
+<dd class="field-odd"><p><strong>T</strong> – the type of object to write </p>
 </dd>
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>: the type of object to write </p></li>
-</ul>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>val</strong> – the value to write</p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">val</span></code>: the value to write</p></li>
-</ul>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the resulting object </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4File14parallel_writeEPc6size_t">
-<span id="_CPPv3N4pigo4File14parallel_writeEPc6size_t"></span><span id="_CPPv2N4pigo4File14parallel_writeEPc6size_t"></span><span id="pigo::File::parallel_write__cP.s"></span><span class="target" id="classpigo_1_1File_1aa7f1349811fb94cd19feea9366c31baf"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">parallel_write</span></code><span class="sig-paren">(</span><span class="pre">char</span> <span class="pre">*</span><em><span class="pre">v</span></em>, <span class="pre">size_t</span> <em><span class="pre">v_size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File14parallel_writeEPc6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4File14parallel_writeEPc6size_t">
+<span id="_CPPv3N4pigo4File14parallel_writeEPc6size_t"></span><span id="_CPPv2N4pigo4File14parallel_writeEPc6size_t"></span><span id="pigo::File::parallel_write__cP.s"></span><span class="target" id="classpigo_1_1File_1aa7f1349811fb94cd19feea9366c31baf"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parallel_write</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">v</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">v_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File14parallel_writeEPc6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Write a binary region in parallel. </p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: the region of data to write </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">v_size</span></code>: the size of the region of data to write </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v</strong> – the region of data to write </p></li>
+<li><p><strong>v_size</strong> – the size of the region of data to write </p></li>
 </ul>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4File13parallel_readEPc6size_t">
-<span id="_CPPv3N4pigo4File13parallel_readEPc6size_t"></span><span id="_CPPv2N4pigo4File13parallel_readEPc6size_t"></span><span id="pigo::File::parallel_read__cP.s"></span><span class="target" id="classpigo_1_1File_1a40e965322a958cfa3bfe26929b14c65a"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">parallel_read</span></code><span class="sig-paren">(</span><span class="pre">char</span> <span class="pre">*</span><em><span class="pre">v</span></em>, <span class="pre">size_t</span> <em><span class="pre">v_size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File13parallel_readEPc6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4File13parallel_readEPc6size_t">
+<span id="_CPPv3N4pigo4File13parallel_readEPc6size_t"></span><span id="_CPPv2N4pigo4File13parallel_readEPc6size_t"></span><span id="pigo::File::parallel_read__cP.s"></span><span class="target" id="classpigo_1_1File_1a40e965322a958cfa3bfe26929b14c65a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">parallel_read</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">v</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">v_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File13parallel_readEPc6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Read a binary region in parallel. </p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: the region of data to save to </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">v_size</span></code>: the size of the region of data to read </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v</strong> – the region of data to save to </p></li>
+<li><p><strong>v_size</strong> – the size of the region of data to read </p></li>
 </ul>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4File4sizeEv">
-<span id="_CPPv3N4pigo4File4sizeEv"></span><span id="_CPPv2N4pigo4File4sizeEv"></span><span id="pigo::File::size"></span><span class="target" id="classpigo_1_1File_1abe1129b605c15ccd1d8ece056664a43d"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">size_t</span> <code class="sig-name descname"><span class="pre">size</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4File4sizeEv">
+<span id="_CPPv3N4pigo4File4sizeEv"></span><span id="_CPPv2N4pigo4File4sizeEv"></span><span id="pigo::File::size"></span><span class="target" id="classpigo_1_1File_1abe1129b605c15ccd1d8ece056664a43d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">size</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File4sizeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the size of the file. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4File15guess_file_typeEv">
-<span id="_CPPv3N4pigo4File15guess_file_typeEv"></span><span id="_CPPv2N4pigo4File15guess_file_typeEv"></span><span id="pigo::File::guess_file_type"></span><span class="target" id="classpigo_1_1File_1abc8042d04dba70d1097f799bf9bd7661"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N4pigo8FileTypeE" title="pigo::FileType"><span class="pre">FileType</span></a> <code class="sig-name descname"><span class="pre">guess_file_type</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File15guess_file_typeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4File15guess_file_typeEv">
+<span id="_CPPv3N4pigo4File15guess_file_typeEv"></span><span id="_CPPv2N4pigo4File15guess_file_typeEv"></span><span id="pigo::File::guess_file_type"></span><span class="target" id="classpigo_1_1File_1abc8042d04dba70d1097f799bf9bd7661"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4pigo8FileTypeE" title="pigo::FileType"><span class="n"><span class="pre">FileType</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">guess_file_type</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File15guess_file_typeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Auto-detect the file type. </p>
 <p>This will determine the file type based on a mixture of the extension, the contents of the file, and investigating the structure of the lines.</p>
 <p>Note that this is a best-guess.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>the determined FileType </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the determined FileType </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo4File6readerEv">
-<span id="_CPPv3N4pigo4File6readerEv"></span><span id="_CPPv2N4pigo4File6readerEv"></span><span id="pigo::File::reader"></span><span class="target" id="classpigo_1_1File_1a3882b6f601fe759a655a1577434fe2c3"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4N4pigo10FileReaderE" title="pigo::FileReader"><span class="pre">FileReader</span></a> <code class="sig-name descname"><span class="pre">reader</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File6readerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo4File6readerEv">
+<span id="_CPPv3N4pigo4File6readerEv"></span><span id="_CPPv2N4pigo4File6readerEv"></span><span id="pigo::File::reader"></span><span class="target" id="classpigo_1_1File_1a3882b6f601fe759a655a1577434fe2c3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4pigo10FileReaderE" title="pigo::FileReader"><span class="n"><span class="pre">FileReader</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reader</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo4File6readerEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return a <a class="reference internal" href="#classpigo_1_1FileReader"><span class="std std-ref">FileReader</span></a> for this file. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>returns a new <a class="reference internal" href="#classpigo_1_1FileReader"><span class="std std-ref">FileReader</span></a> object for this file </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>returns a new <a class="reference internal" href="#classpigo_1_1FileReader"><span class="std std-ref">FileReader</span></a> object for this file </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 </div>
 </dd></dl>
 
 <dl class="cpp class">
-<dt id="_CPPv4N4pigo6ROFileE">
-<span id="_CPPv3N4pigo6ROFileE"></span><span id="_CPPv2N4pigo6ROFileE"></span><span id="pigo::ROFile"></span><span class="target" id="classpigo_1_1ROFile"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">ROFile</span></code> <span class="pre">:</span> <em class="property"><span class="pre">public</span></em> <span class="pre">pigo</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N4pigo4FileE" title="pigo::File"><span class="pre">File</span></a><a class="headerlink" href="#_CPPv4N4pigo6ROFileE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6ROFileE">
+<span id="_CPPv3N4pigo6ROFileE"></span><span id="_CPPv2N4pigo6ROFileE"></span><span id="pigo::ROFile"></span><span class="target" id="classpigo_1_1ROFile"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">ROFile</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N4pigo4FileE" title="pigo::File"><span class="n"><span class="pre">File</span></span></a><a class="headerlink" href="#_CPPv4N4pigo6ROFileE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Opens a read-only file for use in PIGO. </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo6ROFile6ROFileENSt6stringE">
-<span id="_CPPv3N4pigo6ROFile6ROFileENSt6stringE"></span><span id="_CPPv2N4pigo6ROFile6ROFileENSt6stringE"></span><span id="pigo::ROFile::ROFile__ss"></span><span class="target" id="classpigo_1_1ROFile_1ad6d495baf9556e5a6589f00de714c5f2"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">ROFile</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">fn</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6ROFile6ROFileENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6ROFile6ROFileENSt6stringE">
+<span id="_CPPv3N4pigo6ROFile6ROFileENSt6stringE"></span><span id="_CPPv2N4pigo6ROFile6ROFileENSt6stringE"></span><span id="pigo::ROFile::ROFile__ss"></span><span class="target" id="classpigo_1_1ROFile_1ad6d495baf9556e5a6589f00de714c5f2"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ROFile</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6ROFile6ROFileENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Opens the given file. </p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">fn</span></code>: the file name to open </p></li>
-</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fn</strong> – the file name to open </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 </div>
 </dd></dl>
 
 <dl class="cpp class">
-<dt id="_CPPv4N4pigo5WFileE">
-<span id="_CPPv3N4pigo5WFileE"></span><span id="_CPPv2N4pigo5WFileE"></span><span id="pigo::WFile"></span><span class="target" id="classpigo_1_1WFile"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">WFile</span></code> <span class="pre">:</span> <em class="property"><span class="pre">public</span></em> <span class="pre">pigo</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N4pigo4FileE" title="pigo::File"><span class="pre">File</span></a><a class="headerlink" href="#_CPPv4N4pigo5WFileE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo5WFileE">
+<span id="_CPPv3N4pigo5WFileE"></span><span id="_CPPv2N4pigo5WFileE"></span><span id="pigo::WFile"></span><span class="target" id="classpigo_1_1WFile"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">WFile</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N4pigo4FileE" title="pigo::File"><span class="n"><span class="pre">File</span></span></a><a class="headerlink" href="#_CPPv4N4pigo5WFileE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Opens a writeable file for use in PIGO. </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo5WFile5WFileENSt6stringE6size_t">
-<span id="_CPPv3N4pigo5WFile5WFileENSt6stringE6size_t"></span><span id="_CPPv2N4pigo5WFile5WFileENSt6stringE6size_t"></span><span id="pigo::WFile::WFile__ss.s"></span><span class="target" id="classpigo_1_1WFile_1ae872ab6c7004b04bef01981e23d12488"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">WFile</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">fn</span></em>, <span class="pre">size_t</span> <em><span class="pre">max_size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo5WFile5WFileENSt6stringE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo5WFile5WFileENSt6stringE6size_t">
+<span id="_CPPv3N4pigo5WFile5WFileENSt6stringE6size_t"></span><span id="_CPPv2N4pigo5WFile5WFileENSt6stringE6size_t"></span><span id="pigo::WFile::WFile__ss.s"></span><span class="target" id="classpigo_1_1WFile_1ae872ab6c7004b04bef01981e23d12488"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WFile</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">max_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo5WFile5WFileENSt6stringE6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Opens the given file. </p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">fn</span></code>: the file name to open </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">max_size</span></code>: the size to allocate for the file </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn</strong> – the file name to open </p></li>
+<li><p><strong>max_size</strong> – the size to allocate for the file </p></li>
 </ul>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 </div>
@@ -699,94 +698,91 @@
 <p>doxygentypedef: Cannot find typedef “pigo::FilePos” in doxygen xml output for project “pigo” from directory: /home/travis/build/GT-TDAlab/PIGO/build/docs/doxygen/xml</p>
 </div>
 <dl class="cpp type">
-<dt id="_CPPv4N4pigo8WFilePosE">
-<span id="_CPPv3N4pigo8WFilePosE"></span><span id="_CPPv2N4pigo8WFilePosE"></span><span id="pigo::WFilePos"></span><span class="target" id="namespacepigo_1a83341f6fe0fb38d36447396247d18265"></span><em class="property"><span class="pre">typedef</span> </em><span class="pre">char</span> <span class="pre">*</span><code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">WFilePos</span></code><a class="headerlink" href="#_CPPv4N4pigo8WFilePosE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo8WFilePosE">
+<span id="_CPPv3N4pigo8WFilePosE"></span><span id="_CPPv2N4pigo8WFilePosE"></span><span id="pigo::WFilePos"></span><span class="target" id="namespacepigo_1a83341f6fe0fb38d36447396247d18265"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">WFilePos</span></span></span><a class="headerlink" href="#_CPPv4N4pigo8WFilePosE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Keep track of the state of an open writeable file. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN4pigo4readE1TR7FilePos">
-<span id="_CPPv3I0EN4pigo4readER7FilePos"></span><span id="_CPPv2I0EN4pigo4readER7FilePos"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">T</span></code><span class="pre">&gt;</span><br /><span class="target" id="namespacepigo_1ae65142d00014b5fd5a86fee4c8f2bac7"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0EN4pigo4readE1TR7FilePos" title="pigo::read::T"><span class="pre">T</span></a> <code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">read</span></code><span class="sig-paren">(</span><span class="pre">FilePos</span> <span class="pre">&amp;</span><em><span class="pre">fp</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo4readE1TR7FilePos" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0EN4pigo4readE1TR7FilePos">
+<span id="_CPPv3I0EN4pigo4readER7FilePos"></span><span id="_CPPv2I0EN4pigo4readER7FilePos"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacepigo_1ae65142d00014b5fd5a86fee4c8f2bac7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN4pigo4readE1TR7FilePos" title="pigo::read::T"><span class="n"><span class="pre">T</span></span></a><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">read</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">FilePos</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">fp</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo4readE1TR7FilePos" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Read a binary value from an open file. </p>
 <p>Reads a binary value out from the given file position. The file position object is incremented to just passed the value read out.</p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>the value read out </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters</dt>
+<dd class="field-odd"><p><strong>T</strong> – the type of object to read </p>
 </dd>
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>: the type of object to read </p></li>
-</ul>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>fp</strong> – <strong>[inout]</strong> the file position object of the open file</p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[inout]</span> <span class="pre">fp</span></code>: the file position object of the open file</p></li>
-</ul>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the value read out </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4I0EN4pigo5writeEvR7FilePos1T">
-<span id="_CPPv3I0EN4pigo5writeER7FilePos1T"></span><span id="_CPPv2I0EN4pigo5writeER7FilePos1T"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">T</span></code><span class="pre">&gt;</span><br /><span class="target" id="namespacepigo_1aef2902e700f21e3896c093f2187732aa"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">write</span></code><span class="sig-paren">(</span><span class="pre">FilePos</span> <span class="pre">&amp;</span><em><span class="pre">fp</span></em>, <a class="reference internal" href="#_CPPv4I0EN4pigo5writeEvR7FilePos1T" title="pigo::write::T"><span class="pre">T</span></a> <em><span class="pre">val</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo5writeEvR7FilePos1T" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0EN4pigo5writeEvR7FilePos1T">
+<span id="_CPPv3I0EN4pigo5writeER7FilePos1T"></span><span id="_CPPv2I0EN4pigo5writeER7FilePos1T"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="namespacepigo_1aef2902e700f21e3896c093f2187732aa"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">write</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">FilePos</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">fp</span></span>, <a class="reference internal" href="#_CPPv4I0EN4pigo5writeEvR7FilePos1T" title="pigo::write::T"><span class="n"><span class="pre">T</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">val</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN4pigo5writeEvR7FilePos1T" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Write a binary value from an open file. </p>
 <p>Writes a binary value into a file at the given position. The file position object is incremented appropriately.</p>
-<p><dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>: the type of object to write </p></li>
-</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters</dt>
+<dd class="field-odd"><p><strong>T</strong> – the type of object to write </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">[inout]</span> <span class="pre">fp</span></code>: the file position object of the open file </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">val</span></code>: the value to write to the file </p></li>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>fp</strong> – <strong>[inout]</strong> the file position object of the open file </p></li>
+<li><p><strong>val</strong> – the value to write to the file </p></li>
 </ul>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo13parallel_readER7FilePosPc6size_t">
-<span id="_CPPv3N4pigo13parallel_readER7FilePosPc6size_t"></span><span id="_CPPv2N4pigo13parallel_readER7FilePosPc6size_t"></span><span id="pigo::parallel_read__FilePosR.cP.s"></span><span class="target" id="namespacepigo_1a5e6d948197c0f6bf9a3a4cf8ca3a7a50"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">parallel_read</span></code><span class="sig-paren">(</span><span class="pre">FilePos</span> <span class="pre">&amp;</span><em><span class="pre">fp</span></em>, <span class="pre">char</span> <span class="pre">*</span><em><span class="pre">v</span></em>, <span class="pre">size_t</span> <em><span class="pre">v_size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo13parallel_readER7FilePosPc6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo13parallel_readER7FilePosPc6size_t">
+<span id="_CPPv3N4pigo13parallel_readER7FilePosPc6size_t"></span><span id="_CPPv2N4pigo13parallel_readER7FilePosPc6size_t"></span><span id="pigo::parallel_read__FilePosR.cP.s"></span><span class="target" id="namespacepigo_1a5e6d948197c0f6bf9a3a4cf8ca3a7a50"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">parallel_read</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">FilePos</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">fp</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">v</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">v_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo13parallel_readER7FilePosPc6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Read a binary region in parallel. </p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">fp</span></code>: the FilePos to begin writing at. This will be incremented passed the read region </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: the region of data to save to </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">v_size</span></code>: the size of the region of data to read </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fp</strong> – the FilePos to begin writing at. This will be incremented passed the read region </p></li>
+<li><p><strong>v</strong> – the region of data to save to </p></li>
+<li><p><strong>v_size</strong> – the size of the region of data to read </p></li>
 </ul>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo14parallel_writeER7FilePosPc6size_t">
-<span id="_CPPv3N4pigo14parallel_writeER7FilePosPc6size_t"></span><span id="_CPPv2N4pigo14parallel_writeER7FilePosPc6size_t"></span><span id="pigo::parallel_write__FilePosR.cP.s"></span><span class="target" id="namespacepigo_1af628160ffd7aad8fd7457837326cec78"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">parallel_write</span></code><span class="sig-paren">(</span><span class="pre">FilePos</span> <span class="pre">&amp;</span><em><span class="pre">fp</span></em>, <span class="pre">char</span> <span class="pre">*</span><em><span class="pre">v</span></em>, <span class="pre">size_t</span> <em><span class="pre">v_size</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo14parallel_writeER7FilePosPc6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo14parallel_writeER7FilePosPc6size_t">
+<span id="_CPPv3N4pigo14parallel_writeER7FilePosPc6size_t"></span><span id="_CPPv2N4pigo14parallel_writeER7FilePosPc6size_t"></span><span id="pigo::parallel_write__FilePosR.cP.s"></span><span class="target" id="namespacepigo_1af628160ffd7aad8fd7457837326cec78"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">parallel_write</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">FilePos</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">fp</span></span>, <span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">v</span></span>, <span class="n"><span class="pre">size_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">v_size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo14parallel_writeER7FilePosPc6size_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Write a binary region in parallel. </p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">fp</span></code>: the FilePos to begin writing at. This will be incremented passed the written block </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: the region of data to write </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">v_size</span></code>: the size of the region of data to write </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fp</strong> – the FilePos to begin writing at. This will be incremented passed the written block </p></li>
+<li><p><strong>v</strong> – the region of data to write </p></li>
+<li><p><strong>v_size</strong> – the size of the region of data to write </p></li>
 </ul>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt id="_CPPv4N4pigo5ErrorE">
-<span id="_CPPv3N4pigo5ErrorE"></span><span id="_CPPv2N4pigo5ErrorE"></span><span id="pigo::Error"></span><span class="target" id="classpigo_1_1Error"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Error</span></code> <span class="pre">:</span> <em class="property"><span class="pre">public</span></em> <span class="pre">runtime_error</span><a class="headerlink" href="#_CPPv4N4pigo5ErrorE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo5ErrorE">
+<span id="_CPPv3N4pigo5ErrorE"></span><span id="_CPPv2N4pigo5ErrorE"></span><span id="pigo::Error"></span><span class="target" id="classpigo_1_1Error"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Error</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">runtime_error</span></span><a class="headerlink" href="#_CPPv4N4pigo5ErrorE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Thrown by errors detected in PIGO. </p>
 <p>Subclassed by <a class="reference internal" href="#classpigo_1_1NotYetImplemented"><span class="std std-ref">pigo::NotYetImplemented</span></a></p>
 </dd></dl>
 
 <dl class="cpp class">
-<dt id="_CPPv4N4pigo17NotYetImplementedE">
-<span id="_CPPv3N4pigo17NotYetImplementedE"></span><span id="_CPPv2N4pigo17NotYetImplementedE"></span><span id="pigo::NotYetImplemented"></span><span class="target" id="classpigo_1_1NotYetImplemented"></span><em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">NotYetImplemented</span></code> <span class="pre">:</span> <em class="property"><span class="pre">public</span></em> <span class="pre">pigo</span><span class="pre">::</span><a class="reference internal" href="#_CPPv4N4pigo5ErrorE" title="pigo::Error"><span class="pre">Error</span></a><a class="headerlink" href="#_CPPv4N4pigo17NotYetImplementedE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo17NotYetImplementedE">
+<span id="_CPPv3N4pigo17NotYetImplementedE"></span><span id="_CPPv2N4pigo17NotYetImplementedE"></span><span id="pigo::NotYetImplemented"></span><span class="target" id="classpigo_1_1NotYetImplemented"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NotYetImplemented</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N4pigo5ErrorE" title="pigo::Error"><span class="n"><span class="pre">Error</span></span></a><a class="headerlink" href="#_CPPv4N4pigo17NotYetImplementedE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Thrown when something is not implemented yet. </p>
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
@@ -795,7 +791,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../LICENSE.html" class="btn btn-neutral float-right" title="License" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../README.html" class="btn btn-neutral float-right" title="PIGO: a Parallel Graph Input and Output library" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="datastructures/matrix.html" class="btn btn-neutral" title="Matrix" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -836,6 +832,7 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>

@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>PIGO: a Parallel Graph Input and Output library &mdash; PIGO 0.5.0 documentation</title>
@@ -28,6 +29,10 @@
   
 
   
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="_static/css/side_color.css" type="text/css" />
   
 
@@ -36,8 +41,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="PIGO 0.5.0 documentation" href="index.html"/>
-        <link rel="next" title="Datastructures" href="api/datastructures.html"/>
-        <link rel="prev" title="Welcome to PIGO’s documentation!" href="index.html"/> 
+        <link rel="next" title="License" href="LICENSE.html"/>
+        <link rel="prev" title="Utilities" href="api/pigo.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -87,6 +92,15 @@
             
             
                 <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">PIGO Tutorial</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/datastructures.html">Datastructures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/pigo.html">Utilities</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Other</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">PIGO: a Parallel Graph Input and Output library</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#quick-start-guide">Quick Start Guide</a></li>
@@ -106,14 +120,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#contact">Contact</a></li>
 </ul>
 </li>
-</ul>
-<p class="caption"><span class="caption-text">API Reference</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api/datastructures.html">Datastructures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/pigo.html">Utilities</a></li>
-</ul>
-<p class="caption"><span class="caption-text">Other</span></p>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="LICENSE.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="genindex.html">Site Map</a></li>
 </ul>
@@ -181,7 +187,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="pigo-a-parallel-graph-input-and-output-library">
+  <section id="pigo-a-parallel-graph-input-and-output-library">
 <h1>PIGO: a Parallel Graph Input and Output library<a class="headerlink" href="#pigo-a-parallel-graph-input-and-output-library" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://travis-ci.org/GT-TDAlab/PIGO"><img alt="Build Status" src="https://travis-ci.org/GT-TDAlab/PIGO.svg?branch=master" /></a></p>
 <p>PIGO is a library built to assist you with common sparse graph or matrix
@@ -191,7 +197,7 @@ saving results and intermediate representations.</p>
 <p>PIGO is built in C++ and its releases are single header-only files.  It is
 designed to be simple to integrate into many projects.</p>
 <p>💻 <strong>Source Code:</strong> [http://github.com/GT-TDAlab/PIGO]<br />📘 <strong>Documentation:</strong> [http://gt-tdalab.github.io/PIGO/]</p>
-<div class="section" id="quick-start-guide">
+<section id="quick-start-guide">
 <h2>Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Permalink to this headline">¶</a></h2>
 <p>First, download the PIGO release <code class="docutils literal notranslate"><span class="pre">pigo.hpp</span></code>. To compile a PIGO
 application, you’ll need to use OpenMP and ensure <code class="docutils literal notranslate"><span class="pre">pigo.hpp</span></code> is in
@@ -200,8 +206,8 @@ a directory where the compiler can find it.</p>
 the same directory as <code class="docutils literal notranslate"><span class="pre">pigo.hpp</span></code>. Add the following to it:</p>
 <div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;pigo.hpp&quot;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
-<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-<span class="k">using</span> <span class="k">namespace</span> <span class="n">pigo</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="nn">std</span><span class="p">;</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="nn">pigo</span><span class="p">;</span>
 <span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
     	<span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Usage: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; filename&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
@@ -239,8 +245,8 @@ the neighbors of vertex 0.</p>
 <span class="mi">9</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="documentation">
+</section>
+<section id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
 <p>The documentation relies on the following dependencies:</p>
 <div class="toctree-wrapper compound">
@@ -255,18 +261,18 @@ the neighbors of vertex 0.</p>
 <p>Next, the documentation can be built by running
 <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">build</span> <span class="pre">&amp;&amp;</span> <span class="pre">cmake</span> <span class="pre">..</span> <span class="pre">&amp;&amp;</span> <span class="pre">make</span> <span class="pre">docs</span></code>.
 The documentation will then be in <code class="docutils literal notranslate"><span class="pre">build/docs/sphinx</span></code>.</p>
-</div>
-<div class="section" id="running-tests">
+</section>
+<section id="running-tests">
 <h2>Running Tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h2>
 <p>Unit tests are controlled using CMake. To use them, you will need a modern
 version of CMake. You can do the following:
 <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">build</span> <span class="pre">&amp;&amp;</span> <span class="pre">cmake</span> <span class="pre">..</span> <span class="pre">&amp;&amp;</span> <span class="pre">make</span> <span class="pre">-j</span> <span class="pre">8</span> <span class="pre">&amp;&amp;</span> <span class="pre">ctest</span></code>.</p>
-</div>
-<div class="section" id="license">
+</section>
+<section id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
 <p>Please see <a class="reference internal" href="LICENSE.html"><span class="doc">LICENSE.md</span></a> for the license.</p>
-</div>
-<div class="section" id="contributors">
+</section>
+<section id="contributors">
 <h2>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
@@ -274,13 +280,13 @@ version of CMake. You can do the following:
 <li class="toctree-l1"><a class="reference external" href="https://cc.gatech.edu/~umit">Umit V. Catalyurek</a></li>
 </ul>
 </div>
-</div>
-<div class="section" id="contact">
+</section>
+<section id="contact">
 <h2>Contact<a class="headerlink" href="#contact" title="Permalink to this headline">¶</a></h2>
 <p>For questions or support please either open an issue or contact
 <a class="reference external" href="mailto:tdalab&#37;&#52;&#48;cc&#46;gatech&#46;edu">tdalab<span>&#64;</span>cc<span>&#46;</span>gatech<span>&#46;</span>edu</a>.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
@@ -289,10 +295,10 @@ version of CMake. You can do the following:
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="api/datastructures.html" class="btn btn-neutral float-right" title="Datastructures" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="LICENSE.html" class="btn btn-neutral float-right" title="License" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Welcome to PIGO’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="api/pigo.html" class="btn btn-neutral" title="Utilities" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -330,6 +336,7 @@ version of CMake. You can do the following:
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="_static/documentation_options.js"></script>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>

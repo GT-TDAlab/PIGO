@@ -5,7 +5,8 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Graph &mdash; PIGO 0.5.0 documentation</title>
@@ -27,6 +28,10 @@
     <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   
 
+  
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   
     <link rel="stylesheet" href="../../_static/css/side_color.css" type="text/css" />
   
@@ -89,7 +94,7 @@
             
                 <p class="caption"><span class="caption-text">Introduction</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../README.html">PIGO: a Parallel Graph Input and Output library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">PIGO Tutorial</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Reference</span></p>
 <ul class="current">
@@ -104,6 +109,7 @@
 </ul>
 <p class="caption"><span class="caption-text">Other</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">PIGO: a Parallel Graph Input and Output library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">License</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Site Map</a></li>
 </ul>
@@ -173,266 +179,347 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="graph">
+  <section id="graph">
 <h1>Graph<a class="headerlink" href="#graph" title="Permalink to this headline">¶</a></h1>
 <p>Defined in <a class="reference external" href="https://github.com/GT-TDAlab/PIGO/blob/master/include/pigo/graph.hpp">graph.hpp</a></p>
 <dl class="cpp class">
-<dt id="_CPPv4I0000_b00EN4pigo9BaseGraphE">
-<span id="_CPPv3I0000_b00EN4pigo9BaseGraphE"></span><span id="_CPPv2I0000_b00EN4pigo9BaseGraphE"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">vertex_t</span></code> <span class="pre">=</span> <span class="pre">uint32_t</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">edge_ctr_t</span></code> <span class="pre">=</span> <span class="pre">uint32_t</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">edge_storage</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="pre">vertex_t</span></a><span class="pre">*</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">edge_ctr_storage</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a><span class="pre">*</span><span class="pre">,</span> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">weighted</span></code> <span class="pre">=</span> <span class="pre">false</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">Weight</span></code> <span class="pre">=</span> <span class="pre">float</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">WeightStorage</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::Weight"><span class="pre">Weight</span></a><span class="pre">*</span><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1BaseGraph"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">BaseGraph</span></code> <span class="pre">:</span> <em class="property"><span class="pre">public</span></em> <span class="pre">pigo</span><span class="pre">::</span><a class="reference internal" href="csr.html#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR"><span class="pre">CSR</span></a><span class="pre">&lt;</span><span class="pre">uint32_t</span><span class="pre">,</span> <span class="pre">uint32_t</span><span class="pre">,</span> <span class="pre">uint32_t</span><span class="pre">*</span><span class="pre">,</span> <span class="pre">uint32_t</span><span class="pre">*</span><span class="pre">,</span> <span class="pre">false</span><span class="pre">,</span> <span class="pre">float</span><span class="pre">,</span> <span class="pre">float</span><span class="pre">*</span><span class="pre">&gt;</span><a class="headerlink" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0000_b00EN4pigo9BaseGraphE">
+<span id="_CPPv3I0000_b00EN4pigo9BaseGraphE"></span><span id="_CPPv2I0000_b00EN4pigo9BaseGraphE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">vertex_t</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">edge_ctr_t</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">edge_storage</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="n"><span class="pre">vertex_t</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">edge_ctr_storage</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="n"><span class="pre">edge_ctr_t</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">weighted</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Weight</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WeightStorage</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::Weight"><span class="n"><span class="pre">Weight</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpigo_1_1BaseGraph"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">BaseGraph</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span><a class="reference internal" href="csr.html#_CPPv4I0000_b00EN4pigo3CSRE" title="pigo::CSR"><span class="n"><span class="pre">CSR</span></span></a><span class="p"><span class="pre">&lt;</span></span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Used to load graphs from disk. </p>
 <p>This class provides a graph-specific naming on top of CSRs.</p>
-<p><dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">vertex_t</span></code>: the type to use for vertices </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">edge_ctr_t</span></code>: the type to use for an edge counter </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">edge_storage</span></code>: the storage type of the endpoints of the <a class="reference internal" href="csr.html#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a>. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">edge_ctr_storage</span></code>: the storage type of the offsets of the <a class="reference internal" href="csr.html#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a>. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">weighted</span></code>: if true, support and use weights </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Weight</span></code>: the weight data type. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">WeightStorage</span></code>: the storage type for the weights. This can be a raw pointer (Weight*), a std::vector (std::vector&lt;Weight&gt;), or a std::shared_ptr&lt;Weight&gt;. </p></li>
-</ul>
+<p><dl class="field-list simple">
+<dt class="field-odd">tparam vertex_t</dt>
+<dd class="field-odd"><p>the type to use for vertices </p>
+</dd>
+<dt class="field-even">tparam edge_ctr_t</dt>
+<dd class="field-even"><p>the type to use for an edge counter </p>
+</dd>
+<dt class="field-odd">tparam edge_storage</dt>
+<dd class="field-odd"><p>the storage type of the endpoints of the <a class="reference internal" href="csr.html#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a>. </p>
+</dd>
+<dt class="field-even">tparam edge_ctr_storage</dt>
+<dd class="field-even"><p>the storage type of the offsets of the <a class="reference internal" href="csr.html#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a>. </p>
+</dd>
+<dt class="field-odd">tparam weighted</dt>
+<dd class="field-odd"><p>if true, support and use weights </p>
+</dd>
+<dt class="field-even">tparam Weight</dt>
+<dd class="field-even"><p>the weight data type. </p>
+</dd>
+<dt class="field-odd">tparam WeightStorage</dt>
+<dd class="field-odd"><p>the storage type for the weights. This can be a raw pointer (Weight*), a std::vector (std::vector&lt;Weight&gt;), or a std::shared_ptr&lt;Weight&gt;. </p>
 </dd>
 </dl>
 </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo9BaseGraph14neighbor_startE8vertex_t">
-<span id="_CPPv3N4pigo9BaseGraph14neighbor_startE8vertex_t"></span><span id="_CPPv2N4pigo9BaseGraph14neighbor_startE8vertex_t"></span><span id="pigo::BaseGraph::neighbor_start__vertex_t"></span><span class="target" id="classpigo_1_1BaseGraph_1ac6d7115be4d77f15c5a4d8b6a21b5142"></span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a> <code class="sig-name descname"><span class="pre">neighbor_start</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="pre">vertex_t</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo9BaseGraph14neighbor_startE8vertex_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo9BaseGraph14neighbor_startE8vertex_t">
+<span id="_CPPv3N4pigo9BaseGraph14neighbor_startE8vertex_t"></span><span id="_CPPv2N4pigo9BaseGraph14neighbor_startE8vertex_t"></span><span id="pigo::BaseGraph::neighbor_start__vertex_t"></span><span class="target" id="classpigo_1_1BaseGraph_1ac6d7115be4d77f15c5a4d8b6a21b5142"></span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="n"><span class="pre">edge_ctr_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">neighbor_start</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="n"><span class="pre">vertex_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">v</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo9BaseGraph14neighbor_startE8vertex_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the neighbors of a vertex. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>an edge_ctr_t containing the neighbor start offset </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> – the vertex to find the neighbors at </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: the vertex to find the neighbors at </p></li>
-</ul>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an edge_ctr_t containing the neighbor start offset </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo9BaseGraph12neighbor_endE8vertex_t">
-<span id="_CPPv3N4pigo9BaseGraph12neighbor_endE8vertex_t"></span><span id="_CPPv2N4pigo9BaseGraph12neighbor_endE8vertex_t"></span><span id="pigo::BaseGraph::neighbor_end__vertex_t"></span><span class="target" id="classpigo_1_1BaseGraph_1a28856944c6ffb0cb53ec7f79ba706663"></span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a> <code class="sig-name descname"><span class="pre">neighbor_end</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="pre">vertex_t</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo9BaseGraph12neighbor_endE8vertex_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo9BaseGraph12neighbor_endE8vertex_t">
+<span id="_CPPv3N4pigo9BaseGraph12neighbor_endE8vertex_t"></span><span id="_CPPv2N4pigo9BaseGraph12neighbor_endE8vertex_t"></span><span id="pigo::BaseGraph::neighbor_end__vertex_t"></span><span class="target" id="classpigo_1_1BaseGraph_1a28856944c6ffb0cb53ec7f79ba706663"></span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="n"><span class="pre">edge_ctr_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">neighbor_end</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="n"><span class="pre">vertex_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">v</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo9BaseGraph12neighbor_endE8vertex_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return beyond the neighbors of a vertex. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>an edge_ctr_t just beyond the neighbor list </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> – the vertex to end the neighbors at </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: the vertex to end the neighbors at </p></li>
-</ul>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an edge_ctr_t just beyond the neighbor list </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo9BaseGraph6degreeE8vertex_t">
-<span id="_CPPv3N4pigo9BaseGraph6degreeE8vertex_t"></span><span id="_CPPv2N4pigo9BaseGraph6degreeE8vertex_t"></span><span id="pigo::BaseGraph::degree__vertex_t"></span><span class="target" id="classpigo_1_1BaseGraph_1a226499bbd66797e10f47bd1ec66d623a"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a> <code class="sig-name descname"><span class="pre">degree</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="pre">vertex_t</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo9BaseGraph6degreeE8vertex_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo9BaseGraph6degreeE8vertex_t">
+<span id="_CPPv3N4pigo9BaseGraph6degreeE8vertex_t"></span><span id="_CPPv2N4pigo9BaseGraph6degreeE8vertex_t"></span><span id="pigo::BaseGraph::degree__vertex_t"></span><span class="target" id="classpigo_1_1BaseGraph_1a226499bbd66797e10f47bd1ec66d623a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="n"><span class="pre">edge_ctr_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">degree</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="n"><span class="pre">vertex_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">v</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo9BaseGraph6degreeE8vertex_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the number of neighbors (degree) of a vertex. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>the number of neighbors of the vertex </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> – the vertex to return the degree of </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: the vertex to return the degree of </p></li>
-</ul>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the number of neighbors of the vertex </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo9BaseGraph9neighborsE8vertex_t">
-<span id="_CPPv3N4pigo9BaseGraph9neighborsE8vertex_t"></span><span id="_CPPv2N4pigo9BaseGraph9neighborsE8vertex_t"></span><span id="pigo::BaseGraph::neighbors__vertex_t"></span><span class="target" id="classpigo_1_1BaseGraph_1a933622090db7867586268873e0c2dd57"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt"><span class="pre">EdgeIt</span></a><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="pre">vertex_t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_storage"><span class="pre">edge_storage</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">neighbors</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="pre">vertex_t</span></a> <em><span class="pre">v</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo9BaseGraph9neighborsE8vertex_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo9BaseGraph9neighborsE8vertex_t">
+<span id="_CPPv3N4pigo9BaseGraph9neighborsE8vertex_t"></span><span id="_CPPv2N4pigo9BaseGraph9neighborsE8vertex_t"></span><span id="pigo::BaseGraph::neighbors__vertex_t"></span><span class="target" id="classpigo_1_1BaseGraph_1a933622090db7867586268873e0c2dd57"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt"><span class="n"><span class="pre">EdgeIt</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="n"><span class="pre">vertex_t</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_ctr_t"><span class="n"><span class="pre">edge_ctr_t</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::edge_storage"><span class="n"><span class="pre">edge_storage</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">neighbors</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph::vertex_t"><span class="n"><span class="pre">vertex_t</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">v</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo9BaseGraph9neighborsE8vertex_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return an iterator for the neighbors the vertex. </p>
-<p><dl class="simple">
-<dt><strong>Return</strong></dt><dd><p>an edge iterator </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> – the vertex to iterate over the neighbors of </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">v</span></code>: the vertex to iterate over the neighbors of </p></li>
-</ul>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>an edge iterator </p>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 </div>
 </dd></dl>
 
 <dl class="cpp class">
-<dt id="_CPPv4I0000_b00EN4pigo7DiGraphE">
-<span id="_CPPv3I0000_b00EN4pigo7DiGraphE"></span><span id="_CPPv2I0000_b00EN4pigo7DiGraphE"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">vertex_t</span></code> <span class="pre">=</span> <span class="pre">uint32_t</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">edge_ctr_t</span></code> <span class="pre">=</span> <span class="pre">uint32_t</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">edge_storage</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::vertex_t"><span class="pre">vertex_t</span></a><span class="pre">*</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">edge_ctr_storage</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a><span class="pre">*</span><span class="pre">,</span> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">weighted</span></code> <span class="pre">=</span> <span class="pre">false</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">Weight</span></code> <span class="pre">=</span> <span class="pre">float</span><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">WeightStorage</span></code> <span class="pre">=</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::Weight"><span class="pre">Weight</span></a><span class="pre">*</span><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1DiGraph"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">DiGraph</span></code><a class="headerlink" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0000_b00EN4pigo7DiGraphE">
+<span id="_CPPv3I0000_b00EN4pigo7DiGraphE"></span><span id="_CPPv2I0000_b00EN4pigo7DiGraphE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">vertex_t</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">edge_ctr_t</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">edge_storage</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::vertex_t"><span class="n"><span class="pre">vertex_t</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">edge_ctr_storage</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="n"><span class="pre">edge_ctr_t</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">weighted</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Weight</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WeightStorage</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::Weight"><span class="n"><span class="pre">Weight</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpigo_1_1DiGraph"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">DiGraph</span></span></span><a class="headerlink" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Used to load directed graphs from disk. </p>
 <p>This class provides a graph-specific naming on top of non-symmetric matrices (<a class="reference internal" href="matrix.html#classpigo_1_1Matrix"><span class="std std-ref">Matrix</span></a>).</p>
-<p><dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">vertex_t</span></code>: the type to use for vertices </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">edge_ctr_t</span></code>: the type to use for an edge counter </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">edge_storage</span></code>: the storage type of the endpoints of the CSR/CSC. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">edge_ctr_storage</span></code>: the storage type of the offsets of the CSR/CSC. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">weighted</span></code>: if true, support and use weights </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Weight</span></code>: the weight data type. </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">WeightStorage</span></code>: the storage type for the weights. This can be a raw pointer (Weight*), a std::vector (std::vector&lt;Weight&gt;), or a std::shared_ptr&lt;Weight&gt;. </p></li>
-</ul>
+<p><dl class="field-list simple">
+<dt class="field-odd">tparam vertex_t</dt>
+<dd class="field-odd"><p>the type to use for vertices </p>
+</dd>
+<dt class="field-even">tparam edge_ctr_t</dt>
+<dd class="field-even"><p>the type to use for an edge counter </p>
+</dd>
+<dt class="field-odd">tparam edge_storage</dt>
+<dd class="field-odd"><p>the storage type of the endpoints of the CSR/CSC. </p>
+</dd>
+<dt class="field-even">tparam edge_ctr_storage</dt>
+<dd class="field-even"><p>the storage type of the offsets of the CSR/CSC. </p>
+</dd>
+<dt class="field-odd">tparam weighted</dt>
+<dd class="field-odd"><p>if true, support and use weights </p>
+</dd>
+<dt class="field-even">tparam Weight</dt>
+<dd class="field-even"><p>the weight data type. </p>
+</dd>
+<dt class="field-odd">tparam WeightStorage</dt>
+<dd class="field-odd"><p>the storage type for the weights. This can be a raw pointer (Weight*), a std::vector (std::vector&lt;Weight&gt;), or a std::shared_ptr&lt;Weight&gt;. </p>
 </dd>
 </dl>
 </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE">
-<span id="_CPPv3I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE"></span><span id="_CPPv2I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">COOvertex_t</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">COOedge_ctr_t</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">COOStorage</span></code><span class="pre">,</span> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">COOsym</span></code><span class="pre">,</span> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">COOut</span></code><span class="pre">,</span> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">COOsl</span></code><span class="pre">,</span> <span class="pre">bool</span> <code class="sig-name descname"><span class="pre">COOme</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">COOW</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">COOWS</span></code><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1DiGraph_1af5cf04f10531e17627ff2377a6909ded"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">DiGraph</span></code><span class="sig-paren">(</span><a class="reference internal" href="coo.html#_CPPv4I000_b_b_b_b_b00EN4pigo3COOE" title="pigo::COO"><span class="pre">COO</span></a><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOvertex_t"><span class="pre">COOvertex_t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOedge_ctr_t"><span class="pre">COOedge_ctr_t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOStorage"><span class="pre">COOStorage</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOsym"><span class="pre">COOsym</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOut"><span class="pre">COOut</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOsl"><span class="pre">COOsl</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOme"><span class="pre">COOme</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::weighted"><span class="pre">weighted</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOW"><span class="pre">COOW</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOWS"><span class="pre">COOWS</span></a><span class="pre">&gt;</span> <span class="pre">&amp;</span><em><span class="pre">coo</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE">
+<span id="_CPPv3I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE"></span><span id="_CPPv2I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">COOvertex_t</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">COOedge_ctr_t</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">COOStorage</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">COOsym</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">COOut</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">COOsl</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">COOme</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">COOW</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">COOWS</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpigo_1_1DiGraph_1af5cf04f10531e17627ff2377a6909ded"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DiGraph</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="coo.html#_CPPv4I000_b_b_b_b_b00EN4pigo3COOE" title="pigo::COO"><span class="n"><span class="pre">COO</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOvertex_t"><span class="n"><span class="pre">COOvertex_t</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOedge_ctr_t"><span class="n"><span class="pre">COOedge_ctr_t</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOStorage"><span class="n"><span class="pre">COOStorage</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOsym"><span class="n"><span class="pre">COOsym</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOut"><span class="n"><span class="pre">COOut</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOsl"><span class="n"><span class="pre">COOsl</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOme"><span class="n"><span class="pre">COOme</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::weighted"><span class="n"><span class="pre">weighted</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOW"><span class="n"><span class="pre">COOW</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="pigo::DiGraph::DiGraph::COOWS"><span class="n"><span class="pre">COOWS</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">coo</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Initialize from a <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. </p>
 <p>This creates a <a class="reference internal" href="#classpigo_1_1DiGraph"><span class="std std-ref">DiGraph</span></a> from an already-loaded <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a>.</p>
 <p>This first copies the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> and transposes the copy, setting that as the in-edges. The out-edges are the original <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a>.</p>
-<p><dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">COOvertex_t</span></code>: the label for the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> format </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">COOedge_ctr_t</span></code>: the ordinal for the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> format </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">COOStorage</span></code>: the storage format of the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">COOsym</span></code>: whether the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> is symmetrized </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">COOut</span></code>: whether the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> only keeps the upper triangle </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">COOsl</span></code>: whether the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> removes self loops </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">COOme</span></code>: whether the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> removes multiple edges </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">COOW</span></code>: the weight type of the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">COOWS</span></code>: the weight storage type of the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>COOvertex_t</strong> – the label for the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> format </p></li>
+<li><p><strong>COOedge_ctr_t</strong> – the ordinal for the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> format </p></li>
+<li><p><strong>COOStorage</strong> – the storage format of the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> </p></li>
+<li><p><strong>COOsym</strong> – whether the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> is symmetrized </p></li>
+<li><p><strong>COOut</strong> – whether the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> only keeps the upper triangle </p></li>
+<li><p><strong>COOsl</strong> – whether the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> removes self loops </p></li>
+<li><p><strong>COOme</strong> – whether the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> removes multiple edges </p></li>
+<li><p><strong>COOW</strong> – the weight type of the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> </p></li>
+<li><p><strong>COOWS</strong> – the weight storage type of the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> </p></li>
 </ul>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">coo</span></code>: the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> object to load the <a class="reference internal" href="csr.html#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a> from </p></li>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>coo</strong> – the <a class="reference internal" href="coo.html#classpigo_1_1COO"><span class="std std-ref">COO</span></a> object to load the <a class="reference internal" href="csr.html#classpigo_1_1CSR"><span class="std std-ref">CSR</span></a> from </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo7DiGraph7DiGraphENSt6stringE">
+<span id="_CPPv3N4pigo7DiGraph7DiGraphENSt6stringE"></span><span id="_CPPv2N4pigo7DiGraph7DiGraphENSt6stringE"></span><span id="pigo::DiGraph::DiGraph__ss"></span><span class="target" id="classpigo_1_1DiGraph_1ad3cea613173ff30a1c5feeadb3448114"></span><span class="sig-name descname"><span class="n"><span class="pre">DiGraph</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph7DiGraphENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize from a file. </p>
+<p>The file type will attempt to be determined automatically.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fn</strong> – the filename to open </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo7DiGraph7DiGraphENSt6stringE8FileType">
+<span id="_CPPv3N4pigo7DiGraph7DiGraphENSt6stringE8FileType"></span><span id="_CPPv2N4pigo7DiGraph7DiGraphENSt6stringE8FileType"></span><span id="pigo::DiGraph::DiGraph__ss.FileType"></span><span class="target" id="classpigo_1_1DiGraph_1a5709ce59e626a272b89ef8836f6973f3"></span><span class="sig-name descname"><span class="n"><span class="pre">DiGraph</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span>, <a class="reference internal" href="../pigo.html#_CPPv4N4pigo8FileTypeE" title="pigo::FileType"><span class="n"><span class="pre">FileType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ft</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph7DiGraphENSt6stringE8FileType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize from a file with a specific type. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn</strong> – the filename to open </p></li>
+<li><p><strong>ft</strong> – the FileType to use </p></li>
 </ul>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo7DiGraph7DiGraphENSt6stringE">
-<span id="_CPPv3N4pigo7DiGraph7DiGraphENSt6stringE"></span><span id="_CPPv2N4pigo7DiGraph7DiGraphENSt6stringE"></span><span id="pigo::DiGraph::DiGraph__ss"></span><span class="target" id="classpigo_1_1DiGraph_1a1ba7c00453967f57e026ba34fd826ab9"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">DiGraph</span></code><span class="sig-paren">(</span><span class="pre">std</span><span class="pre">::</span><span class="pre">string</span> <em><span class="pre">filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph7DiGraphENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Create a <a class="reference internal" href="#classpigo_1_1DiGraph"><span class="std std-ref">DiGraph</span></a> from a file. </p>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo7DiGraph7DiGraphER4File8FileType">
+<span id="_CPPv3N4pigo7DiGraph7DiGraphER4File8FileType"></span><span id="_CPPv2N4pigo7DiGraph7DiGraphER4File8FileType"></span><span id="pigo::DiGraph::DiGraph__FileR.FileType"></span><span class="target" id="classpigo_1_1DiGraph_1a02f4acd3dbc5e51af72f1825b2fd43ce"></span><span class="sig-name descname"><span class="n"><span class="pre">DiGraph</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../pigo.html#_CPPv4N4pigo4FileE" title="pigo::File"><span class="n"><span class="pre">File</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">f</span></span>, <a class="reference internal" href="../pigo.html#_CPPv4N4pigo8FileTypeE" title="pigo::FileType"><span class="n"><span class="pre">FileType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ft</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph7DiGraphER4File8FileType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize from an open file with a specific type. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> – the open <a class="reference internal" href="../pigo.html#classpigo_1_1File"><span class="std std-ref">File</span></a> </p></li>
+<li><p><strong>ft</strong> – the FileType to use </p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo7DiGraph4freeEv">
-<span id="_CPPv3N4pigo7DiGraph4freeEv"></span><span id="_CPPv2N4pigo7DiGraph4freeEv"></span><span id="pigo::DiGraph::free"></span><span class="target" id="classpigo_1_1DiGraph_1a02b3941292564bcd46fb5c22303b04e1"></span><em class="property"><span class="pre">inline</span></em> <span class="pre">void</span> <code class="sig-name descname"><span class="pre">free</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph4freeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo7DiGraph4freeEv">
+<span id="_CPPv3N4pigo7DiGraph4freeEv"></span><span id="_CPPv2N4pigo7DiGraph4freeEv"></span><span id="pigo::DiGraph::free"></span><span class="target" id="classpigo_1_1DiGraph_1a02b3941292564bcd46fb5c22303b04e1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">free</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph4freeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Free the associated memory. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo7DiGraph1mEv">
-<span id="_CPPv3N4pigo7DiGraph1mEv"></span><span id="_CPPv2N4pigo7DiGraph1mEv"></span><span id="pigo::DiGraph::m"></span><span class="target" id="classpigo_1_1DiGraph_1adaeb01ae9935d5d1c76ed32787e2b128"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a> <code class="sig-name descname"><span class="pre">m</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph1mEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo7DiGraph1mEv">
+<span id="_CPPv3N4pigo7DiGraph1mEv"></span><span id="_CPPv2N4pigo7DiGraph1mEv"></span><span id="pigo::DiGraph::m"></span><span class="target" id="classpigo_1_1DiGraph_1adaeb01ae9935d5d1c76ed32787e2b128"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="n"><span class="pre">edge_ctr_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">m</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph1mEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the number of non-zeros or edges. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo7DiGraph1nEv">
-<span id="_CPPv3N4pigo7DiGraph1nEv"></span><span id="_CPPv2N4pigo7DiGraph1nEv"></span><span id="pigo::DiGraph::n"></span><span class="target" id="classpigo_1_1DiGraph_1a12036b25c67db21b89522ff0556574ea"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a> <code class="sig-name descname"><span class="pre">n</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph1nEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo7DiGraph1nEv">
+<span id="_CPPv3N4pigo7DiGraph1nEv"></span><span id="_CPPv2N4pigo7DiGraph1nEv"></span><span id="pigo::DiGraph::n"></span><span class="target" id="classpigo_1_1DiGraph_1a12036b25c67db21b89522ff0556574ea"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="n"><span class="pre">edge_ctr_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">n</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph1nEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the number of vertices. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo7DiGraph5nrowsEv">
-<span id="_CPPv3N4pigo7DiGraph5nrowsEv"></span><span id="_CPPv2N4pigo7DiGraph5nrowsEv"></span><span id="pigo::DiGraph::nrows"></span><span class="target" id="classpigo_1_1DiGraph_1ae02cc879bfb431e7a66b9f8e93627fdc"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a> <code class="sig-name descname"><span class="pre">nrows</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph5nrowsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo7DiGraph5nrowsEv">
+<span id="_CPPv3N4pigo7DiGraph5nrowsEv"></span><span id="_CPPv2N4pigo7DiGraph5nrowsEv"></span><span id="pigo::DiGraph::nrows"></span><span class="target" id="classpigo_1_1DiGraph_1ae02cc879bfb431e7a66b9f8e93627fdc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="n"><span class="pre">edge_ctr_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nrows</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph5nrowsEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the number of rows. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo7DiGraph5ncolsEv">
-<span id="_CPPv3N4pigo7DiGraph5ncolsEv"></span><span id="_CPPv2N4pigo7DiGraph5ncolsEv"></span><span id="pigo::DiGraph::ncols"></span><span class="target" id="classpigo_1_1DiGraph_1aa4cde8e3bd28efba0500af3d9069122a"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a> <code class="sig-name descname"><span class="pre">ncols</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph5ncolsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo7DiGraph5ncolsEv">
+<span id="_CPPv3N4pigo7DiGraph5ncolsEv"></span><span id="_CPPv2N4pigo7DiGraph5ncolsEv"></span><span id="pigo::DiGraph::ncols"></span><span class="target" id="classpigo_1_1DiGraph_1aa4cde8e3bd28efba0500af3d9069122a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="n"><span class="pre">edge_ctr_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ncols</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph5ncolsEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the number of columns. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo7DiGraph3outEv">
-<span id="_CPPv3N4pigo7DiGraph3outEv"></span><span id="_CPPv2N4pigo7DiGraph3outEv"></span><span id="pigo::DiGraph::out"></span><span class="target" id="classpigo_1_1DiGraph_1a0ac7d8f8f7e2ad093b862172b2a01a78"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph"><span class="pre">BaseGraph</span></a><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::vertex_t"><span class="pre">vertex_t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_storage"><span class="pre">edge_storage</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_storage"><span class="pre">edge_ctr_storage</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::weighted"><span class="pre">weighted</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::Weight"><span class="pre">Weight</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::WeightStorage"><span class="pre">WeightStorage</span></a><span class="pre">&gt;</span> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">out</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph3outEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo7DiGraph3outEv">
+<span id="_CPPv3N4pigo7DiGraph3outEv"></span><span id="_CPPv2N4pigo7DiGraph3outEv"></span><span id="pigo::DiGraph::out"></span><span class="target" id="classpigo_1_1DiGraph_1a0ac7d8f8f7e2ad093b862172b2a01a78"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph"><span class="n"><span class="pre">BaseGraph</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::vertex_t"><span class="n"><span class="pre">vertex_t</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="n"><span class="pre">edge_ctr_t</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_storage"><span class="n"><span class="pre">edge_storage</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_storage"><span class="n"><span class="pre">edge_ctr_storage</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::weighted"><span class="n"><span class="pre">weighted</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::Weight"><span class="n"><span class="pre">Weight</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::WeightStorage"><span class="n"><span class="pre">WeightStorage</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">out</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph3outEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the out-edges. </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo7DiGraph2inEv">
-<span id="_CPPv3N4pigo7DiGraph2inEv"></span><span id="_CPPv2N4pigo7DiGraph2inEv"></span><span id="pigo::DiGraph::in"></span><span class="target" id="classpigo_1_1DiGraph_1af3500af0232cdd0fcbf41ea18241097a"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph"><span class="pre">BaseGraph</span></a><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::vertex_t"><span class="pre">vertex_t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="pre">edge_ctr_t</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_storage"><span class="pre">edge_storage</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_storage"><span class="pre">edge_ctr_storage</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::weighted"><span class="pre">weighted</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::Weight"><span class="pre">Weight</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::WeightStorage"><span class="pre">WeightStorage</span></a><span class="pre">&gt;</span> <span class="pre">&amp;</span><code class="sig-name descname"><span class="pre">in</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph2inEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo7DiGraph2inEv">
+<span id="_CPPv3N4pigo7DiGraph2inEv"></span><span id="_CPPv2N4pigo7DiGraph2inEv"></span><span id="pigo::DiGraph::in"></span><span class="target" id="classpigo_1_1DiGraph_1af3500af0232cdd0fcbf41ea18241097a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo9BaseGraphE" title="pigo::BaseGraph"><span class="n"><span class="pre">BaseGraph</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::vertex_t"><span class="n"><span class="pre">vertex_t</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_t"><span class="n"><span class="pre">edge_ctr_t</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_storage"><span class="n"><span class="pre">edge_storage</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::edge_ctr_storage"><span class="n"><span class="pre">edge_ctr_storage</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::weighted"><span class="n"><span class="pre">weighted</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::Weight"><span class="n"><span class="pre">Weight</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0000_b00EN4pigo7DiGraphE" title="pigo::DiGraph::WeightStorage"><span class="n"><span class="pre">WeightStorage</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">in</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph2inEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the in-edges. </p>
 </dd></dl>
 
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo7DiGraph4saveENSt6stringE">
+<span id="_CPPv3N4pigo7DiGraph4saveENSt6stringE"></span><span id="_CPPv2N4pigo7DiGraph4saveENSt6stringE"></span><span id="pigo::DiGraph::save__ss"></span><span class="target" id="classpigo_1_1DiGraph_1a1f51b13fd14740d7ea4c0cdf19ef2429"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">save</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7DiGraph4saveENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Save the loaded <a class="reference internal" href="#classpigo_1_1DiGraph"><span class="std std-ref">DiGraph</span></a> as a PIGO binary file. </p>
+<p>This saves the current <a class="reference internal" href="#classpigo_1_1DiGraph"><span class="std std-ref">DiGraph</span></a> to disk</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fn</strong> – the filename to save as </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-attributes">Public Static Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo7DiGraph19digraph_file_headerE">
+<span id="_CPPv3N4pigo7DiGraph19digraph_file_headerE"></span><span id="_CPPv2N4pigo7DiGraph19digraph_file_headerE"></span><span id="pigo::DiGraph::digraph_file_header__cCP"></span><span class="target" id="classpigo_1_1DiGraph_1a7fa046c017e841041967ef8866009c12"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">digraph_file_header</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><s><span class="pre">&quot;PIGO-DiGraph-v1&quot;</span></s><a class="headerlink" href="#_CPPv4N4pigo7DiGraph19digraph_file_headerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The output file header for reading/writing </p>
+</dd></dl>
+
 </div>
 </dd></dl>
 
 <dl class="cpp class">
-<dt id="_CPPv4I000EN4pigo7EdgeItTE">
-<span id="_CPPv3I000EN4pigo7EdgeItTE"></span><span id="_CPPv2I000EN4pigo7EdgeItTE"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">V</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">O</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">S</span></code><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1EdgeItT"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">EdgeItT</span></code><a class="headerlink" href="#_CPPv4I000EN4pigo7EdgeItTE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I000EN4pigo7EdgeItTE">
+<span id="_CPPv3I000EN4pigo7EdgeItTE"></span><span id="_CPPv2I000EN4pigo7EdgeItTE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">V</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">O</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">S</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpigo_1_1EdgeItT"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">EdgeItT</span></span></span><a class="headerlink" href="#_CPPv4I000EN4pigo7EdgeItTE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>An iterator type for edges. </p>
-<p><dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">V</span></code>: the vertex ID type </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">O</span></code>: the ordinal type </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">S</span></code>: the storage type for the edges </p></li>
-</ul>
+<p><dl class="field-list simple">
+<dt class="field-odd">tparam V</dt>
+<dd class="field-odd"><p>the vertex ID type </p>
+</dd>
+<dt class="field-even">tparam O</dt>
+<dd class="field-even"><p>the ordinal type </p>
+</dd>
+<dt class="field-odd">tparam S</dt>
+<dd class="field-odd"><p>the storage type for the edges </p>
 </dd>
 </dl>
 </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo7EdgeItT7EdgeItTE1S1O">
-<span id="_CPPv3N4pigo7EdgeItT7EdgeItTE1S1O"></span><span id="_CPPv2N4pigo7EdgeItT7EdgeItTE1S1O"></span><span id="pigo::EdgeItT::EdgeItT__S.O"></span><span class="target" id="classpigo_1_1EdgeItT_1ab63233f437d4bed0cc1862269fc48c0a"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">EdgeItT</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I000EN4pigo7EdgeItTE" title="pigo::EdgeItT::S"><span class="pre">S</span></a> <em><span class="pre">s</span></em>, <a class="reference internal" href="#_CPPv4I000EN4pigo7EdgeItTE" title="pigo::EdgeItT::O"><span class="pre">O</span></a> <em><span class="pre">pos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7EdgeItT7EdgeItTE1S1O" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo7EdgeItT7EdgeItTE1S1O">
+<span id="_CPPv3N4pigo7EdgeItT7EdgeItTE1S1O"></span><span id="_CPPv2N4pigo7EdgeItT7EdgeItTE1S1O"></span><span id="pigo::EdgeItT::EdgeItT__S.O"></span><span class="target" id="classpigo_1_1EdgeItT_1ab63233f437d4bed0cc1862269fc48c0a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EdgeItT</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I000EN4pigo7EdgeItTE" title="pigo::EdgeItT::S"><span class="n"><span class="pre">S</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="#_CPPv4I000EN4pigo7EdgeItTE" title="pigo::EdgeItT::O"><span class="n"><span class="pre">O</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">pos</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo7EdgeItT7EdgeItTE1S1O" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Initialize the edge list iterator type. </p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: the storage for the edge list endpoints </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pos</span></code>: the position in the storage </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> – the storage for the edge list endpoints </p></li>
+<li><p><strong>pos</strong> – the position in the storage </p></li>
 </ul>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 </div>
 </dd></dl>
 
 <dl class="cpp class">
-<dt id="_CPPv4I000EN4pigo6EdgeItE">
-<span id="_CPPv3I000EN4pigo6EdgeItE"></span><span id="_CPPv2I000EN4pigo6EdgeItE"></span><span class="pre">template&lt;</span><span class="pre">class</span> <code class="sig-name descname"><span class="pre">V</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">O</span></code><span class="pre">,</span> <span class="pre">class</span> <code class="sig-name descname"><span class="pre">S</span></code><span class="pre">&gt;</span><br /><span class="target" id="classpigo_1_1EdgeIt"></span><em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">EdgeIt</span></code><a class="headerlink" href="#_CPPv4I000EN4pigo6EdgeItE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I000EN4pigo6EdgeItE">
+<span id="_CPPv3I000EN4pigo6EdgeItE"></span><span id="_CPPv2I000EN4pigo6EdgeItE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">V</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">O</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">S</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpigo_1_1EdgeIt"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">EdgeIt</span></span></span><a class="headerlink" href="#_CPPv4I000EN4pigo6EdgeItE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>An iterable edge list. </p>
-<p><dl class="simple">
-<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">V</span></code>: the vertex ID type </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">O</span></code>: the ordinal type </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">S</span></code>: the storage type for the edges </p></li>
-</ul>
+<p><dl class="field-list simple">
+<dt class="field-odd">tparam V</dt>
+<dd class="field-odd"><p>the vertex ID type </p>
 </dd>
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">begin</span></code>: the starting offset </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">end</span></code>: one passed the starting offset </p></li>
-</ul>
+<dt class="field-even">tparam O</dt>
+<dd class="field-even"><p>the ordinal type </p>
+</dd>
+<dt class="field-odd">tparam S</dt>
+<dd class="field-odd"><p>the storage type for the edges </p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">param begin</dt>
+<dd class="field-odd"><p>the starting offset </p>
+</dd>
+<dt class="field-even">param end</dt>
+<dd class="field-even"><p>one passed the starting offset </p>
 </dd>
 </dl>
 </p>
 <div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo6EdgeIt6EdgeItE1O1O1S">
-<span id="_CPPv3N4pigo6EdgeIt6EdgeItE1O1O1S"></span><span id="_CPPv2N4pigo6EdgeIt6EdgeItE1O1O1S"></span><span id="pigo::EdgeIt::EdgeIt__O.O.S"></span><span class="target" id="classpigo_1_1EdgeIt_1a0d918d9bb54abd4a470e1368e6291e26"></span><em class="property"><span class="pre">inline</span></em> <code class="sig-name descname"><span class="pre">EdgeIt</span></code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::O"><span class="pre">O</span></a> <em><span class="pre">begin</span></em>, <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::O"><span class="pre">O</span></a> <em><span class="pre">end</span></em>, <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::S"><span class="pre">S</span></a> <em><span class="pre">s</span></em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6EdgeIt6EdgeItE1O1O1S" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6EdgeIt6EdgeItE1O1O1S">
+<span id="_CPPv3N4pigo6EdgeIt6EdgeItE1O1O1S"></span><span id="_CPPv2N4pigo6EdgeIt6EdgeItE1O1O1S"></span><span id="pigo::EdgeIt::EdgeIt__O.O.S"></span><span class="target" id="classpigo_1_1EdgeIt_1a0d918d9bb54abd4a470e1368e6291e26"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EdgeIt</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::O"><span class="n"><span class="pre">O</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">begin</span></span>, <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::O"><span class="n"><span class="pre">O</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">end</span></span>, <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::S"><span class="n"><span class="pre">S</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6EdgeIt6EdgeItE1O1O1S" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Construct the edge iterator for the given offset values. </p>
-<p><dl class="simple">
-<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">begin</span></code>: the starting offset </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">end</span></code>: the ending offset </p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">s</span></code>: the storage </p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>begin</strong> – the starting offset </p></li>
+<li><p><strong>end</strong> – the ending offset </p></li>
+<li><p><strong>s</strong> – the storage </p></li>
 </ul>
 </dd>
 </dl>
-</p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo6EdgeIt5beginEv">
-<span id="_CPPv3N4pigo6EdgeIt5beginEv"></span><span id="_CPPv2N4pigo6EdgeIt5beginEv"></span><span id="pigo::EdgeIt::begin"></span><span class="target" id="classpigo_1_1EdgeIt_1aa28581841f13c33ac3a8fda5e35d69c8"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I000EN4pigo7EdgeItTE" title="pigo::EdgeItT"><span class="pre">EdgeItT</span></a><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::V"><span class="pre">V</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::O"><span class="pre">O</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::S"><span class="pre">S</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">begin</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6EdgeIt5beginEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6EdgeIt5beginEv">
+<span id="_CPPv3N4pigo6EdgeIt5beginEv"></span><span id="_CPPv2N4pigo6EdgeIt5beginEv"></span><span id="pigo::EdgeIt::begin"></span><span class="target" id="classpigo_1_1EdgeIt_1aa28581841f13c33ac3a8fda5e35d69c8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000EN4pigo7EdgeItTE" title="pigo::EdgeItT"><span class="n"><span class="pre">EdgeItT</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::V"><span class="n"><span class="pre">V</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::O"><span class="n"><span class="pre">O</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::S"><span class="n"><span class="pre">S</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">begin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6EdgeIt5beginEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the iterator start </p>
 </dd></dl>
 
 <dl class="cpp function">
-<dt id="_CPPv4N4pigo6EdgeIt3endEv">
-<span id="_CPPv3N4pigo6EdgeIt3endEv"></span><span id="_CPPv2N4pigo6EdgeIt3endEv"></span><span id="pigo::EdgeIt::end"></span><span class="target" id="classpigo_1_1EdgeIt_1aea6bda1a071b1f1433ec0b9726406ab2"></span><em class="property"><span class="pre">inline</span></em> <a class="reference internal" href="#_CPPv4I000EN4pigo7EdgeItTE" title="pigo::EdgeItT"><span class="pre">EdgeItT</span></a><span class="pre">&lt;</span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::V"><span class="pre">V</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::O"><span class="pre">O</span></a><span class="pre">,</span> <a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::S"><span class="pre">S</span></a><span class="pre">&gt;</span> <code class="sig-name descname"><span class="pre">end</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6EdgeIt3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6EdgeIt3endEv">
+<span id="_CPPv3N4pigo6EdgeIt3endEv"></span><span id="_CPPv2N4pigo6EdgeIt3endEv"></span><span id="pigo::EdgeIt::end"></span><span class="target" id="classpigo_1_1EdgeIt_1aea6bda1a071b1f1433ec0b9726406ab2"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000EN4pigo7EdgeItTE" title="pigo::EdgeItT"><span class="n"><span class="pre">EdgeItT</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::V"><span class="n"><span class="pre">V</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::O"><span class="n"><span class="pre">O</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000EN4pigo6EdgeItE" title="pigo::EdgeIt::S"><span class="n"><span class="pre">S</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">end</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6EdgeIt3endEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Return the iterator end </p>
 </dd></dl>
 
@@ -440,16 +527,16 @@
 </dd></dl>
 
 <dl class="cpp type">
-<dt id="_CPPv4N4pigo5GraphE">
-<span id="_CPPv3N4pigo5GraphE"></span><span id="_CPPv2N4pigo5GraphE"></span><span id="pigo::Graph"></span><em class="property"><span class="pre">type</span> </em><code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">Graph</span></code><a class="headerlink" href="#_CPPv4N4pigo5GraphE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo5GraphE">
+<span id="_CPPv3N4pigo5GraphE"></span><span id="_CPPv2N4pigo5GraphE"></span><span id="pigo::Graph"></span><span class="k"><span class="pre">type</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">Graph</span></span></span><a class="headerlink" href="#_CPPv4N4pigo5GraphE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp type">
-<dt id="_CPPv4N4pigo8BigGraphE">
-<span id="_CPPv3N4pigo8BigGraphE"></span><span id="_CPPv2N4pigo8BigGraphE"></span><span id="pigo::BigGraph"></span><em class="property"><span class="pre">type</span> </em><code class="sig-prename descclassname"><span class="pre">pigo</span><code class="sig-prename descclassname"><span class="pre">::</span></code></code><code class="sig-name descname"><span class="pre">BigGraph</span></code><a class="headerlink" href="#_CPPv4N4pigo8BigGraphE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo8BigGraphE">
+<span id="_CPPv3N4pigo8BigGraphE"></span><span id="_CPPv2N4pigo8BigGraphE"></span><span id="pigo::BigGraph"></span><span class="k"><span class="pre">type</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">BigGraph</span></span></span><a class="headerlink" href="#_CPPv4N4pigo8BigGraphE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
-</div>
+</section>
 
 
            </div>
@@ -499,6 +586,7 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
       <script type="text/javascript" src="../../_static/jquery.js"></script>
       <script type="text/javascript" src="../../_static/underscore.js"></script>
       <script type="text/javascript" src="../../_static/doctools.js"></script>

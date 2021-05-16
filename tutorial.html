@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to PIGO’s documentation! &mdash; PIGO 0.5.0 documentation</title>
+  <title>PIGO Tutorial &mdash; PIGO 0.5.0 documentation</title>
   
 
   
@@ -40,8 +40,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="PIGO 0.5.0 documentation" href="#"/>
-        <link rel="next" title="PIGO Tutorial" href="tutorial.html"/> 
+    <link rel="top" title="PIGO 0.5.0 documentation" href="index.html"/>
+        <link rel="next" title="Read Binary Files" href="tutorials/read_binary.html"/>
+        <link rel="prev" title="Welcome to PIGO’s documentation!" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -60,7 +61,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> PIGO
+            <a href="index.html" class="icon icon-home"> PIGO
           
 
           
@@ -91,8 +92,11 @@
             
             
                 <p class="caption"><span class="caption-text">Introduction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">PIGO Tutorial</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PIGO Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/read_binary.html">Read Binary Files</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">API Reference</span></p>
 <ul>
@@ -118,7 +122,7 @@
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">PIGO</a>
+          <a href="index.html">PIGO</a>
         
       </nav>
 
@@ -146,16 +150,16 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Welcome to PIGO’s documentation!</li>
+      <li>PIGO Tutorial</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
             
-              <a href="https://github.com/GT-TDALab/PIGO/blob/master/docs/index.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/GT-TDALab/PIGO/blob/master/docs/tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -169,44 +173,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="welcome-to-pigo-s-documentation">
-<h1>Welcome to PIGO’s documentation!<a class="headerlink" href="#welcome-to-pigo-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <section id="pigo-tutorial">
+<h1>PIGO Tutorial<a class="headerlink" href="#pigo-tutorial" title="Permalink to this headline">¶</a></h1>
+<p>This document provides several common uses of PIGO and slowly builds up to
+demonstrate PIGO’s features.</p>
+<p>Each section is designed to be self contained, so feel free to jump around
+or follow from the beginning to the end.</p>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Introduction</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">PIGO Tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorials/read_binary.html">Read Binary Files</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">API Reference</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api/datastructures.html">Datastructures</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/datastructures/coo.html">COO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/datastructures/csr.html">CSR</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/datastructures/graph.html">Graph</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/datastructures/matrix.html">Matrix</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api/pigo.html">Utilities</a></li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Other</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="README.html">PIGO: a Parallel Graph Input and Output library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="README.html#quick-start-guide">Quick Start Guide</a></li>
-<li class="toctree-l2"><a class="reference internal" href="README.html#documentation">Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="README.html#running-tests">Running Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="README.html#license">License</a></li>
-<li class="toctree-l2"><a class="reference internal" href="README.html#contributors">Contributors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="README.html#contact">Contact</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">License</a></li>
-<li class="toctree-l1"><a class="reference internal" href="genindex.html">Site Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/read_binary.html">Read Binary Files</a></li>
 </ul>
 </div>
 </section>
@@ -218,8 +193,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tutorial.html" class="btn btn-neutral float-right" title="PIGO Tutorial" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tutorials/read_binary.html" class="btn btn-neutral float-right" title="Read Binary Files" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to PIGO’s documentation!" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

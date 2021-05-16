@@ -28,6 +28,10 @@
   
 
   
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
     <link rel="stylesheet" href="_static/css/side_color.css" type="text/css" />
   
 
@@ -86,7 +90,7 @@
             
                 <p class="caption"><span class="caption-text">Introduction</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="README.html">PIGO: a Parallel Graph Input and Output library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">PIGO Tutorial</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Reference</span></p>
 <ul>
@@ -95,6 +99,7 @@
 </ul>
 <p class="caption"><span class="caption-text">Other</span></p>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">PIGO: a Parallel Graph Input and Output library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="LICENSE.html">License</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Site Map</a></li>
 </ul>
@@ -204,6 +209,12 @@
 </li>
       <li><a href="api/datastructures/coo.html#_CPPv4N4pigo3COO4saveENSt6stringE">pigo::COO::save (C++ function)</a>
 </li>
+      <li><a href="api/datastructures/coo.html#_CPPv4N4pigo3COO5set_nE5Label">pigo::COO::set_n (C++ function)</a>
+</li>
+      <li><a href="api/datastructures/coo.html#_CPPv4N4pigo3COO9set_ncolsE5Label">pigo::COO::set_ncols (C++ function)</a>
+</li>
+      <li><a href="api/datastructures/coo.html#_CPPv4N4pigo3COO9set_nrowsE5Label">pigo::COO::set_nrows (C++ function)</a>
+</li>
       <li><a href="api/datastructures/coo.html#_CPPv4N4pigo3COO9transposeEv">pigo::COO::transpose (C++ function)</a>
 </li>
       <li><a href="api/datastructures/coo.html#_CPPv4N4pigo3COO1wEv">pigo::COO::w (C++ function)</a>
@@ -234,13 +245,17 @@
 </li>
       <li><a href="api/datastructures/csr.html#_CPPv4N4pigo3CSR7offsetsEv">pigo::CSR::offsets (C++ function)</a>
 </li>
-      <li><a href="api/datastructures/csr.html#_CPPv4N4pigo3CSR4saveENSt6stringE">pigo::CSR::save (C++ function)</a>
+      <li><a href="api/datastructures/csr.html#_CPPv4N4pigo3CSR4saveENSt6stringE">pigo::CSR::save (C++ function)</a>, <a href="api/datastructures/csr.html#_CPPv4N4pigo3CSR4saveER4File">[1]</a>
+</li>
+      <li><a href="api/datastructures/csr.html#_CPPv4NK4pigo3CSR9save_sizeEv">pigo::CSR::save_size (C++ function)</a>
 </li>
       <li><a href="api/datastructures/csr.html#_CPPv4N4pigo3CSR7weightsEv">pigo::CSR::weights (C++ function)</a>
 </li>
       <li><a href="api/datastructures/graph.html#_CPPv4I0000_b00EN4pigo7DiGraphE">pigo::DiGraph (C++ class)</a>
 </li>
-      <li><a href="api/datastructures/graph.html#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE">pigo::DiGraph::DiGraph (C++ function)</a>, <a href="api/datastructures/graph.html#_CPPv4N4pigo7DiGraph7DiGraphENSt6stringE">[1]</a>
+      <li><a href="api/datastructures/graph.html#_CPPv4I000_b_b_b_b00EN4pigo7DiGraph7DiGraphER3COOI11COOvertex_t13COOedge_ctr_t10COOStorage6COOsym5COOut5COOsl5COOme8weighted4COOW5COOWSE">pigo::DiGraph::DiGraph (C++ function)</a>, <a href="api/datastructures/graph.html#_CPPv4N4pigo7DiGraph7DiGraphENSt6stringE">[1]</a>, <a href="api/datastructures/graph.html#_CPPv4N4pigo7DiGraph7DiGraphENSt6stringE8FileType">[2]</a>, <a href="api/datastructures/graph.html#_CPPv4N4pigo7DiGraph7DiGraphER4File8FileType">[3]</a>
+</li>
+      <li><a href="api/datastructures/graph.html#_CPPv4N4pigo7DiGraph19digraph_file_headerE">pigo::DiGraph::digraph_file_header (C++ member)</a>
 </li>
       <li><a href="api/datastructures/graph.html#_CPPv4N4pigo7DiGraph4freeEv">pigo::DiGraph::free (C++ function)</a>
 </li>
@@ -255,6 +270,8 @@
       <li><a href="api/datastructures/graph.html#_CPPv4N4pigo7DiGraph5nrowsEv">pigo::DiGraph::nrows (C++ function)</a>
 </li>
       <li><a href="api/datastructures/graph.html#_CPPv4N4pigo7DiGraph3outEv">pigo::DiGraph::out (C++ function)</a>
+</li>
+      <li><a href="api/datastructures/graph.html#_CPPv4N4pigo7DiGraph4saveENSt6stringE">pigo::DiGraph::save (C++ function)</a>
 </li>
       <li><a href="api/datastructures/graph.html#_CPPv4I000EN4pigo6EdgeItE">pigo::EdgeIt (C++ class)</a>
 </li>
@@ -286,12 +303,12 @@
 </li>
       <li><a href="api/pigo.html#_CPPv4I0EN4pigo4File4readE1Tv">pigo::File::read (C++ function)</a>, <a href="api/pigo.html#_CPPv4N4pigo4File4readERKNSt6stringE">[1]</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/pigo.html#_CPPv4N4pigo4File6readerEv">pigo::File::reader (C++ function)</a>
 </li>
       <li><a href="api/pigo.html#_CPPv4N4pigo4File4seekE6size_t">pigo::File::seek (C++ function)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/pigo.html#_CPPv4N4pigo4File4sizeEv">pigo::File::size (C++ function)</a>
 </li>
       <li><a href="api/pigo.html#_CPPv4I0EN4pigo4File5writeEv1T">pigo::File::write (C++ function)</a>
@@ -361,6 +378,8 @@
       <li><a href="api/pigo.html#_CPPv4N4pigo8FileType12PIGO_COO_BINE">pigo::FileType::PIGO_COO_BIN (C++ enumerator)</a>
 </li>
       <li><a href="api/pigo.html#_CPPv4N4pigo8FileType12PIGO_CSR_BINE">pigo::FileType::PIGO_CSR_BIN (C++ enumerator)</a>
+</li>
+      <li><a href="api/pigo.html#_CPPv4N4pigo8FileType16PIGO_DIGRAPH_BINE">pigo::FileType::PIGO_DIGRAPH_BIN (C++ enumerator)</a>
 </li>
       <li><a href="api/datastructures/graph.html#_CPPv4N4pigo5GraphE">pigo::Graph (C++ type)</a>
 </li>
@@ -455,6 +474,7 @@
             SOURCELINK_SUFFIX: '.txt'
         };
     </script>
+      <script type="text/javascript" src="_static/documentation_options.js"></script>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
