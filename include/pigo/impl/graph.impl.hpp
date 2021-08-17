@@ -52,7 +52,7 @@ namespace pigo {
             // Build a COO, then load ourselves from it
             COO<
                     vertex_t, edge_ctr_t, edge_storage,
-                    false, false, false, false,
+                    false, false, false,
                     weighted, Weight, WeightStorage
                 > coo { f, ft };
             from_coo_(coo);

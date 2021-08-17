@@ -126,10 +126,10 @@ namespace pigo {
 
             /** @brief Build a Matrix from a COO */
             template <class COOLabel, class COOOrdinal, class COOStorage,
-                     bool COOsym, bool COOut, bool COOsl, bool COOme,
+                     bool COOsym, bool COOut, bool COOsl,
                      class COOW, class COOWS>
             void from_coo_(COO<COOLabel, COOOrdinal, COOStorage, COOsym, COOut,
-                    COOsl, COOme, weighted, COOW, COOWS>& coo) {
+                    COOsl, weighted, COOW, COOWS>& coo) {
                 auto coo_copy = coo;
                 coo_copy.transpose();
 
@@ -169,16 +169,15 @@ namespace pigo {
              * @tparam COOsym whether the COO is symmetrized
              * @tparam COOut whether the COO only keeps the upper triangle
              * @tparam COOsl whether the COO removes self loops
-             * @tparam COOme whether the COO removes multiple edges
              * @tparam COOW the weight type of the COO
              * @tparam COOWS the weight storage type of the COO
              * @param coo the COO object to load the CSR from
              */
             template <class COOLabel, class COOOrdinal, class COOStorage,
-                     bool COOsym, bool COOut, bool COOsl, bool COOme,
+                     bool COOsym, bool COOut, bool COOsl,
                      class COOW, class COOWS>
             Matrix(COO<COOLabel, COOOrdinal, COOStorage, COOsym, COOut,
-                    COOsl, COOme, weighted, COOW, COOWS>& coo) {
+                    COOsl, weighted, COOW, COOWS>& coo) {
                 from_coo_(coo);
             }
 
@@ -189,7 +188,7 @@ namespace pigo {
             Matrix(std::string filename) {
                 COO<
                     Label, Ordinal, LabelStorage,
-                    false, false, false, false,
+                    false, false, false,
                     weighted, Weight, WeightStorage
                 > coo {filename};
                 from_coo_(coo);

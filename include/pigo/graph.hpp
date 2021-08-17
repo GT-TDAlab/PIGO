@@ -207,10 +207,10 @@ namespace pigo {
 
             /** @build a DiGraph from a COO */
             template <class COOvertex_t, class COOedge_ctr_t, class COOStorage,
-                     bool COOsym, bool COOut, bool COOsl, bool COOme,
+                     bool COOsym, bool COOut, bool COOsl,
                      class COOW, class COOWS>
             void from_coo_(COO<COOvertex_t, COOedge_ctr_t, COOStorage, COOsym, COOut,
-                    COOsl, COOme, weighted, COOW, COOWS>& coo) {
+                    COOsl, weighted, COOW, COOWS>& coo) {
                 auto coo_copy = coo;
                 coo_copy.transpose();
 
@@ -252,16 +252,15 @@ namespace pigo {
              * @tparam COOsym whether the COO is symmetrized
              * @tparam COOut whether the COO only keeps the upper triangle
              * @tparam COOsl whether the COO removes self loops
-             * @tparam COOme whether the COO removes multiple edges
              * @tparam COOW the weight type of the COO
              * @tparam COOWS the weight storage type of the COO
              * @param coo the COO object to load the CSR from
              */
             template <class COOvertex_t, class COOedge_ctr_t, class COOStorage,
-                     bool COOsym, bool COOut, bool COOsl, bool COOme,
+                     bool COOsym, bool COOut, bool COOsl,
                      class COOW, class COOWS>
             DiGraph(COO<COOvertex_t, COOedge_ctr_t, COOStorage, COOsym, COOut,
-                    COOsl, COOme, weighted, COOW, COOWS>& coo) {
+                    COOsl, weighted, COOW, COOWS>& coo) {
                 from_coo_(coo);
             }
 

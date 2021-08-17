@@ -35,6 +35,15 @@
             }                                                                           \
     } while(0);
 
+#define NOPRINT_NEQ(x,y)                                                                \
+    do {                                                                                \
+        if ((x) == (y)) {                                                               \
+            std::cerr << "FAILURE: values are equal"                                    \
+                << " for " << #x << " in " << __FILE__ << ":" << __LINE__ << std::endl; \
+            return 1;                                                                   \
+            }                                                                           \
+    } while(0);
+
 #define FEQ(x,y)                                                                        \
     do {                                                                                \
         if (std::fabs((x) - (y)) > F_EPS) {                                             \

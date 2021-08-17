@@ -56,9 +56,6 @@ namespace pigo {
      *         If set to true, this will detect and remove any self loops
      *         (if the coordinate is (x,y,val) and (x==y), the entry will
      *         not be included in the COO.
-     * @tparam remove_multi_edges whether to remove multiple edges.
-     *         If set to true, any multi-edges will be detected and removed.
-     *         These are repeat edges, with (x,y,val) == (x,y,val)
      * @tparam weighted if true, support and use weights
      * @tparam Weight the weight data type.
      * @tparam WeightStorage the storage type for the weights. This can be
@@ -72,7 +69,6 @@ namespace pigo {
         bool symmetric=false,
         bool keep_upper_triangle_only=false,
         bool remove_self_loops=false,
-        bool remove_multi_edges=false,
         bool weighted=false,
         class Weight=float,
         class WeightStorage=Weight*
@@ -235,6 +231,12 @@ namespace pigo {
             /** @brief Initialize an empty COO */
             COO() : n_(0), nrows_(0), ncols_(0), m_(0) { }
 
+            /** @brief Provide space for copying in existing, out-of-band data */
+            COO(Label n, Label nrows, Label ncols, Ordinal m) :
+                    n_(n), nrows_(nrows), ncols_(ncols), m_(m) {
+                allocate_();
+            }
+
             /** @brief Retrieve the X coordinate array
              *
              * @return the X array in the format Storage
@@ -357,12 +359,10 @@ namespace pigo {
         class WeightStorage=Weight*,
         bool symmetric=false,
         bool keep_upper_triangle_only=false,
-        bool remove_self_loops=false,
-        bool remove_multi_edges=false
+        bool remove_self_loops=false
     >
     using WCOO = COO<Label, Ordinal, Storage,
-        symmetric, keep_upper_triangle_only,
-        remove_self_loops, remove_multi_edges,
+        symmetric, keep_upper_triangle_only, remove_self_loops,
         true, Weight, WeightStorage>;
 
     /** @brief Holds a pointer based weighted COO
@@ -375,8 +375,7 @@ namespace pigo {
         class Weight=float,
         bool symmetric=false,
         bool keep_upper_triangle_only=false,
-        bool remove_self_loops=false,
-        bool remove_multi_edges=false
+        bool remove_self_loops=false
     >
     using WCOOPtr = COO<
         Label,
@@ -385,7 +384,6 @@ namespace pigo {
         symmetric,
         keep_upper_triangle_only,
         remove_self_loops,
-        remove_multi_edges,
         true,
         Weight,
         Weight*>;

@@ -114,16 +114,15 @@ namespace pigo {
              * @tparam COOsym whether the COO is symmetrized
              * @tparam COOut whether the COO only keeps the upper triangle
              * @tparam COOsl whether the COO removes self loops
-             * @tparam COOme whether the COO removes multiple edges
              * @tparam COOW the weight type of the COO
              * @tparam COOWS the weight storage type of the COO
              * @param coo the COO to load from
              */
             template <class COOLabel, class COOOrdinal, class COOStorage,
-                     bool COOsym, bool COOut, bool COOsl, bool COOme,
+                     bool COOsym, bool COOut, bool COOsl,
                      class COOW, class COOWS>
             void convert_coo_(COO<COOLabel, COOOrdinal, COOStorage,
-                    COOsym, COOut, COOsl, COOme, weighted, COOW, COOWS>&
+                    COOsym, COOut, COOsl, weighted, COOW, COOWS>&
                     coo);
         public:
             /** @brief Initialize an empty CSR */
@@ -142,16 +141,15 @@ namespace pigo {
              * @tparam COOsym whether the COO is symmetrized
              * @tparam COOut whether the COO only keeps the upper triangle
              * @tparam COOsl whether the COO removes self loops
-             * @tparam COOme whether the COO removes multiple edges
              * @tparam COOW the weight type of the COO
              * @tparam COOWS the weight storage type of the COO
              * @param coo the COO object to load the CSR from
              */
             template <class COOLabel, class COOOrdinal, class COOStorage,
-                     bool COOsym, bool COOut, bool COOsl, bool COOme,
+                     bool COOsym, bool COOut, bool COOsl,
                      class COOW, class COOWS>
             CSR(COO<COOLabel, COOOrdinal, COOStorage, COOsym, COOut,
-                    COOsl, COOme, weighted, COOW, COOWS>& coo);
+                    COOsl, weighted, COOW, COOWS>& coo);
 
             /** @brief Initialize from a file
              *
@@ -213,17 +211,20 @@ namespace pigo {
              */
             Label n() { return n_; }
 
-            /** @brief Retrieves the number of rows in the COO
+            /** @brief Retrieves the number of rows in the CSR
              *
              * @return the number of rows
              */
             Label nrows() { return nrows_; }
 
-            /** @brief Retrieves the number of columns in the COO
+            /** @brief Retrieves the number of columns in the CSR
              *
              * @return the number of columns
              */
             Label ncols() { return ncols_; }
+
+            /** @brief Sort all row adjacencies in the CSR */
+            void sort();
 
             /** @brief Utility to free consumed memory
              *
@@ -243,7 +244,6 @@ namespace pigo {
              * @return size_t containing the binary file size
              */
             size_t save_size () const;
-
 
             /** @brief Save the loaded CSR as a PIGO binary file
              *

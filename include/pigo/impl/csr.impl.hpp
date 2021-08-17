@@ -3,6 +3,7 @@
  * Copyright (c) 2021 GT-TDALab
  */
 
+#include <algorithm>
 #include <atomic>
 #include <vector>
 #include <string>
@@ -49,7 +50,7 @@ namespace pigo {
         if (ft_used == MATRIX_MARKET || ft_used == EDGE_LIST ||
                 ft_used == PIGO_COO_BIN) {
             // First build a COO, then load here
-            COO<L,O,L*, false, false, false, false, wgt, W, WS> coo { f, ft_used };
+            COO<L,O,L*, false, false, false, wgt, W, WS> coo { f, ft_used };
             convert_coo_(coo);
             coo.free();
         } else if (ft_used == PIGO_CSR_BIN) {
@@ -91,20 +92,20 @@ namespace pigo {
 
     template<class L, class O, class LS, class OS, bool wgt, class W,
         class WS> template<class COOL, class COOO, class COOStorage, bool
-            COOsym, bool COOut, bool COOsl, bool COOme, class COOW, class
+            COOsym, bool COOut, bool COOsl, class COOW, class
             COOWS>
     CSR<L,O,LS,OS,wgt,W,WS>::CSR(COO<COOL,COOO,COOStorage,COOsym,
-            COOut,COOsl,COOme,wgt,COOW,COOWS>
+            COOut,COOsl,wgt,COOW,COOWS>
             &coo) {
         convert_coo_(coo);
     }
 
     template<class L, class O, class LS, class OS, bool wgt, class W,
         class WS> template<class COOL, class COOO, class COOStorage,
-        bool COOsym, bool COOut, bool COOsl, bool COOme,
+        bool COOsym, bool COOut, bool COOsl,
         class COOW, class COOWS>
     void CSR<L,O,LS,OS,wgt,W,WS>::convert_coo_(COO<
-            COOL,COOO,COOStorage,COOsym,COOut,COOsl,COOme,wgt,COOW,COOWS>&
+            COOL,COOO,COOStorage,COOsym,COOut,COOsl,wgt,COOW,COOWS>&
             coo) {
         // Set the sizes first
         n_ = coo.n();
@@ -508,6 +509,24 @@ namespace pigo {
         if (w_size > 0) {
             char* wend = detail::get_raw_data_<WS>(weights_);
             f.parallel_read(wend, w_size);
+        }
+    }
+
+    template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
+    void CSR<L,O,LS,OS,wgt,W,WS>::sort() {
+        #pragma omp parallel for schedule(dynamic, 10240)
+        for (L v = 0; v < n_; ++v) {
+            // Get the start and end range
+            O start = detail::get_value_<OS, O>(offsets_, v);
+            O end = detail::get_value_<OS, O>(offsets_, v+1);
+
+            L* endpoints = (L*)detail::get_raw_data_(endpoints_);
+
+            L* range_start = endpoints+start;
+            L* range_end = endpoints+end;
+
+            // Sort the range from the start to the end
+            std::sort(range_start, range_end);
         }
     }
 

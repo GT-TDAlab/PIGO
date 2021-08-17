@@ -10,24 +10,24 @@
 
 namespace pigo {
 
-    template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
-    COO<L,O,S,sym,ut,sl,me,wgt,W,WS>::COO(std::string fn) : COO(fn, AUTO) { }
+    template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
+    COO<L,O,S,sym,ut,sl,wgt,W,WS>::COO(std::string fn) : COO(fn, AUTO) { }
 
-    template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
-    COO<L,O,S,sym,ut,sl,me,wgt,W,WS>::COO(std::string fn, FileType ft) {
+    template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
+    COO<L,O,S,sym,ut,sl,wgt,W,WS>::COO(std::string fn, FileType ft) {
         // Open the file for reading
         ROFile f { fn };
 
         read_(f, ft);
     }
 
-    template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
-    COO<L,O,S,sym,ut,sl,me,wgt,W,WS>::COO(File& f, FileType ft) {
+    template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
+    COO<L,O,S,sym,ut,sl,wgt,W,WS>::COO(File& f, FileType ft) {
         read_(f, ft);
     }
 
-    template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
-    void COO<L,O,S,sym,ut,sl,me,wgt,W,WS>::read_(File& f, FileType ft) {
+    template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
+    void COO<L,O,S,sym,ut,sl,wgt,W,WS>::read_(File& f, FileType ft) {
         FileType ft_used = ft;
         // If the file type is AUTO, then try to detect it
         if (ft_used == AUTO) {
@@ -54,15 +54,15 @@ namespace pigo {
         }
     }
 
-    template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
+    template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
     template <class CL, class CO, class LS, class OS, class CW, class CWS>
-    COO<L,O,S,sym,ut,sl,me,wgt,W,WS>::COO(CSR<CL,CO,LS,OS,wgt,CW,CWS>& csr) {
+    COO<L,O,S,sym,ut,sl,wgt,W,WS>::COO(CSR<CL,CO,LS,OS,wgt,CW,CWS>& csr) {
         convert_csr_(csr);
     }
 
-    template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
+    template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
     template <class CL, class CO, class LS, class OS, class CW, class CWS>
-    void COO<L,O,S,sym,ut,sl,me,wgt,W,WS>::convert_csr_(CSR<CL,CO,LS,OS,wgt,CW,CWS>& csr) {
+    void COO<L,O,S,sym,ut,sl,wgt,W,WS>::convert_csr_(CSR<CL,CO,LS,OS,wgt,CW,CWS>& csr) {
         // First, set our sizes and allocate space
         n_ = csr.n();
         m_ = csr.m();
@@ -101,8 +101,8 @@ namespace pigo {
         }
     }
 
-    template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
-    void COO<L,O,S,sym,ut,sl,me,wgt,W,WS>::allocate_() {
+    template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
+    void COO<L,O,S,sym,ut,sl,wgt,W,WS>::allocate_() {
         detail::allocate_mem_<S>(x_, m_);
         detail::allocate_mem_<S>(y_, m_);
         detail::allocate_mem_<WS,wgt>(w_, m_);
@@ -221,12 +221,12 @@ namespace pigo {
             >::op_(coord_pos, ws, r);
         }
 
-        template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS, bool count_only>
+        template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS, bool count_only>
         struct read_coord_entry_i_;
 
         /** Count-only implementation of reading a coord entry */
-        template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
-        struct read_coord_entry_i_<L,O,S,sym,ut,sl,me,wgt,W,WS,true> {
+        template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
+        struct read_coord_entry_i_<L,O,S,sym,ut,sl,wgt,W,WS,true> {
             static inline void op_(S& x_, S& y_, WS& w_, size_t &coord_pos, FileReader &r, L& max_row, L& max_col) {
                 L x = r.read_int<L>();
                 r.move_to_next_int();
@@ -236,7 +236,7 @@ namespace pigo {
                 r.move_to_eol();
                 r.move_to_next_int();
                 if (!coo_read_rsl_i_<L, sl>::op_(x, y)) {
-                    return read_coord_entry_i_<L,O,S,sym,ut,sl,me,wgt,W,WS,true>::op_(x_, y_, w_, coord_pos, r, max_row, max_col);
+                    return read_coord_entry_i_<L,O,S,sym,ut,sl,wgt,W,WS,true>::op_(x_, y_, w_, coord_pos, r, max_row, max_col);
                 }
                 if (coo_read_sym_i_<sym>::op_() && x != y) ++coord_pos;
                 ++coord_pos;
@@ -244,8 +244,8 @@ namespace pigo {
         };
 
         /** Setting implementation of reading a coord entry */
-        template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
-        struct read_coord_entry_i_<L,O,S,sym,ut,sl,me,wgt,W,WS,false> {
+        template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
+        struct read_coord_entry_i_<L,O,S,sym,ut,sl,wgt,W,WS,false> {
             static inline void op_(S& x_, S& y_, WS& w_, size_t &coord_pos, FileReader &r, L& max_row, L& max_col) {
                 L x = r.read_int<L>();
                 r.move_to_next_int();
@@ -255,7 +255,7 @@ namespace pigo {
                 r.move_to_eol();
                 r.move_to_next_int();
                 if (!coo_read_rsl_i_<L, sl>::op_(x, y)) {
-                    return read_coord_entry_i_<L,O,S,sym,ut,sl,me,wgt,W,WS,false>::op_(x_, y_, w_, coord_pos, r, max_row, max_col);
+                    return read_coord_entry_i_<L,O,S,sym,ut,sl,wgt,W,WS,false>::op_(x_, y_, w_, coord_pos, r, max_row, max_col);
                 }
                 set_value_(x_, coord_pos, x);
                 set_value_(y_, coord_pos, y);
@@ -277,7 +277,7 @@ namespace pigo {
         /** Count-only implementation of reading a coord entry without
          * flags */
         template<class L, class O, class S, bool wgt, class W, class WS>
-        struct read_coord_entry_i_<L,O,S,false,false,false,false,wgt,W,WS,true> {
+        struct read_coord_entry_i_<L,O,S,false,false,false,wgt,W,WS,true> {
             static inline void op_(S&, S&, WS&, size_t &coord_pos, FileReader &r, L&, L&) {
                 r.move_to_next_int();
                 if (!r.good()) return;
@@ -289,7 +289,7 @@ namespace pigo {
 
         /** Setting implementation of reading a coord entry without flags */
         template<class L, class O, class S, bool wgt, class W, class WS>
-        struct read_coord_entry_i_<L,O,S,false,false,false,false,wgt,W,WS,false> {
+        struct read_coord_entry_i_<L,O,S,false,false,false,wgt,W,WS,false> {
             static inline void op_(S& x_, S& y_, WS& w_, size_t &coord_pos, FileReader &r, L& max_row, L& max_col) {
                 L x = r.read_int<L>();
                 r.move_to_next_int();
@@ -307,15 +307,15 @@ namespace pigo {
         };
     }
 
-    template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
+    template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
     template<bool count_only>
-    void COO<L,O,S,sym,ut,sl,me,wgt,W,WS>::read_coord_entry_(size_t &coord_pos, FileReader &r,
+    void COO<L,O,S,sym,ut,sl,wgt,W,WS>::read_coord_entry_(size_t &coord_pos, FileReader &r,
             L& max_row, L& max_col) {
-        detail::read_coord_entry_i_<L,O,S,sym,ut,sl,me,wgt,W,WS,count_only>::op_(x_, y_, w_, coord_pos, r, max_row, max_col);
+        detail::read_coord_entry_i_<L,O,S,sym,ut,sl,wgt,W,WS,count_only>::op_(x_, y_, w_, coord_pos, r, max_row, max_col);
     }
 
-    template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
-    void COO<L,O,S,sym,ut,sl,me,wgt,W,WS>::read_mm_(FileReader& r) {
+    template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
+    void COO<L,O,S,sym,ut,sl,wgt,W,WS>::read_mm_(FileReader& r) {
         // Matrix market is ready similar to edge lists, however first the
         // header is skipped
         // Furthermore, any attributes are ignored (symmetric, etc.)
@@ -371,8 +371,8 @@ namespace pigo {
         else n_ = ncols_;
     }
 
-    template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
-    void COO<L,O,S,sym,ut,sl,me,wgt,W,WS>::read_el_(FileReader& r) {
+    template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
+    void COO<L,O,S,sym,ut,sl,wgt,W,WS>::read_el_(FileReader& r) {
         // Get the number of threads
         omp_set_dynamic(0);
         size_t num_threads = 0;
@@ -465,8 +465,8 @@ namespace pigo {
         else n_ = ncols_;
     }
 
-    template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
-    void COO<L,O,S,sym,ut,sl,me,wgt,W,WS>::save(std::string fn) {
+    template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
+    void COO<L,O,S,sym,ut,sl,wgt,W,WS>::save(std::string fn) {
         // Before creating the file, we need to find the size
         size_t out_size = 0;
         std::string cfh { coo_file_header };
@@ -513,8 +513,8 @@ namespace pigo {
         }
     }
 
-    template<class L, class O, class S, bool sym, bool ut, bool sl, bool me, bool wgt, class W, class WS>
-    void COO<L,O,S,sym,ut,sl,me,wgt,W,WS>::read_bin_(File& f) {
+    template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
+    void COO<L,O,S,sym,ut,sl,wgt,W,WS>::read_bin_(File& f) {
         // Read and confirm the header
         f.read(coo_file_header);
 

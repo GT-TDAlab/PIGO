@@ -22,11 +22,15 @@ This file documents PIGO's changes.
 - Support for (weighted) graphs
 - Support for changing the number of rows, cols, and labels in COOs
 - Support for reading and writing binary directed graphs
+- Added a release generation script to create a single header file
+- Added support for sorting CSRs
+- Support for creating a fixed-sized uninitialized COO
 
 ### Breaking changes (minor)
 - Removed the Matrix alias due to adding full (non-symmetric) Matrix
   support
 - Changed symmetrizing to not introduce multiedge diagonals
+- Removed the option for the COO to remove multi edges
 
 ### Fixed
 - Fixed support for converting from shared_ptr COOs to CSRs
