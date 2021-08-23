@@ -4,30 +4,6 @@ dist: focal
 compiler: gcc
 jobs:
   include:
-  - language: python
-    python: '3.7'
-    addons:
-      apt:
-        packages:
-        - doxygen
-        - graphviz
-    install:
-    - pip3 install -r docs/requirements.txt
-    script:
-    - mkdir -p ${TRAVIS_BUILD_DIR}/build
-    - cd ${TRAVIS_BUILD_DIR}/build
-    - cmake ..
-    - make -i docs
-    - cd ${TRAVIS_BUILD_DIR}
-    deploy:
-      strategy: git
-      provider: pages
-      local_dir: "./build/docs/sphinx"
-      github_token: "$GH_PAGES"
-      keep_history: true
-      verbose: true
-      skip_cleanup: true
-      cleanup: false
   - before_script:
     - mkdir -p ${TRAVIS_BUILD_DIR}/build-test
     - cd ${TRAVIS_BUILD_DIR}/build-test
@@ -35,6 +11,3 @@ jobs:
     script:
     - make -j 8
     - make test
-env:
-  global:
-  - secure: nMrhpnINXVcmOdM+5ot7O158zGWBZmn0oWrCU5f05GDsnzv3Lsj8TKWhBuAK7rH6JvKlm1MR15hWSGo+jOzUx909bAFagPLFmDuC+DykgAr1k4XPQyhSDzKFJBsipydxolvsSfx/+4rhVk6/ugfNc8aAEdLconKW7it5Z5uYAmbDtPZvDZGXzgFHafRcoxmbgM2CXlgT/MdHu7Nt5Ff3hvSiu4MsaYEtvzaPWkD+yLK4/ukfukQA0apz8G57JOv0NzWFD4cJKgtjMFp1gdy4Ah0QU0yUnChpjn8LlVgpPSyFnzK/kyqoiszpgs6dL0tn41jfHMQhQd9AWg+Oq/sySZ4SzQlDlfrGmx9PgF+utaVaHxennpNlQNeWYUh5nBQEpEgbAkmDapBsc6HaOTxkcjdF90jdnPrDtB9NVjXTisv+fQ2bwapwt7iK8nDtjX9xZVaqAWLP69AETnAeAXqGVwcnwHbzDyCszYz+2Tr0DuZBpe7Y7jJ6hsnPv/TpmHl0iplWjLKXXuw1o414xuVEdbf9FpUDcquAvpRPWq8Zrm5DPuvMaLVEhq7GaFzbsTLN35nja28ATVVEXx1F9h2Qc4GBlP44RGRtbDU6ZKWTe8zDmnO6xfPO2+8JwIrN3/uQ2H51AYpqhtfQnOOnNaDa8iG+BdBmSz5drS7+Xacn8NY=
