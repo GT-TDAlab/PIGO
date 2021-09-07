@@ -99,6 +99,23 @@ Please see [`LICENSE.md`](LICENSE.md) for the license.
 * [Kasimir Gabert](https://kasimir.co)
 * [Umit V. Catalyurek](https://cc.gatech.edu/~umit)
 
+## Citation
+
+If you use this work in an academic setting, or are inspired by it, please
+consider citing the following (BibTeX):
+
+```bibtex
+@inproceedings {Gabert21-GrAPL,
+    title = {{PIGO}: A Parallel Graph Input/Output Library},
+    author = {Kasimir Gabert and \"Umit V. \c{C}ataly\"{u}rek},
+    booktitle = {2021 IEEE International Parallel and Distributed Processing Symposium Workshops (IPDPSW)},
+    pages = {276--279},
+    year = {2021},
+    organization = {IEEE},
+    doi = { 10.1109/IPDPSW52791.2021.00050 }
+}
+```
+
 ## Contact
 
 For questions or support please either open an issue or contact
