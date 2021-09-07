@@ -25,6 +25,7 @@ This file documents PIGO's changes.
 - Added a release generation script to create a single header file
 - Added support for sorting CSRs
 - Support for creating a fixed-sized uninitialized COO
+- Added an example for finding an edge in a graph
 
 ### Breaking changes (minor)
 - Removed the Matrix alias due to adding full (non-symmetric) Matrix
@@ -38,6 +39,7 @@ This file documents PIGO's changes.
 - Fixed setting n for matrix market files instead of just nrows/ncols
 - Fixed symmetrizing with weights
 - Fixed a bug where nrows and ncols were not saved in CSR binary files
+- Fixed CMake to ensure anything that uses PIGO is linked with OpenMP
 
 ## [0.4] - 2021-02-17
 Initial public release.

@@ -22,6 +22,7 @@ find_package(OpenMP REQUIRED)
 # Create the pigo library target
 add_library(pigo INTERFACE)
 target_include_directories(pigo INTERFACE include/)
+target_link_libraries(pigo INTERFACE OpenMP::OpenMP_CXX)
 
 # ----------------------------------------------------------------------------
 # Force out-of-source
