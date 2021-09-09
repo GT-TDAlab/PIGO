@@ -413,6 +413,45 @@ namespace pigo {
      */
     template<class T> void write(FilePos &fp, T val);
 
+    /** @brief Return the size taken to write the given object
+     *
+     * @tparam T the type of the object
+     * @param obj the object to return the output size
+     *
+     * @return size_t number of bytes used to write the object
+     */
+    template<typename T,
+        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
+        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        > inline size_t write_size(T obj);
+    template<typename T,
+        typename std::enable_if<std::is_integral<T>::value>::type* = nullptr,
+        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        > inline size_t write_size(T obj);
+    template<typename T,
+        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
+        typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr
+        > inline size_t write_size(T obj);
+
+    /** @brief Write an ASCII value to an open file
+     *
+     * @tparam T the type of object to write
+     * @param[in,out] fp the file position of the open file
+     * @param obj the object to write
+     */
+    template<typename T,
+        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
+        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        > inline void write_ascii(FilePos &fp, T obj);
+    template<typename T,
+        typename std::enable_if<std::is_integral<T>::value>::type* = nullptr,
+        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        > inline void write_ascii(FilePos &fp, T obj);
+    template<typename T,
+        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
+        typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr
+        > inline void write_ascii(FilePos &fp, T obj);
+
     namespace detail {
 
         /** A holder for allocation implementations */

@@ -40,7 +40,7 @@ namespace pigo {
         }
 
         // Open the file to get the total size and base the mmap on
-        #ifdef _GNU_SOURCE
+        #ifdef __linux__
         int fd = open(fn.c_str(), open_mode | O_DIRECT);
         #else
         int fd = open(fn.c_str(), open_mode);
@@ -178,6 +178,111 @@ namespace pigo {
         for (char x : val) {
             write(fp, x);
         }
+    }
+
+    namespace detail {
+        template<typename T,
+            typename std::enable_if<!std::is_signed<T>::value>::type* = nullptr
+            >
+        inline
+        size_t neg_size(T obj) {
+            (void)obj;
+            return 0;
+        }
+
+        template<typename T,
+            typename std::enable_if<std::is_signed<T>::value>::type* = nullptr
+            >
+        inline
+        size_t neg_size(T obj) {
+            if (obj < 0) return 1;
+            return 0;
+        }
+
+        template<typename T, typename std::enable_if<!std::is_signed<T>::value>::type* = nullptr >
+        inline
+        void write_neg_ascii(FilePos &fp, T obj) {
+            (void)fp;
+            (void)obj;
+        }
+
+        template<typename T, typename std::enable_if<std::is_signed<T>::value>::type* = nullptr >
+        inline
+        void write_neg_ascii(FilePos &fp, T obj) {
+            if (obj < 0) pigo::write(fp, '-');
+        }
+    }
+
+    template<typename T,
+        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
+        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        >
+    inline
+    size_t write_size(T obj) {
+        // We do not have special processing for this obj
+        return std::to_string(obj).size();
+    }
+
+    template<typename T,
+        typename std::enable_if<std::is_integral<T>::value>::type* = nullptr,
+        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        >
+    inline
+    size_t write_size(T obj) {
+        size_t res = 0;
+        do {
+            obj /= 10;
+            ++res;
+        } while (obj != 0);
+        // If it is signed, and negative, it will take an additional char
+        return res + detail::neg_size(obj);
+    }
+
+    template<typename T,
+        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
+        typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr
+        >
+    inline
+    size_t write_size(T obj) {
+        // This can be optimized significantly by manually writing
+        return std::to_string(obj).size();
+    }
+
+    template<typename T,
+        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
+        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        >
+    inline
+    void write_ascii(FilePos &fp, T obj) {
+        // We do not have special processing for this obj
+        write(fp, std::to_string(obj));
+    }
+
+    template<typename T,
+        typename std::enable_if<std::is_integral<T>::value>::type* = nullptr,
+        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        >
+    inline
+    void write_ascii(FilePos &fp, T obj) {
+        detail::write_neg_ascii(fp, obj);
+
+        size_t num_size = write_size(obj);
+        size_t pos = num_size-1;
+        // Write out each digit
+        do {
+            *((char*)fp+pos--) = (obj%10)+'0';
+            obj /= 10;
+        } while (obj != 0);
+        fp += num_size;
+    }
+
+    template<typename T,
+        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
+        typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr
+        >
+    inline
+    void write_ascii(FilePos &fp, T obj) {
+        write(fp, std::to_string(obj));
     }
 
     inline

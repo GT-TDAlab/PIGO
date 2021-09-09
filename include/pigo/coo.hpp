@@ -37,8 +37,6 @@ namespace pigo {
      * @tparam Storage the storage type of the COO. This can either be
      *         vector (std::vector<Label>), a pointer (Label*), or
      *         a shared_ptr (std::shared_ptr<Label>).
-     * @tparam Params additional parameters for the COO, held in
-     *         a COOParameters object.
      * @tparam symmetric Ensure that the COO is symmetric, that is ensure
      *         that for every coordinate there is a corresponding
      *         symmetric coordinate with the same value.
@@ -293,6 +291,9 @@ namespace pigo {
 
             /** @brief Saves the COO to a binary PIGO file */
             void save(std::string fn);
+
+            /** @brief Write the COO out to an ASCII file */
+            void write(std::string fn);
 
             /** @brief Utility to free consumed memory
              *

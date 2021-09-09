@@ -44,14 +44,16 @@
             }                                                                           \
     } while(0);
 
-#define FEQ(x,y)                                                                        \
+#define FEQD(x,y,d)                                                                     \
     do {                                                                                \
-        if (std::fabs((x) - (y)) > F_EPS) {                                             \
+        if (std::fabs((x) - (y)) > d) {                                                 \
             std::cerr << "FAILURE: Expected " << (y) << " instead got " << (x)          \
                 << " for " << #x << " in " << __FILE__ << ":" << __LINE__ << std::endl; \
             return 1;                                                                   \
             }                                                                           \
     } while(0);
+
+#define FEQ(x,y) FEQD(x,y,F_EPS)
 
 #define TEST(f, ...)                                             \
     do {                                                         \

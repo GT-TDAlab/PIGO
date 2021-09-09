@@ -551,4 +551,96 @@ namespace pigo {
         }
     }
 
+    template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
+    void COO<L,O,S,sym,ut,sl,wgt,W,WS>::write(std::string fn) {
+        // Writing occurs in two passes
+        // First, each thread will simulate writing and compute how the
+        // space taken
+        // After the first pass, the output file is allocated
+        // Second, each thread actually writes
+
+        // Get the number of threads
+        omp_set_dynamic(0);
+        size_t num_threads = 0;
+        #pragma omp parallel shared(num_threads)
+        {
+            #pragma omp single
+            {
+                num_threads = omp_get_num_threads();
+            }
+        }
+
+        std::vector<size_t> pos_offsets(num_threads+1);
+        std::shared_ptr<File> f;
+        #pragma omp parallel shared(f) shared(pos_offsets)
+        {
+            size_t tid = omp_get_thread_num();
+            size_t my_size = 0;
+            char buf[64];
+
+            #pragma omp for
+            for (O e = 0; e < m_; ++e) {
+                // Use more expensive, standard C++ conversions to strings
+                // This approach will perform the conversion twice
+                // This could be optimized
+                auto x = detail::get_value_<S, L>(x_, e);
+                my_size += write_size(x);
+
+                // Account for the separating space
+                my_size += 1;
+
+                auto y = detail::get_value_<S, L>(y_, e);
+                my_size += write_size(y);
+
+                if (detail::if_true_<wgt>()) {
+                    // FIXME integral weights
+                    auto w = detail::get_value_<WS, W>(w_, e);
+
+                    snprintf(buf, sizeof(buf), "%lf", w);
+                    my_size += strlen(buf);
+                    my_size += 1;
+                }
+                // Account for the file newline
+                my_size += 1;
+            }
+
+            pos_offsets[tid+1] = my_size;
+            #pragma omp barrier
+
+            #pragma omp single
+            {
+                // Compute the total size and perform a prefix sum
+                pos_offsets[0] = 0;
+                for (size_t thread = 1; thread <= num_threads; ++thread)
+                    pos_offsets[thread] = pos_offsets[thread-1] + pos_offsets[thread];
+
+                // Allocate the file
+                f = std::make_shared<File>(fn, WRITE, pos_offsets[num_threads]);
+            }
+
+            #pragma omp barrier
+
+            FilePos my_fp = f->fp()+pos_offsets[tid];
+
+            // Perform the second pass, actually writing out to the file
+            #pragma omp for
+            for (O e = 0; e < m_; ++e) {
+                // Use more expensive, standard C++ conversions to strings
+                // This approach will perform the conversion twice
+                // This could be optimized
+                auto x = detail::get_value_<S, L>(x_, e);
+                write_ascii(my_fp, x);
+                pigo::write(my_fp, ' ');
+                auto y = detail::get_value_<S, L>(y_, e);
+                write_ascii(my_fp, y);
+                if (detail::if_true_<wgt>()) {
+                    auto w = detail::get_value_<WS, W>(w_, e);
+                    pigo::write(my_fp, ' ');
+                    write_ascii(my_fp, w);
+                }
+                pigo::write(my_fp, '\n');
+            }
+        }
+    }
+
 }

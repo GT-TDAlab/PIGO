@@ -9,6 +9,7 @@ This file documents PIGO's changes.
   a CSR).
 - Added a DiGraph (directed graph) class, similar to a Matrix but with
   graph-specific naming and in-edge and out-edge iterators.
+- Added support for writing out COOs to ASCII files
 
 ### Added (minor)
 - Support for easily computing the vertex degree (non-zeros in a row)
@@ -40,6 +41,7 @@ This file documents PIGO's changes.
 - Fixed symmetrizing with weights
 - Fixed a bug where nrows and ncols were not saved in CSR binary files
 - Fixed CMake to ensure anything that uses PIGO is linked with OpenMP
+- Fixed the detection of Linux-specific file opening options to not detect GCC
 
 ## [0.4] - 2021-02-17
 Initial public release.
