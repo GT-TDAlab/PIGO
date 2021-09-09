@@ -92,11 +92,11 @@
           
             
             
-                <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+                <p class="caption"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">PIGO Tutorial</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<p class="caption"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../datastructures.html">Datastructures</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">COO</a></li>
@@ -107,7 +107,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../pigo.html">Utilities</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Other</span></p>
+<p class="caption"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../README.html">PIGO: a Parallel Graph Input and Output library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">License</a></li>
@@ -198,26 +198,23 @@
 <dt class="field-odd">tparam Storage</dt>
 <dd class="field-odd"><p>the storage type of the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. This can either be vector (std::vector&lt;Label&gt;), a pointer (Label*), or a shared_ptr (std::shared_ptr&lt;Label&gt;). </p>
 </dd>
-<dt class="field-even">tparam Params</dt>
-<dd class="field-even"><p>additional parameters for the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a>, held in a COOParameters object. </p>
+<dt class="field-even">tparam symmetric</dt>
+<dd class="field-even"><p>Ensure that the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a> is symmetric, that is ensure that for every coordinate there is a corresponding symmetric coordinate with the same value. If true, this will always be the case. If false, any symmetry will be based on whether the input is. </p>
 </dd>
-<dt class="field-odd">tparam symmetric</dt>
-<dd class="field-odd"><p>Ensure that the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a> is symmetric, that is ensure that for every coordinate there is a corresponding symmetric coordinate with the same value. If true, this will always be the case. If false, any symmetry will be based on whether the input is. </p>
+<dt class="field-odd">tparam keep_upper_triangle_only</dt>
+<dd class="field-odd"><p>Only keep values that are in the upper triangle (if the coordinate is (x,y,val), only keep it in the coo if x &lt;= y) If this is used with symmetric, then the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a> will first symmetrize and then remove any value out of the upper triangle. If this is used without symmetric, then any edges with (y &gt; x) will not be included in the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. </p>
 </dd>
-<dt class="field-even">tparam keep_upper_triangle_only</dt>
-<dd class="field-even"><p>Only keep values that are in the upper triangle (if the coordinate is (x,y,val), only keep it in the coo if x &lt;= y) If this is used with symmetric, then the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a> will first symmetrize and then remove any value out of the upper triangle. If this is used without symmetric, then any edges with (y &gt; x) will not be included in the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. </p>
+<dt class="field-even">tparam remove_self_loops</dt>
+<dd class="field-even"><p>remove any self loops. If set to true, this will detect and remove any self loops (if the coordinate is (x,y,val) and (x==y), the entry will not be included in the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. </p>
 </dd>
-<dt class="field-odd">tparam remove_self_loops</dt>
-<dd class="field-odd"><p>remove any self loops. If set to true, this will detect and remove any self loops (if the coordinate is (x,y,val) and (x==y), the entry will not be included in the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. </p>
+<dt class="field-odd">tparam weighted</dt>
+<dd class="field-odd"><p>if true, support and use weights </p>
 </dd>
-<dt class="field-even">tparam weighted</dt>
-<dd class="field-even"><p>if true, support and use weights </p>
+<dt class="field-even">tparam Weight</dt>
+<dd class="field-even"><p>the weight data type. </p>
 </dd>
-<dt class="field-odd">tparam Weight</dt>
-<dd class="field-odd"><p>the weight data type. </p>
-</dd>
-<dt class="field-even">tparam WeightStorage</dt>
-<dd class="field-even"><p>the storage type for the weights. This can be a raw pointer (Weight*), a std::vector (std::vector&lt;Weight&gt;), or a std::shared_ptr&lt;Weight&gt;. </p>
+<dt class="field-odd">tparam WeightStorage</dt>
+<dd class="field-odd"><p>the storage type for the weights. This can be a raw pointer (Weight*), a std::vector (std::vector&lt;Weight&gt;), or a std::shared_ptr&lt;Weight&gt;. </p>
 </dd>
 </dl>
 </p>
@@ -386,6 +383,12 @@
 <dt class="sig sig-object cpp" id="_CPPv4N4pigo3COO4saveENSt6stringE">
 <span id="_CPPv3N4pigo3COO4saveENSt6stringE"></span><span id="_CPPv2N4pigo3COO4saveENSt6stringE"></span><span id="pigo::COO::save__ss"></span><span class="target" id="classpigo_1_1COO_1af3e902ff68ba9e20d64dc703111f0c24"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">save</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3COO4saveENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Saves the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a> to a binary PIGO file. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo3COO5writeENSt6stringE">
+<span id="_CPPv3N4pigo3COO5writeENSt6stringE"></span><span id="_CPPv2N4pigo3COO5writeENSt6stringE"></span><span id="pigo::COO::write__ss"></span><span class="target" id="classpigo_1_1COO_1a8c63db1ced64cc59a4d868eba2cd0c41"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">write</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3COO5writeENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Write the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a> out to an ASCII file. </p>
 </dd></dl>
 
 <dl class="cpp function">

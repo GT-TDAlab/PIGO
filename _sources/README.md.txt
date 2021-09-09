@@ -1,6 +1,6 @@
 # PIGO: a Parallel Graph Input and Output library
 
-[![Build Status](https://travis-ci.org/GT-TDAlab/PIGO.svg?branch=master)](https://travis-ci.org/GT-TDAlab/PIGO)
+[![Build Status](https://app.travis-ci.com/GT-TDAlab/PIGO.svg?branch=master)](https://app.travis-ci.com/github/GT-TDAlab/PIGO)
 
 PIGO is a library built to assist you with common sparse graph or matrix
 input, output, and preprocessing. It supports easily loading a variety of
@@ -98,6 +98,23 @@ Please see [`LICENSE.md`](LICENSE.md) for the license.
 
 * [Kasimir Gabert](https://kasimir.co)
 * [Umit V. Catalyurek](https://cc.gatech.edu/~umit)
+
+## Citation
+
+If you use this work in an academic setting, or are inspired by it, please
+consider citing the following (BibTeX):
+
+```bibtex
+@inproceedings {Gabert21-GrAPL,
+    title = {{PIGO}: A Parallel Graph Input/Output Library},
+    author = {Kasimir Gabert and \"Umit V. \c{C}ataly\"{u}rek},
+    booktitle = {2021 IEEE International Parallel and Distributed Processing Symposium Workshops (IPDPSW)},
+    pages = {276--279},
+    year = {2021},
+    organization = {IEEE},
+    doi = { 10.1109/IPDPSW52791.2021.00050 }
+}
+```
 
 ## Contact
 
