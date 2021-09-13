@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Simple Graph Cleaner &mdash; PIGO 0.5.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/css/side_color.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="PIGO 0.5.0 documentation" href="../index.html"/>
+        <link rel="up" title="PIGO Tutorial" href="../tutorial.html"/>
+        <link rel="next" title="Datastructures" href="../api/datastructures.html"/>
+        <link rel="prev" title="Read Binary Files" href="read_binary.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PIGO
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorial.html">PIGO Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="read_binary.html">Read Binary Files</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Simple Graph Cleaner</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#building-the-tool">Building the Tool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building">Building</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#evaluation">Evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial.html#tutorial-evaluation-environment">Tutorial Evaluation Environment</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/datastructures.html">Datastructures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/pigo.html">Utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">PIGO: a Parallel Graph Input and Output library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">Site Map</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PIGO</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../tutorial.html">PIGO Tutorial</a> &raquo;</li>
+        
+      <li>Simple Graph Cleaner</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/GT-TDALab/PIGO/blob/master/docs/tutorials/simple_graph_cleaner.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="simple-graph-cleaner">
+<h1>Simple Graph Cleaner<a class="headerlink" href="#simple-graph-cleaner" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial we develop a graph cleaning utility that takes in a graph
+file and “cleans” it to be a simple graph.  That is, it will symmetrize
+the graph, remove self loops and multiple edges, and output an edge list
+with only one direction (the “upper” triangle).</p>
+<section id="building-the-tool">
+<h2>Building the Tool<a class="headerlink" href="#building-the-tool" title="Permalink to this headline">¶</a></h2>
+<p>For this example, we will not evaluate whether the input is already
+symmetric or not.  Instead, we will perform an expensive approach of
+always symmetrizing it. We start by loading the input into a <code class="docutils literal notranslate"><span class="pre">COO</span></code>.  We
+then use template parameter to indicate we want to symmetrize it and
+remove self loops.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">COO</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="p">,</span><span class="w"> </span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="o">&gt;</span><span class="w"> </span><span class="n">coo</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Once we have this COO, we can convert it into a CSR.  We will use the CSR
+to then detect and remove redundant, multiple edges.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">CSR</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="p">,</span><span class="w"></span>
+<span class="w">        </span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">csr</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">coo</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Next, we need to build a new CSR that does not have redundant edges.  Here
+we use a provided method, <code class="docutils literal notranslate"><span class="pre">new_csr_without_dups</span></code>, that generates a new,
+clean CSR. Any new template parameters can be passed to this function for
+the resulting CSR to take.</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">clean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csr</span><span class="p">.</span><span class="n">new_csr_without_dups</span><span class="p">();</span><span class="w"></span>
+</pre></div>
+</div>
+<p>As a last step, we convert back to a new COO and write it out as an ascii
+file using <code class="docutils literal notranslate"><span class="pre">write</span></code>.</p>
+<p>The full program is as follows:</p>
+<div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span><span class="w"></span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;pigo.hpp&quot;</span><span class="cp"></span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">pigo</span><span class="p">;</span><span class="w"></span>
+
+<span class="c1">// Setup a simple timer</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;omp.h&gt;</span><span class="cp"></span>
+<span class="kt">double</span><span class="w"> </span><span class="n">g_t_</span><span class="p">;</span><span class="w"></span>
+<span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">tlog_init</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">g_t_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">omp_get_wtime</span><span class="p">();</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+<span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">tlog</span><span class="p">(</span><span class="n">string</span><span class="w"> </span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">omp_get_wtime</span><span class="p">()</span><span class="o">-</span><span class="n">g_t_</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">msg</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">tlog_init</span><span class="p">();</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="o">**</span><span class="w"> </span><span class="n">argv</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// Open and load the file</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">argc</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">cerr</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Usage: &quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot; in-file out-file&quot;</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">tlog_init</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">COO</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="p">,</span><span class="w"> </span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="o">&gt;</span><span class="w"> </span><span class="n">coo</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="n">tlog</span><span class="p">(</span><span class="s">&quot;read input into coo&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">CSR</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="p">,</span><span class="w"></span>
+<span class="w">            </span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="p">,</span><span class="w"> </span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">csr</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">coo</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="n">tlog</span><span class="p">(</span><span class="s">&quot;built csr&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">coo</span><span class="p">.</span><span class="n">free</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">tlog</span><span class="p">(</span><span class="s">&quot;free read input coo&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">clean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">csr</span><span class="p">.</span><span class="n">new_csr_without_dups</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">tlog</span><span class="p">(</span><span class="s">&quot;built clean csr&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">csr</span><span class="p">.</span><span class="n">free</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">tlog</span><span class="p">(</span><span class="s">&quot;free original csr&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">COO</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="p">,</span><span class="w"> </span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">out_coo</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">clean</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="n">tlog</span><span class="p">(</span><span class="s">&quot;built output coo&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">clean</span><span class="p">.</span><span class="n">free</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">tlog</span><span class="p">(</span><span class="s">&quot;free clean csr&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">out_coo</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span><span class="w"></span>
+<span class="w">    </span><span class="n">tlog</span><span class="p">(</span><span class="s">&quot;wrote output file&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">out_coo</span><span class="p">.</span><span class="n">free</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">tlog</span><span class="p">(</span><span class="s">&quot;free out coo&quot;</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="building">
+<h2>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h2>
+<p>After ensuring <code class="docutils literal notranslate"><span class="pre">pigo.hpp</span></code> is in the same directory, this program can be
+compiled on Linux with
+<code class="docutils literal notranslate"><span class="pre">g++</span> <span class="pre">-std=c++11</span> <span class="pre">-O3</span> <span class="pre">-o</span> <span class="pre">clean_graph</span> <span class="pre">clean_graph.cpp</span> <span class="pre">-fopenmp</span></code>
+and on Mac, after <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">libomp</span></code>, with
+<code class="docutils literal notranslate"><span class="pre">clang++</span> <span class="pre">-std=c++11</span> <span class="pre">-O3</span> <span class="pre">-o</span> <span class="pre">clean_graph</span> <span class="pre">clean_graph.cpp</span> <span class="pre">-Xclang</span> <span class="pre">-fopenmp</span> <span class="pre">/usr/local/lib/libomp.dylib</span></code>.</p>
+</section>
+<section id="evaluation">
+<h2>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">¶</a></h2>
+<p>Suppose that you have a messy input file, e.g., the following file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span> <span class="mi">6</span>
+<span class="mi">4</span> <span class="mi">4</span>
+<span class="mi">4</span> <span class="mi">4</span>
+<span class="mi">3</span> <span class="mi">4</span>
+<span class="mi">6</span> <span class="mi">5</span>
+<span class="mi">1</span> <span class="mi">2</span>
+<span class="mi">1</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">2</span>
+<span class="mi">1</span> <span class="mi">2</span>
+<span class="mi">2</span> <span class="mi">1</span>
+<span class="mi">1</span> <span class="mi">0</span>
+<span class="mi">0</span> <span class="mi">2</span>
+<span class="mi">0</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Note that this file contains self loops and multiple edges, some of which
+are present if the file is directed, and others are only present when it
+is undirected (e.g., <code class="docutils literal notranslate"><span class="pre">5</span> <span class="pre">6</span></code> and <code class="docutils literal notranslate"><span class="pre">6</span> <span class="pre">5</span></code>).</p>
+<p>After running <code class="docutils literal notranslate"><span class="pre">./clean_graph</span> <span class="pre">messy.el</span> <span class="pre">clean.el</span></code>, the following file is
+saved:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="mi">1</span>
+<span class="mi">0</span> <span class="mi">2</span>
+<span class="mi">1</span> <span class="mi">2</span>
+<span class="mi">3</span> <span class="mi">4</span>
+<span class="mi">5</span> <span class="mi">6</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api/datastructures.html" class="btn btn-neutral float-right" title="Datastructures" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="read_binary.html" class="btn btn-neutral" title="Read Binary Files" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, GT-TDAlab.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> and ❤️  using a custom <a href="https://github.com/LinxiFan/Sphinx-theme">theme</a> based on <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.5.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/documentation_options.js"></script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

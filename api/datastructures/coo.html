@@ -92,11 +92,11 @@
           
             
             
-                <p class="caption"><span class="caption-text">Introduction</span></p>
+                <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">PIGO Tutorial</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Reference</span></p>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../datastructures.html">Datastructures</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">COO</a></li>
@@ -107,7 +107,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../pigo.html">Utilities</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Other</span></p>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../README.html">PIGO: a Parallel Graph Input and Output library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">License</a></li>
@@ -317,8 +317,8 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N4pigo3COO1mEv">
-<span id="_CPPv3N4pigo3COO1mEv"></span><span id="_CPPv2N4pigo3COO1mEv"></span><span id="pigo::COO::m"></span><span class="target" id="classpigo_1_1COO_1a310d33252df71cb0dc939f6fad9796e4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3COOE" title="pigo::COO::Ordinal"><span class="n"><span class="pre">Ordinal</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">m</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3COO1mEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK4pigo3COO1mEv">
+<span id="_CPPv3NK4pigo3COO1mEv"></span><span id="_CPPv2NK4pigo3COO1mEv"></span><span id="pigo::COO::mC"></span><span class="target" id="classpigo_1_1COO_1a08374e50250b5669cbc82d09076682d1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3COOE" title="pigo::COO::Ordinal"><span class="n"><span class="pre">Ordinal</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">m</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK4pigo3COO1mEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Retrieves the number of entries in the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -328,8 +328,8 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N4pigo3COO1nEv">
-<span id="_CPPv3N4pigo3COO1nEv"></span><span id="_CPPv2N4pigo3COO1nEv"></span><span id="pigo::COO::n"></span><span class="target" id="classpigo_1_1COO_1a12f15319ed5323892717485eef2100b8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3COOE" title="pigo::COO::Label"><span class="n"><span class="pre">Label</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">n</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3COO1nEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK4pigo3COO1nEv">
+<span id="_CPPv3NK4pigo3COO1nEv"></span><span id="_CPPv2NK4pigo3COO1nEv"></span><span id="pigo::COO::nC"></span><span class="target" id="classpigo_1_1COO_1a3be41b89c84c061824bc2c4522fcbf10"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3COOE" title="pigo::COO::Label"><span class="n"><span class="pre">Label</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">n</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK4pigo3COO1nEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Retrieves the number of labels the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a> contains. </p>
 <p>Note: This will include any zero entry-labels. So, the count is the largest seen label+1.</p>
 <dl class="field-list simple">
@@ -358,8 +358,8 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N4pigo3COO5nrowsEv">
-<span id="_CPPv3N4pigo3COO5nrowsEv"></span><span id="_CPPv2N4pigo3COO5nrowsEv"></span><span id="pigo::COO::nrows"></span><span class="target" id="classpigo_1_1COO_1a80628bff39f9c586d4e9d468c7c410be"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3COOE" title="pigo::COO::Label"><span class="n"><span class="pre">Label</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nrows</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3COO5nrowsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK4pigo3COO5nrowsEv">
+<span id="_CPPv3NK4pigo3COO5nrowsEv"></span><span id="_CPPv2NK4pigo3COO5nrowsEv"></span><span id="pigo::COO::nrowsC"></span><span class="target" id="classpigo_1_1COO_1adc17fe95735141673785df701848d60c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3COOE" title="pigo::COO::Label"><span class="n"><span class="pre">Label</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nrows</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK4pigo3COO5nrowsEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Retrieves the number of rows in the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -369,8 +369,8 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N4pigo3COO5ncolsEv">
-<span id="_CPPv3N4pigo3COO5ncolsEv"></span><span id="_CPPv2N4pigo3COO5ncolsEv"></span><span id="pigo::COO::ncols"></span><span class="target" id="classpigo_1_1COO_1a4e230078615e2fd9a298714bb77f7d30"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3COOE" title="pigo::COO::Label"><span class="n"><span class="pre">Label</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ncols</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo3COO5ncolsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK4pigo3COO5ncolsEv">
+<span id="_CPPv3NK4pigo3COO5ncolsEv"></span><span id="_CPPv2NK4pigo3COO5ncolsEv"></span><span id="pigo::COO::ncolsC"></span><span class="target" id="classpigo_1_1COO_1a471af4547a4bd39a7635cf3a9a8e64ce"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b_b_b_b00EN4pigo3COOE" title="pigo::COO::Label"><span class="n"><span class="pre">Label</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ncols</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK4pigo3COO5ncolsEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Retrieves the number of columns in the <a class="reference internal" href="#classpigo_1_1COO"><span class="std std-ref">COO</span></a>. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
