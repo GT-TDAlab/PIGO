@@ -1,7 +1,7 @@
 # Changelog
 This file documents PIGO's changes.
 
-## [Unreleased]
+## [0.5] - 2021-09-13
 ### Added (major)
 - Support for signed and unsigned integral and floating point weights
 - Add the Matrix class, which is non-symmetric by default, and added
