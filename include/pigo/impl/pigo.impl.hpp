@@ -181,41 +181,49 @@ namespace pigo {
     }
 
     namespace detail {
-        template<typename T,
-            typename std::enable_if<!std::is_signed<T>::value>::type* = nullptr
-            >
+        template<typename T, typename std::enable_if<!std::is_signed<T>::value, bool>::type = false>
         inline
         size_t neg_size(T obj) {
             (void)obj;
             return 0;
         }
 
-        template<typename T,
-            typename std::enable_if<std::is_signed<T>::value>::type* = nullptr
-            >
+        template<typename T, typename std::enable_if<std::is_signed<T>::value, bool>::type = true>
         inline
         size_t neg_size(T obj) {
             if (obj < 0) return 1;
             return 0;
         }
 
-        template<typename T, typename std::enable_if<!std::is_signed<T>::value>::type* = nullptr >
+        template<typename T, typename std::enable_if<!std::is_signed<T>::value, bool>::type = false>
         inline
         void write_neg_ascii(FilePos &fp, T obj) {
             (void)fp;
             (void)obj;
         }
 
-        template<typename T, typename std::enable_if<std::is_signed<T>::value>::type* = nullptr >
+        template<typename T, typename std::enable_if<std::is_signed<T>::value, bool>::type = true>
         inline
         void write_neg_ascii(FilePos &fp, T obj) {
             if (obj < 0) pigo::write(fp, '-');
         }
+
+        template<typename T, typename std::enable_if<!std::is_signed<T>::value, bool>::type = false>
+        inline
+        T get_positive(T obj) {
+            return obj;
+        }
+        template<typename T, typename std::enable_if<std::is_signed<T>::value, bool>::type = true>
+        inline
+        T get_positive(T obj) {
+            if (obj < 0) return -obj;
+            return obj;
+        }
     }
 
     template<typename T,
-        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
-        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        typename std::enable_if<!std::is_integral<T>::value, bool>::type,
+        typename std::enable_if<!std::is_floating_point<T>::value, bool>::type
         >
     inline
     size_t write_size(T obj) {
@@ -224,23 +232,23 @@ namespace pigo {
     }
 
     template<typename T,
-        typename std::enable_if<std::is_integral<T>::value>::type* = nullptr,
-        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        typename std::enable_if<std::is_integral<T>::value, bool>::type,
+        typename std::enable_if<!std::is_floating_point<T>::value, bool>::type
         >
     inline
     size_t write_size(T obj) {
-        size_t res = 0;
+        // If it is signed, and negative, it will take an additional char
+        size_t res = detail::neg_size(obj);
         do {
             obj /= 10;
             ++res;
         } while (obj != 0);
-        // If it is signed, and negative, it will take an additional char
-        return res + detail::neg_size(obj);
+        return res;
     }
 
     template<typename T,
-        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
-        typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr
+        typename std::enable_if<!std::is_integral<T>::value, bool>::type,
+        typename std::enable_if<std::is_floating_point<T>::value, bool>::type
         >
     inline
     size_t write_size(T obj) {
@@ -249,8 +257,8 @@ namespace pigo {
     }
 
     template<typename T,
-        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
-        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        typename std::enable_if<!std::is_integral<T>::value, bool>::type,
+        typename std::enable_if<!std::is_floating_point<T>::value, bool>::type
         >
     inline
     void write_ascii(FilePos &fp, T obj) {
@@ -259,12 +267,13 @@ namespace pigo {
     }
 
     template<typename T,
-        typename std::enable_if<std::is_integral<T>::value>::type* = nullptr,
-        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        typename std::enable_if<std::is_integral<T>::value, bool>::type,
+        typename std::enable_if<!std::is_floating_point<T>::value, bool>::type
         >
     inline
     void write_ascii(FilePos &fp, T obj) {
         detail::write_neg_ascii(fp, obj);
+        obj = detail::get_positive(obj);
 
         size_t num_size = write_size(obj);
         size_t pos = num_size-1;
@@ -277,8 +286,8 @@ namespace pigo {
     }
 
     template<typename T,
-        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
-        typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr
+        typename std::enable_if<!std::is_integral<T>::value, bool>::type,
+        typename std::enable_if<std::is_floating_point<T>::value, bool>::type
         >
     inline
     void write_ascii(FilePos &fp, T obj) {

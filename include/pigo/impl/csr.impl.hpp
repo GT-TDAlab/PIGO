@@ -520,14 +520,179 @@ namespace pigo {
             O start = detail::get_value_<OS, O>(offsets_, v);
             O end = detail::get_value_<OS, O>(offsets_, v+1);
 
-            L* endpoints = (L*)detail::get_raw_data_(endpoints_);
-
-            L* range_start = endpoints+start;
-            L* range_end = endpoints+end;
-
             // Sort the range from the start to the end
-            std::sort(range_start, range_end);
+            if (detail::if_true_<wgt>()) {
+                // This should be improved, e.g., without replicating
+                // everything. For now, make a joint array, sort that, and
+                // then pull out the resulting data
+                std::vector<std::pair<L, W>> vec;
+                vec.reserve(end-start);
+                for (O cur = start; cur < end; ++cur) {
+                    L l = detail::get_value_<LS, L>(endpoints_, cur);
+                    W w = detail::get_value_<WS, W>(weights_, cur);
+                    std::pair<L, W> val = {l, w};
+                    vec.emplace_back(val);
+                }
+                std::sort(vec.begin(), vec.end());
+                O cur = start;
+                for (auto& pair : vec) {
+                    L l = std::get<0>(pair);
+                    W w = std::get<1>(pair);
+                    detail::set_value_(endpoints_, cur, l);
+                    detail::set_value_(weights_, cur, w);
+                    ++cur;
+                }
+            } else {
+                L* endpoints = (L*)detail::get_raw_data_(endpoints_);
+
+                L* range_start = endpoints+start;
+                L* range_end = endpoints+end;
+
+                std::sort(range_start, range_end);
+            }
         }
+    }
+
+    template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
+    template<class nL, class nO, class nLS, class nOS, bool nw, class nW, class nWS>
+    CSR<nL, nO, nLS, nOS, nw, nW, nWS> CSR<L,O,LS,OS,wgt,W,WS>::new_csr_without_dups() {
+        // First, sort ourselves
+        sort();
+
+        // Next, count the degrees for each vertex, excluding duplicates
+        std::shared_ptr<L> degs_storage;
+        detail::allocate_mem_(degs_storage, n_);
+        L* degs = degs_storage.get();
+
+        nO new_m = 0;
+
+        #pragma omp parallel for schedule(dynamic, 10240) shared(degs) reduction(+ : new_m)
+        for (L v = 0; v < n_; ++v) {
+            O start = detail::get_value_<OS, O>(offsets_, v);
+            O end = detail::get_value_<OS, O>(offsets_, v+1);
+            if (end-start == 0) {
+                degs[v] = 0;
+                continue;
+            }
+
+            L prev_val = detail::get_value_<LS, L>(endpoints_, start++);
+            L new_deg = 1;
+
+            while (start != end) {
+                L cur_val = detail::get_value_<LS, L>(endpoints_, start++);
+                if (cur_val != prev_val) {
+                    prev_val = cur_val;
+                    ++new_deg;
+                }
+            }
+
+            degs[v] = new_deg;
+            new_m += new_deg;
+        }
+
+        // Allocate the new CSR
+        CSR<nL, nO, nLS, nOS, nw, nW, nWS> ret { (nL)n_, new_m, (nL)nrows_, (nL)ncols_ };
+
+        auto& new_endpoints = ret.endpoints();
+        auto& new_offsets = ret.offsets();
+        auto& new_weights = ret.weights();
+
+        // Set the offsets by doing a prefix sum on the degrees
+
+        // Get the number of threads
+        omp_set_dynamic(0);
+        size_t num_threads = 0;
+        #pragma omp parallel shared(num_threads)
+        {
+            #pragma omp single
+            {
+                num_threads = omp_get_num_threads();
+            }
+        }
+        // Keep track of the starting offsets for each thread
+        std::shared_ptr<O> so_storage;
+        detail::allocate_mem_(so_storage, num_threads);
+        O* start_offsets = so_storage.get();
+
+        #pragma omp parallel shared(start_offsets)
+        {
+            size_t tid = omp_get_thread_num();
+
+            L v_start = (tid*n_)/num_threads;
+            L v_end = ((tid+1)*n_)/num_threads;
+
+            O my_degs = 0;
+            for (L c = v_start; c < v_end; ++c) {
+                // FIXME get the degs
+                O this_deg = degs[c];
+                my_degs += this_deg;
+            }
+
+            // Save our local degree count to do a prefix sum on
+            start_offsets[tid] = my_degs;
+
+            #pragma omp barrier
+            #pragma omp single
+            {
+                O total_degs = 0;
+                for (size_t cur_tid = 0; cur_tid < num_threads; ++cur_tid) {
+                    total_degs += start_offsets[cur_tid];
+                    start_offsets[cur_tid] = total_degs;
+                }
+            }
+            #pragma omp barrier
+
+            // Get the starting offset
+            // The prefix sum array is off by one, so the start is at zero
+            O cur_offset = 0;
+            if (tid > 0)
+                cur_offset = start_offsets[tid-1];
+
+            // Now, assign the offsets to each label
+            for (L c = v_start; c < v_end; ++c) {
+                detail::set_value_(new_offsets, c, cur_offset);
+                cur_offset += degs[c];
+            }
+            #pragma omp single
+            {
+                // Patch the last offset to the end, making for easier
+                // degree computation and iteration
+                detail::set_value_(new_offsets, (nL)n_, new_m);
+            }
+
+            // Now, all new offsets have been assigned
+        }
+
+        // Repeat going through the edges, copying out the endpoints
+        #pragma omp parallel for schedule(dynamic, 10240)
+        for (L v = 0; v < n_; ++v) {
+            O o_start = detail::get_value_<OS, O>(offsets_, v);
+            O o_end = detail::get_value_<OS, O>(offsets_, v+1);
+            if (o_end-o_start == 0) continue;
+
+            nO n_cur = detail::get_value_<nOS, nO>(new_offsets, (nL)v);
+
+            L prev_val = detail::get_value_<LS, L>(endpoints_, o_start++);
+            detail::set_value_(new_endpoints, n_cur++, prev_val);
+            if (detail::if_true_<nw>()) {
+                W w = detail::get_value_<WS, W>(weights_, o_start-1);
+                detail::set_value_(new_weights, n_cur-1, (nW)w);
+            }
+
+            while (o_start != o_end) {
+                L cur_val = detail::get_value_<LS, L>(endpoints_, o_start++);
+                if (prev_val != cur_val) {
+                    prev_val = cur_val;
+                    detail::set_value_(new_endpoints, n_cur++, (nL)prev_val);
+                    if (detail::if_true_<nw>()) {
+                        W w = detail::get_value_<WS, W>(weights_, o_start-1);
+                        detail::set_value_(new_weights, n_cur-1, (nW)w);
+                    }
+                }
+            }
+        }
+
+        return ret;
     }
 
 }

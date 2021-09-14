@@ -257,7 +257,7 @@ namespace pigo {
              *
              * @return the count of entries
              */
-            Ordinal m() { return m_; }
+            Ordinal m() const { return m_; }
 
             /** @brief Retrieves the number of labels the COO contains
              *
@@ -266,7 +266,7 @@ namespace pigo {
              *
              * @return the number of labels
              */
-            Label n() { return n_; }
+            Label n() const { return n_; }
 
             /** @brief Update the largest label */
             void set_n(Label new_n) { n_ = new_n; }
@@ -281,13 +281,13 @@ namespace pigo {
              *
              * @return the number of rows
              */
-            Label nrows() { return nrows_; }
+            Label nrows() const { return nrows_; }
 
             /** @brief Retrieves the number of columns in the COO
              *
              * @return the number of columns
              */
-            Label ncols() { return ncols_; }
+            Label ncols() const { return ncols_; }
 
             /** @brief Saves the COO to a binary PIGO file */
             void save(std::string fn);

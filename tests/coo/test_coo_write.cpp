@@ -63,6 +63,30 @@ int weights(string dir_path) {
     return 0;
 }
 
+int neg_weight(string dir_path) {
+    WCOOPtr<int, size_t, int> coo { dir_path + "/intweight.mtx" };
+
+    coo.write(".tmp.test_coo_write.out");
+
+    // Confirm the write by reading
+    COO<> c_no_w {".tmp.test_coo_write.out"};
+    EQ((size_t)c_no_w.m(), coo.m());
+    EQ((int)c_no_w.n(), coo.n());
+    c_no_w.free();
+
+    WCOO<int, size_t, vector<int>, int, vector<int>> coo_r { ".tmp.test_coo_write.out" };
+    EQ(coo_r.m(), coo.m());
+    for (size_t e = 0; e < coo.m(); ++e) {
+        EQ(coo.x()[e], coo_r.x()[e]);
+        EQ(coo.y()[e], coo_r.y()[e]);
+        EQ(coo.w()[e], coo_r.w()[e]);
+    }
+
+    coo.free();
+
+    return 0;
+}
+
 int main(int argc, char **argv) {
     int pass = 0;
 
@@ -76,6 +100,7 @@ int main(int argc, char **argv) {
     TEST(use_shared_ptr, dir_path);
     TEST(use_def, dir_path);
     TEST(weights, dir_path);
+    TEST(neg_weight, dir_path)
 
     return pass;
 }

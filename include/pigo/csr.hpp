@@ -128,6 +128,12 @@ namespace pigo {
             /** @brief Initialize an empty CSR */
             CSR() : n_(0), m_(0), nrows_(0), ncols_(0) { }
 
+            /** @brief Allocate a CSR for the given size */
+            CSR(Label n, Ordinal m, Label nrows, Label ncols) :
+                    n_(n), m_(m), nrows_(nrows), ncols_(ncols) {
+                allocate_();
+            }
+
             /** @brief Initialize from a COO
              *
              * This creates a CSR from an already-loaded COO.
@@ -201,7 +207,7 @@ namespace pigo {
              *
              * @return the count of endpoints
              */
-            Ordinal m() { return m_; }
+            Ordinal m() const { return m_; }
 
             /** @brief Retrieves the number of labels the CSR contains
              *
@@ -209,22 +215,26 @@ namespace pigo {
              *
              * @return the number of labels
              */
-            Label n() { return n_; }
+            Label n() const { return n_; }
 
             /** @brief Retrieves the number of rows in the CSR
              *
              * @return the number of rows
              */
-            Label nrows() { return nrows_; }
+            Label nrows() const { return nrows_; }
 
             /** @brief Retrieves the number of columns in the CSR
              *
              * @return the number of columns
              */
-            Label ncols() { return ncols_; }
+            Label ncols() const { return ncols_; }
 
             /** @brief Sort all row adjacencies in the CSR */
             void sort();
+
+            /** @brief Return a new CSR without duplicate entries */
+            template<class nL=Label, class nO=Ordinal, class nLS=LabelStorage, class nOS=OrdinalStorage, bool nw=weighted, class nW=Weight, class nWS=WeightStorage>
+            CSR<nL, nO, nLS, nOS, nw, nW, nWS> new_csr_without_dups();
 
             /** @brief Utility to free consumed memory
              *

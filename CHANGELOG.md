@@ -10,6 +10,9 @@ This file documents PIGO's changes.
 - Added a DiGraph (directed graph) class, similar to a Matrix but with
   graph-specific naming and in-edge and out-edge iterators.
 - Added support for writing out COOs to ASCII files
+- Added support for upper-triangle handling in COO template parameters
+- Added support for removing multiple edges by a CSR generation method,
+  new_csr_without_dups
 
 ### Added (minor)
 - Support for easily computing the vertex degree (non-zeros in a row)
@@ -27,6 +30,7 @@ This file documents PIGO's changes.
 - Added support for sorting CSRs
 - Support for creating a fixed-sized uninitialized COO
 - Added an example for finding an edge in a graph
+- Added const to size returning methods in COO and CSR
 
 ### Breaking changes (minor)
 - Removed the Matrix alias due to adding full (non-symmetric) Matrix

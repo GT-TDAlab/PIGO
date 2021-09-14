@@ -421,16 +421,16 @@ namespace pigo {
      * @return size_t number of bytes used to write the object
      */
     template<typename T,
-        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
-        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        typename std::enable_if<!std::is_integral<T>::value, bool>::type = false,
+        typename std::enable_if<!std::is_floating_point<T>::value, bool>::type = false
         > inline size_t write_size(T obj);
     template<typename T,
-        typename std::enable_if<std::is_integral<T>::value>::type* = nullptr,
-        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        typename std::enable_if<std::is_integral<T>::value, bool>::type = true,
+        typename std::enable_if<!std::is_floating_point<T>::value, bool>::type = false
         > inline size_t write_size(T obj);
     template<typename T,
-        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
-        typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr
+        typename std::enable_if<!std::is_integral<T>::value, bool>::type = false,
+        typename std::enable_if<std::is_floating_point<T>::value, bool>::type = true
         > inline size_t write_size(T obj);
 
     /** @brief Write an ASCII value to an open file
@@ -440,16 +440,16 @@ namespace pigo {
      * @param obj the object to write
      */
     template<typename T,
-        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
-        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        typename std::enable_if<!std::is_integral<T>::value, bool>::type = false,
+        typename std::enable_if<!std::is_floating_point<T>::value, bool>::type = false
         > inline void write_ascii(FilePos &fp, T obj);
     template<typename T,
-        typename std::enable_if<std::is_integral<T>::value>::type* = nullptr,
-        typename std::enable_if<!std::is_floating_point<T>::value>::type* = nullptr
+        typename std::enable_if<std::is_integral<T>::value, bool>::type = true,
+        typename std::enable_if<!std::is_floating_point<T>::value, bool>::type = false
         > inline void write_ascii(FilePos &fp, T obj);
     template<typename T,
-        typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr,
-        typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr
+        typename std::enable_if<!std::is_integral<T>::value, bool>::type = false,
+        typename std::enable_if<std::is_floating_point<T>::value, bool>::type = true
         > inline void write_ascii(FilePos &fp, T obj);
 
     namespace detail {

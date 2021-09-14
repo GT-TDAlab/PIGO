@@ -109,31 +109,6 @@ namespace pigo {
     }
 
     namespace detail {
-        /** Handle different options for reading out entries */
-        template<class L, bool sl> struct coo_read_rsl_i_;
-
-        template<class L>
-        struct coo_read_rsl_i_<L, true> {
-            static inline bool op_(L &x, L &y) {
-                return x != y;
-            }
-        };
-
-        template<class L>
-        struct coo_read_rsl_i_<L, false> {
-            static inline bool op_(L&, L&) { return true; }
-        };
-
-        template<bool sym> struct coo_read_sym_i_;
-
-        template<> struct coo_read_sym_i_<true> {
-            static inline bool op_() { return true; }
-        };
-
-        template<> struct coo_read_sym_i_<false> {
-            static inline bool op_() { return false; }
-        };
-
         template <bool wgt, bool is_integral, bool is_signed, bool is_real, class W, class WS, bool counting>
         struct read_wgt_i_ { static inline void op_(size_t&, WS&, FileReader&) {} };
 
@@ -235,10 +210,13 @@ namespace pigo {
                 if (!r.good()) return;
                 r.move_to_eol();
                 r.move_to_next_int();
-                if (!coo_read_rsl_i_<L, sl>::op_(x, y)) {
+                if (if_true_<sl>() && x == y) {
                     return read_coord_entry_i_<L,O,S,sym,ut,sl,wgt,W,WS,true>::op_(x_, y_, w_, coord_pos, r, max_row, max_col);
                 }
-                if (coo_read_sym_i_<sym>::op_() && x != y) ++coord_pos;
+                if (!if_true_<sym>() && if_true_<ut>() && x > y) {
+                    return read_coord_entry_i_<L,O,S,sym,ut,sl,wgt,W,WS,true>::op_(x_, y_, w_, coord_pos, r, max_row, max_col);
+                }
+                if (if_true_<sym>() && !if_true_<ut>() && x != y) ++coord_pos;
                 ++coord_pos;
             }
         };
@@ -254,13 +232,17 @@ namespace pigo {
                 if (!r.good()) return;
                 r.move_to_eol();
                 r.move_to_next_int();
-                if (!coo_read_rsl_i_<L, sl>::op_(x, y)) {
+                if (if_true_<sl>() && x == y) {
                     return read_coord_entry_i_<L,O,S,sym,ut,sl,wgt,W,WS,false>::op_(x_, y_, w_, coord_pos, r, max_row, max_col);
                 }
+                if (!if_true_<sym>() && if_true_<ut>() && x > y) {
+                    return read_coord_entry_i_<L,O,S,sym,ut,sl,wgt,W,WS,false>::op_(x_, y_, w_, coord_pos, r, max_row, max_col);
+                }
+                if (if_true_<sym>() && if_true_<ut>() && x > y) std::swap(x, y);
                 set_value_(x_, coord_pos, x);
                 set_value_(y_, coord_pos, y);
                 ++coord_pos;
-                if (coo_read_sym_i_<sym>::op_() && x != y) {
+                if (if_true_<sym>() && !if_true_<ut>() && x != y) {
                     if (if_true_<wgt>()) {
                         auto w = get_value_<WS, W>(w_, coord_pos-1);
                         set_value_(w_, coord_pos, w);
@@ -576,13 +558,9 @@ namespace pigo {
         {
             size_t tid = omp_get_thread_num();
             size_t my_size = 0;
-            char buf[64];
 
             #pragma omp for
             for (O e = 0; e < m_; ++e) {
-                // Use more expensive, standard C++ conversions to strings
-                // This approach will perform the conversion twice
-                // This could be optimized
                 auto x = detail::get_value_<S, L>(x_, e);
                 my_size += write_size(x);
 
@@ -593,12 +571,11 @@ namespace pigo {
                 my_size += write_size(y);
 
                 if (detail::if_true_<wgt>()) {
-                    // FIXME integral weights
-                    auto w = detail::get_value_<WS, W>(w_, e);
-
-                    snprintf(buf, sizeof(buf), "%lf", w);
-                    my_size += strlen(buf);
+                    // Account for the separating space
                     my_size += 1;
+
+                    auto w = detail::get_value_<WS, W>(w_, e);
+                    my_size += write_size(w);
                 }
                 // Account for the file newline
                 my_size += 1;
@@ -625,17 +602,14 @@ namespace pigo {
             // Perform the second pass, actually writing out to the file
             #pragma omp for
             for (O e = 0; e < m_; ++e) {
-                // Use more expensive, standard C++ conversions to strings
-                // This approach will perform the conversion twice
-                // This could be optimized
                 auto x = detail::get_value_<S, L>(x_, e);
                 write_ascii(my_fp, x);
                 pigo::write(my_fp, ' ');
                 auto y = detail::get_value_<S, L>(y_, e);
                 write_ascii(my_fp, y);
                 if (detail::if_true_<wgt>()) {
-                    auto w = detail::get_value_<WS, W>(w_, e);
                     pigo::write(my_fp, ' ');
+                    auto w = detail::get_value_<WS, W>(w_, e);
                     write_ascii(my_fp, w);
                 }
                 pigo::write(my_fp, '\n');

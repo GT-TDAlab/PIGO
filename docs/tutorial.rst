@@ -13,6 +13,7 @@ or follow from the beginning to the end.
 
     tutorials/read_binary
     tutorials/write_binary
+    tutorials/simple_graph_cleaner
 
 Tutorial Evaluation Environment
 -------------------------------
