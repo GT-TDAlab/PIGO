@@ -20,6 +20,10 @@ remove self loops.
     COO<uint64_t, uint64_t, shared_ptr<uint64_t>,
             true, true, true> coo { argv[1] };
 
+If we want the remove self loops and multi-edges from a directed graph, but not
+symmetrize it, we would replace the first two ``true`` values with ``false``
+(template parameters 4 and 5 would become false).
+
 Once we have this COO, we can convert it into a CSR.  We will use the CSR
 to then detect and remove redundant, multiple edges.
 

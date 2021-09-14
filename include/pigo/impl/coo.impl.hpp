@@ -67,6 +67,13 @@ namespace pigo {
         n_ = csr.n();
         m_ = csr.m();
 
+        if (detail::if_true_<sym>() && !detail::if_true_<ut>())
+            m_ *= 2;
+        else if (!detail::if_true_<sym>() && detail::if_true_<ut>())
+            throw NotYetImplemented("Keeping triangle only from CSR not yet implemented");
+        if (detail::if_true_<sl>())
+            throw NotYetImplemented("Removing self loops from CSR not yet implemented");
+
         allocate_();
 
         auto storage_offsets = csr.offsets();
@@ -85,13 +92,31 @@ namespace pigo {
             auto start = endpoints + offsets[v];
             auto end = endpoints + offsets[v+1];
             size_t coo_cur = offsets[v];
+
+            if (detail::if_true_<sym>() && !detail::if_true_<ut>())
+                coo_cur *= 2;
+
             CW* cur_weight = nullptr;
             if (detail::if_true_<wgt>()) {
                 cur_weight = weights + offsets[v];
             }
             for (auto cur = start; cur < end; ++cur, ++coo_cur) {
-                detail::set_value_(x_, coo_cur, v);
-                detail::set_value_(y_, coo_cur, *cur);
+                L new_x = v;
+                L new_y = *cur;
+                if (detail::if_true_<sym>() && detail::if_true_<ut>()) {
+                    // Only the upper triangle should be saved
+                    if (new_x > new_y)
+                        std::swap(new_x, new_y);
+                } else if (detail::if_true_<sym>() && !detail::if_true_<ut>()) {
+                    // We need to duplicate each edge, to point both ways
+                    detail::set_value_(x_, coo_cur, new_y);
+                    detail::set_value_(y_, coo_cur, new_x);
+                    if (detail::if_true_<wgt>())
+                        detail::set_value_(w_, coo_cur, *cur_weight);
+                    ++coo_cur;
+                }
+                detail::set_value_(x_, coo_cur, new_x);
+                detail::set_value_(y_, coo_cur, new_y);
 
                 if (detail::if_true_<wgt>()) {
                     detail::set_value_(w_, coo_cur, *cur_weight);

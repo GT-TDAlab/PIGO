@@ -1,6 +1,10 @@
 # Changelog
 This file documents PIGO's changes.
 
+## [Unreleased]
+### Added (minor)
+- Support for symmetrizing from a CSR to a COO
+
 ## [0.5] - 2021-09-13
 ### Added (major)
 - Support for signed and unsigned integral and floating point weights
