@@ -418,6 +418,43 @@ namespace pigo {
     }
 
     inline
+    size_t FileReader::count_spaces_to_eol() {
+        size_t space_ct = 0;
+        // Loop until a newline
+        while (d < end && *d != '\n') {
+            // Read up to an integer, stopping once it is within an
+            // integer
+            while (d < end && *d != '\n' && *d != '%' && *d != '#' && (*d < '0' || *d > '9')) { ++d; }
+
+            // Make sure this is an integer
+            if (*d < '0' || *d > '9') {
+                move_to_eol();
+                break;
+            }
+
+            // Read through the integer
+            while (d < end && ((*d >= '0' && *d <= '9') || *d == '.')) {  ++d; }
+
+            if (*d == '\n') break;
+            if (*d == '%' || *d == '#') {
+                move_to_eol();
+                break;
+            }
+
+            // Count this as a space
+            ++space_ct;
+            if (*d == '\n') break;
+            if (*d == '%' || *d == '#') {
+                move_to_eol();
+                break;
+            }
+
+            ++d;
+        }
+        return space_ct;
+    }
+
+    inline
     void FileReader::move_to_next_int_or_nl() {
         bool at_int = false;
         if (d < end && (*d >= '0' && *d <= '9')) at_int = true;

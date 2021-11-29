@@ -132,6 +132,9 @@ namespace pigo {
             */
             void move_to_next_signed_int();
 
+            /** @brief Count the spaces in the line, moving the cursor */
+            size_t count_spaces_to_eol();
+
             /** @brief Move to the next integer or newline
             *
             * Note: this will move through the current integer or newline
@@ -237,6 +240,8 @@ namespace pigo {
         PIGO_CSR_BIN,
         /** A binary format storing a PIGO DiGraph */
         PIGO_DIGRAPH_BIN,
+        /** A binary format storing a Tensor CSR */
+        PIGO_TENSOR_BIN,
         /** A file with a head and where each line contains an adjacency
          * list */
         GRAPH,
@@ -735,11 +740,13 @@ namespace pigo {
 #include "pigo/csr.hpp"
 #include "pigo/matrix.hpp"
 #include "pigo/graph.hpp"
+#include "pigo/tensor.hpp"
 
 // Load the implementations
 #include "pigo/impl/pigo.impl.hpp"
 #include "pigo/impl/coo.impl.hpp"
 #include "pigo/impl/csr.impl.hpp"
 #include "pigo/impl/graph.impl.hpp"
+#include "pigo/impl/tensor.impl.hpp"
 
 #endif /* PIGO_HPP */

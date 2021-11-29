@@ -1,0 +1,8 @@
+# Test file     from: http://frostt.io/tensors/file-formats.html
+# This is a comment
+1   1    1 1 # TEST TEST
+1 1 2 1 # Another comment
+2 2 2 1
+2 3 1 2
+# Test
+3 1 1 2

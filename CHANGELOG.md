@@ -2,6 +2,10 @@
 This file documents PIGO's changes.
 
 ## [Unreleased]
+### Added (major)
+- Support for reading and writing Tensors, which are coordinate lists
+  where the coordinates are densely packed row by row.
+
 ### Added (minor)
 - Support for symmetrizing from a CSR to a COO
 
