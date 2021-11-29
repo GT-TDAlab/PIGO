@@ -200,6 +200,9 @@ remove self loops.</p>
 <span class="w">        </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="o">&gt;</span><span class="w"> </span><span class="n">coo</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
 </pre></div>
 </div>
+<p>If we want the remove self loops and multi-edges from a directed graph, but not
+symmetrize it, we would replace the first two <code class="docutils literal notranslate"><span class="pre">true</span></code> values with <code class="docutils literal notranslate"><span class="pre">false</span></code>
+(template parameters 4 and 5 would become false).</p>
 <p>Once we have this COO, we can convert it into a CSR.  We will use the CSR
 to then detect and remove redundant, multiple edges.</p>
 <div class="highlight-C++ notranslate"><div class="highlight"><pre><span></span><span class="n">CSR</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="p">,</span><span class="w"> </span><span class="kt">uint64_t</span><span class="p">,</span><span class="w"></span>
