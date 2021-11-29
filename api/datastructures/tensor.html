@@ -1,0 +1,424 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tensor &mdash; PIGO 0.5.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/css/side_color.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="PIGO 0.5.0 documentation" href="../../index.html"/>
+        <link rel="up" title="Datastructures" href="../datastructures.html"/>
+        <link rel="next" title="Utilities" href="../pigo.html"/>
+        <link rel="prev" title="Matrix" href="matrix.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> PIGO
+          
+
+          
+            
+            <img src="../../_static/logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">PIGO Tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../datastructures.html">Datastructures</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="coo.html">COO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="csr.html">CSR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="graph.html">Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix.html">Matrix</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Tensor</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pigo.html">Utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Other</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">PIGO: a Parallel Graph Input and Output library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../genindex.html">Site Map</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">PIGO</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../datastructures.html">Datastructures</a> &raquo;</li>
+        
+      <li>Tensor</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/GT-TDALab/PIGO/blob/master/docs/api/datastructures/tensor.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <section id="tensor">
+<h1>Tensor<a class="headerlink" href="#tensor" title="Permalink to this headline">¶</a></h1>
+<p>Defined in <a class="reference external" href="https://github.com/GT-TDAlab/PIGO/blob/master/include/pigo/tensor.hpp">coo.hpp</a></p>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4I000_b00EN4pigo6TensorE">
+<span id="_CPPv3I000_b00EN4pigo6TensorE"></span><span id="_CPPv2I000_b00EN4pigo6TensorE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Label</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Ordinal</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b00EN4pigo6TensorE" title="pigo::Tensor::Label"><span class="n"><span class="pre">Label</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Storage</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b00EN4pigo6TensorE" title="pigo::Tensor::Label"><span class="n"><span class="pre">Label</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">weighted</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Weight</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WeightStorage</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b00EN4pigo6TensorE" title="pigo::Tensor::Weight"><span class="n"><span class="pre">Weight</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classpigo_1_1Tensor"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-prename descclassname"><span class="n"><span class="pre">pigo</span></span><span class="p"><span class="pre">::</span></span></span><span class="sig-name descname"><span class="n"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#_CPPv4I000_b00EN4pigo6TensorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Holds coordinate-addressed tensors. </p>
+<p>A <a class="reference internal" href="#classpigo_1_1Tensor"><span class="std std-ref">Tensor</span></a> is designed to read sparse tensor files and expose the resulting file as a coordinate list with weights.</p>
+<p><dl class="field-list simple">
+<dt class="field-odd">tparam Label</dt>
+<dd class="field-odd"><p>the label data type. This type needs to be able to support the largest coordinate value read inside of the <a class="reference internal" href="#classpigo_1_1Tensor"><span class="std std-ref">Tensor</span></a>. </p>
+</dd>
+<dt class="field-even">tparam Ordinal</dt>
+<dd class="field-even"><p>the ordinal data type. This type needs to support large enough values to hold the number of entries or rows in the <a class="reference internal" href="#classpigo_1_1Tensor"><span class="std std-ref">Tensor</span></a>. It defaults to the same type as the label type. </p>
+</dd>
+<dt class="field-odd">tparam Storage</dt>
+<dd class="field-odd"><p>the storage type of the <a class="reference internal" href="#classpigo_1_1Tensor"><span class="std std-ref">Tensor</span></a>. This can either be vector (std::vector&lt;Label&gt;), a pointer (Label*), or a shared_ptr (std::shared_ptr&lt;Label&gt;). </p>
+</dd>
+<dt class="field-even">tparam weighted</dt>
+<dd class="field-even"><p>if true, support and use weights </p>
+</dd>
+<dt class="field-odd">tparam Weight</dt>
+<dd class="field-odd"><p>the weight data type. </p>
+</dd>
+<dt class="field-even">tparam WeightStorage</dt>
+<dd class="field-even"><p>the storage type for the weights. This can be a raw pointer (Weight*), a std::vector (std::vector&lt;Weight&gt;), or a std::shared_ptr&lt;Weight&gt;. </p>
+</dd>
+</dl>
+</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6Tensor6TensorENSt6stringE">
+<span id="_CPPv3N4pigo6Tensor6TensorENSt6stringE"></span><span id="_CPPv2N4pigo6Tensor6TensorENSt6stringE"></span><span id="pigo::Tensor::Tensor__ss"></span><span class="target" id="classpigo_1_1Tensor_1a9f43c2033f0734d21f20de2082af5fe1"></span><span class="sig-name descname"><span class="n"><span class="pre">Tensor</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6Tensor6TensorENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize a <a class="reference internal" href="#classpigo_1_1Tensor"><span class="std std-ref">Tensor</span></a> from a file. </p>
+<p>The file type will attempt to be determined automatically.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fn</strong> – the filename to open </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6Tensor6TensorENSt6stringE8FileType">
+<span id="_CPPv3N4pigo6Tensor6TensorENSt6stringE8FileType"></span><span id="_CPPv2N4pigo6Tensor6TensorENSt6stringE8FileType"></span><span id="pigo::Tensor::Tensor__ss.FileType"></span><span class="target" id="classpigo_1_1Tensor_1acf9d45df2fb956cb82b18a5839b9b121"></span><span class="sig-name descname"><span class="n"><span class="pre">Tensor</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span>, <a class="reference internal" href="../pigo.html#_CPPv4N4pigo8FileTypeE" title="pigo::FileType"><span class="n"><span class="pre">FileType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ft</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6Tensor6TensorENSt6stringE8FileType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize a <a class="reference internal" href="#classpigo_1_1Tensor"><span class="std std-ref">Tensor</span></a> from a file with a specific type. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fn</strong> – the filename to open </p></li>
+<li><p><strong>ft</strong> – the FileType to use </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6Tensor6TensorER4File8FileType">
+<span id="_CPPv3N4pigo6Tensor6TensorER4File8FileType"></span><span id="_CPPv2N4pigo6Tensor6TensorER4File8FileType"></span><span id="pigo::Tensor::Tensor__FileR.FileType"></span><span class="target" id="classpigo_1_1Tensor_1af7d0c84c177857940c80eaa4da74e79d"></span><span class="sig-name descname"><span class="n"><span class="pre">Tensor</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../pigo.html#_CPPv4N4pigo4FileE" title="pigo::File"><span class="n"><span class="pre">File</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">f</span></span>, <a class="reference internal" href="../pigo.html#_CPPv4N4pigo8FileTypeE" title="pigo::FileType"><span class="n"><span class="pre">FileType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ft</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6Tensor6TensorER4File8FileType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize a <a class="reference internal" href="#classpigo_1_1Tensor"><span class="std std-ref">Tensor</span></a> from an open <a class="reference internal" href="../pigo.html#classpigo_1_1File"><span class="std std-ref">File</span></a> with a specific type. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> – the <a class="reference internal" href="../pigo.html#classpigo_1_1File"><span class="std std-ref">File</span></a> to use </p></li>
+<li><p><strong>ft</strong> – the FileType to use </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6Tensor6TensorEv">
+<span id="_CPPv3N4pigo6Tensor6TensorEv"></span><span id="_CPPv2N4pigo6Tensor6TensorEv"></span><span id="pigo::Tensor::Tensor"></span><span class="target" id="classpigo_1_1Tensor_1acf213a5e7b5d4ed743545617fa4ee8e2"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Tensor</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6Tensor6TensorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Initialize an empty <a class="reference internal" href="#classpigo_1_1Tensor"><span class="std std-ref">Tensor</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6Tensor6TensorE7Ordinal7Ordinal">
+<span id="_CPPv3N4pigo6Tensor6TensorE7Ordinal7Ordinal"></span><span id="_CPPv2N4pigo6Tensor6TensorE7Ordinal7Ordinal"></span><span id="pigo::Tensor::Tensor__Ordinal.Ordinal"></span><span class="target" id="classpigo_1_1Tensor_1ab5680ace515676bf0f7f36d26ef8f29c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Tensor</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4I000_b00EN4pigo6TensorE" title="pigo::Tensor::Ordinal"><span class="n"><span class="pre">Ordinal</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">order</span></span>, <a class="reference internal" href="#_CPPv4I000_b00EN4pigo6TensorE" title="pigo::Tensor::Ordinal"><span class="n"><span class="pre">Ordinal</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">m</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6Tensor6TensorE7Ordinal7Ordinal" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Provide space for copying in existing, out-of-band data. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6Tensor1cEv">
+<span id="_CPPv3N4pigo6Tensor1cEv"></span><span id="_CPPv2N4pigo6Tensor1cEv"></span><span id="pigo::Tensor::c"></span><span class="target" id="classpigo_1_1Tensor_1ac4bde502c0eba825c074d696f51c001e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b00EN4pigo6TensorE" title="pigo::Tensor::Storage"><span class="n"><span class="pre">Storage</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">c</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6Tensor1cEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Retrieve the coordinate array. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the coordinate array in the format Storage </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6Tensor1wEv">
+<span id="_CPPv3N4pigo6Tensor1wEv"></span><span id="_CPPv2N4pigo6Tensor1wEv"></span><span id="pigo::Tensor::w"></span><span class="target" id="classpigo_1_1Tensor_1ae2f9fefb79a2fe292f13692edafaccd9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b00EN4pigo6TensorE" title="pigo::Tensor::WeightStorage"><span class="n"><span class="pre">WeightStorage</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">w</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6Tensor1wEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Retrieve the weight array. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the weight array in the format WeightStorage </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK4pigo6Tensor1mEv">
+<span id="_CPPv3NK4pigo6Tensor1mEv"></span><span id="_CPPv2NK4pigo6Tensor1mEv"></span><span id="pigo::Tensor::mC"></span><span class="target" id="classpigo_1_1Tensor_1a1eb66966a3a6aec0e96336c41732fc7f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b00EN4pigo6TensorE" title="pigo::Tensor::Ordinal"><span class="n"><span class="pre">Ordinal</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">m</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK4pigo6Tensor1mEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Retrieves the number of entries in the <a class="reference internal" href="#classpigo_1_1Tensor"><span class="std std-ref">Tensor</span></a>. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the count of entries </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK4pigo6Tensor5orderEv">
+<span id="_CPPv3NK4pigo6Tensor5orderEv"></span><span id="_CPPv2NK4pigo6Tensor5orderEv"></span><span id="pigo::Tensor::orderC"></span><span class="target" id="classpigo_1_1Tensor_1ac788f8db9920ae6646868994c69f4604"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b00EN4pigo6TensorE" title="pigo::Tensor::Ordinal"><span class="n"><span class="pre">Ordinal</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">order</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK4pigo6Tensor5orderEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Retrieves the order of the tensor. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the order of the tensor </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6Tensor4saveENSt6stringE">
+<span id="_CPPv3N4pigo6Tensor4saveENSt6stringE"></span><span id="_CPPv2N4pigo6Tensor4saveENSt6stringE"></span><span id="pigo::Tensor::save__ss"></span><span class="target" id="classpigo_1_1Tensor_1a6689d05a870782a35f342ee39d9c1c6a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">save</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6Tensor4saveENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Saves the <a class="reference internal" href="#classpigo_1_1Tensor"><span class="std std-ref">Tensor</span></a> to a binary PIGO file. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6Tensor5writeENSt6stringE">
+<span id="_CPPv3N4pigo6Tensor5writeENSt6stringE"></span><span id="_CPPv2N4pigo6Tensor5writeENSt6stringE"></span><span id="pigo::Tensor::write__ss"></span><span class="target" id="classpigo_1_1Tensor_1a1ca8e6525c991bf6b6846fc0fc50f966"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">write</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">fn</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6Tensor5writeENSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Write the <a class="reference internal" href="#classpigo_1_1Tensor"><span class="std std-ref">Tensor</span></a> out to an ASCII file. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6Tensor4freeEv">
+<span id="_CPPv3N4pigo6Tensor4freeEv"></span><span id="_CPPv2N4pigo6Tensor4freeEv"></span><span id="pigo::Tensor::free"></span><span class="target" id="classpigo_1_1Tensor_1a5961707dc2f76fcca8e818a795e120b0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">free</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6Tensor4freeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Free consumed memory. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6Tensor6TensorERK6Tensor">
+<span id="_CPPv3N4pigo6Tensor6TensorERK6Tensor"></span><span id="_CPPv2N4pigo6Tensor6TensorERK6Tensor"></span><span id="pigo::Tensor::Tensor__TensorCR"></span><span class="target" id="classpigo_1_1Tensor_1a8a5864b9bfee5c608debfc021975ce41"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Tensor</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N4pigo6Tensor6TensorERK6Tensor" title="pigo::Tensor::Tensor"><span class="n"><span class="pre">Tensor</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">other</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6Tensor6TensorERK6Tensor" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The copy constructor for creating a new <a class="reference internal" href="#classpigo_1_1Tensor"><span class="std std-ref">Tensor</span></a>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6TensoraSERK6Tensor">
+<span id="_CPPv3N4pigo6TensoraSERK6Tensor"></span><span id="_CPPv2N4pigo6TensoraSERK6Tensor"></span><span id="pigo::Tensor::assign-operator__TensorCR"></span><span class="target" id="classpigo_1_1Tensor_1a9c5f858652c3ab5071efa29c00bd43ae"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b00EN4pigo6TensorE" title="pigo::Tensor"><span class="n"><span class="pre">Tensor</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I000_b00EN4pigo6TensorE" title="pigo::Tensor"><span class="n"><span class="pre">Tensor</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">other</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N4pigo6TensoraSERK6Tensor" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The copy assignment operator. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-attributes">Public Static Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N4pigo6Tensor18tensor_file_headerE">
+<span id="_CPPv3N4pigo6Tensor18tensor_file_headerE"></span><span id="_CPPv2N4pigo6Tensor18tensor_file_headerE"></span><span id="pigo::Tensor::tensor_file_header__cCP"></span><span class="target" id="classpigo_1_1Tensor_1a9c93f263d54c159c3a15ed197135e0b7"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">constexpr</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">tensor_file_header</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="s"><span class="pre">&quot;PIGO-Tensor-v1&quot;</span></span><a class="headerlink" href="#_CPPv4N4pigo6Tensor18tensor_file_headerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The output file header for reading/writing </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../pigo.html" class="btn btn-neutral float-right" title="Utilities" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="matrix.html" class="btn btn-neutral" title="Matrix" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, GT-TDAlab.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> and ❤️  using a custom <a href="https://github.com/LinxiFan/Sphinx-theme">theme</a> based on <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.5.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
