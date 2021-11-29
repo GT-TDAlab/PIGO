@@ -194,6 +194,9 @@ namespace pigo {
         out_size += cfh.size();
         // Find the template sizes
         out_size += sizeof(uint8_t)*2;
+        if (detail::if_true_<wgt>())
+            out_size += sizeof(uint8_t);
+
         // Find the size of the entries, order
         out_size += 2*sizeof(O);
         // Finally, find the actual Tensor sizes
@@ -212,6 +215,10 @@ namespace pigo {
         uint8_t O_size = sizeof(O);
         w.write(L_size);
         w.write(O_size);
+        if (detail::if_true_<wgt>()) {
+            uint8_t W_size = sizeof(W);
+            w.write(W_size);
+        }
 
         // Output the sizes and data
         w.write(order_);
@@ -219,7 +226,7 @@ namespace pigo {
 
         // Output the data
         char* vc = detail::get_raw_data_<S>(c_);
-        size_t vc_size = sizeof(L)*order_*c_;
+        size_t vc_size = sizeof(L)*order_*m_;
         w.parallel_write(vc, vc_size);
 
         if (w_size > 0) {
@@ -240,6 +247,11 @@ namespace pigo {
 
         if (L_size != sizeof(L)) throw Error("Invalid Tensor template parameters to match binary");
         if (O_size != sizeof(O)) throw Error("Invalid Tensor template parameters to match binary");
+
+        if (detail::if_true_<wgt>()) {
+            uint8_t W_size = f.read<uint8_t>();
+            if (W_size != sizeof(W)) throw Error("Invalid Tensor template parameters to match binary");
+        }
 
         // Read the sizes
         order_ = f.read<O>();

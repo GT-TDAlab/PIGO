@@ -14,20 +14,23 @@ using namespace std;
 using namespace pigo;
 
 int main(int argc, char **argv) {
-    if (argc != 2) {
-        cerr << "Usage: " << argv[0] << " input-file" << endl;
+    if (argc != 3) {
+        cerr << "Usage: " << argv[0] << " input-file output-file" << endl;
         return 1;
     }
 
     string input_file = string(argv[1]);
+    string output_file = string(argv[2]);
 
-    double start = omp_get_wtime();
+    double clk = omp_get_wtime();
     Tensor<uint32_t, uint64_t> t { input_file };
-    double end = omp_get_wtime();
+    cerr << "Tensor load time: " << (omp_get_wtime()-clk) << " sec" << endl;
+
+    clk = omp_get_wtime();
+    t.save(output_file);
+    cerr << "Tensor binary write time: " << (omp_get_wtime()-clk) << " sec" << endl;
 
     t.free();
-
-    cerr << "Tensor load time: " << (end-start) << " sec" << endl;
 
     return 0;
 }

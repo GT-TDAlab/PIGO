@@ -139,6 +139,8 @@ namespace pigo {
             return PIGO_CSR_BIN;
         if (r.at_str(DiGraph<>::digraph_file_header))
             return PIGO_DIGRAPH_BIN;
+        if (r.at_str(Tensor<>::tensor_file_header))
+            return PIGO_TENSOR_BIN;
         if (r.at_str("PIGO"))
             throw Error("Unsupported PIGO binary format, likely version mismatch");
         // Check the filename for .mtx

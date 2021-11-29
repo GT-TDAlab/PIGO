@@ -56,6 +56,30 @@ int write_tensor(string dir_path) {
     return 0;
 }
 
+int write_bin(string dir_path) {
+    Tensor<int,int,vector<int>> r { dir_path + "/test.tns" };
+    r.save(".test.out.bin");
+
+    try {
+        Tensor<uint64_t, uint64_t, shared_ptr<uint64_t>, true, double, shared_ptr<double>> r2 { ".test.out.bin" };
+        EQ(1, 0);
+    } catch(...) { }
+
+    Tensor<int, int, shared_ptr<int>, true, float, vector<float>> r2 { ".test.out.bin" };
+
+    EQ(r.order(), r2.order());
+    EQ(r.m(), r2.m());
+    for (int idx = 0; idx < r2.order()*r2.m(); ++idx)
+        EQ(r.c()[idx], r2.c().get()[idx]);
+
+    for (int idx = 0; idx < r2.m(); ++idx)
+        FEQ(r.w()[idx], r2.w()[idx]);
+
+    r.free();
+    r2.free();
+    return 0;
+}
+
 int no_weight(string dir_path) {
     Tensor<int, int, int*, false> t { dir_path + "/noweight.tns" };
     EQ(t.order(), 4);
@@ -84,6 +108,7 @@ int main(int argc, char **argv) {
 
     TEST(read_tensor, dir_path);
     TEST(write_tensor, dir_path);
+    TEST(write_bin, dir_path);
     TEST(no_weight, dir_path);
 
     return pass;
