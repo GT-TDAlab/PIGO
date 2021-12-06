@@ -8,8 +8,6 @@
 #include "tests.hpp"
 #include "pigo.hpp"
 
-#include <vector>
-
 using namespace std;
 using namespace pigo;
 
@@ -41,7 +39,7 @@ int write_tensor(string dir_path) {
     Tensor<int,int,vector<int>> r { dir_path + "/test.tns" };
     r.write(".test.out.ascii");
 
-    Tensor<uint64_t, uint64_t, shared_ptr<uint64_t>, true, double, shared_ptr<double>> r2 { ".test.out.ascii" };
+    Tensor<uint64_t, uint64_t, shared_ptr<uint64_t>, double, shared_ptr<double>> r2 { ".test.out.ascii" };
 
     EQ((uint64_t)r.order(), r2.order());
     EQ((uint64_t)r.m(), r2.m());
@@ -61,11 +59,11 @@ int write_bin(string dir_path) {
     r.save(".test.out.bin");
 
     try {
-        Tensor<uint64_t, uint64_t, shared_ptr<uint64_t>, true, double, shared_ptr<double>> r2 { ".test.out.bin" };
+        Tensor<uint64_t, uint64_t, shared_ptr<uint64_t>, double, shared_ptr<double>> r2 { ".test.out.bin" };
         EQ(1, 0);
     } catch(...) { }
 
-    Tensor<int, int, shared_ptr<int>, true, float, vector<float>> r2 { ".test.out.bin" };
+    Tensor<int, int, shared_ptr<int>, float, vector<float>> r2 { ".test.out.bin" };
 
     EQ(r.order(), r2.order());
     EQ(r.m(), r2.m());
@@ -75,13 +73,17 @@ int write_bin(string dir_path) {
     for (int idx = 0; idx < r2.m(); ++idx)
         FEQ(r.w()[idx], r2.w()[idx]);
 
+    auto ml1 = r.max_labels();
+    auto ml2 = r2.max_labels();
+    NOPRINT_EQ(ml1, ml2);
+
     r.free();
     r2.free();
     return 0;
 }
 
 int no_weight(string dir_path) {
-    Tensor<int, int, int*, false> t { dir_path + "/noweight.tns" };
+    Tensor<int, int, int*, float, float*, false> t { dir_path + "/noweight.tns" };
     EQ(t.order(), 4);
     EQ(t.m(), 5);
     auto& c = t.c();
@@ -91,6 +93,19 @@ int no_weight(string dir_path) {
     EQ(c[idx++], 2); EQ(c[idx++], 2); EQ(c[idx++], 2); EQ(c[idx++], 1);
     EQ(c[idx++], 2); EQ(c[idx++], 3); EQ(c[idx++], 1); EQ(c[idx++], 2);
     EQ(c[idx++], 3); EQ(c[idx++], 1); EQ(c[idx++], 1); EQ(c[idx++], 2);
+
+    t.free();
+    return 0;
+}
+
+int max_labs(string dir_path) {
+    Tensor<int,int,vector<int>,double,vector<double>> t { dir_path + "/test.tns" };
+
+    EQ(t.m(), 5);
+    EQ(t.order(), 4);
+    auto labs = t.max_labels();
+    EQ(labs.size(), 4);
+    EQ(labs[0], 3); EQ(labs[1], 3); EQ(labs[2], 2); EQ(labs[3], 2);
 
     t.free();
     return 0;
@@ -110,6 +125,7 @@ int main(int argc, char **argv) {
     TEST(write_tensor, dir_path);
     TEST(write_bin, dir_path);
     TEST(no_weight, dir_path);
+    TEST(max_labs, dir_path);
 
     return pass;
 }

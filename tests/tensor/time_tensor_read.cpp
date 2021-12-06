@@ -8,12 +8,14 @@
 #include "pigo.hpp"
 
 #include <iostream>
+#include <iomanip>
 #include <omp.h>
 
 using namespace std;
 using namespace pigo;
 
 int main(int argc, char **argv) {
+    double start, end;
     if (argc != 2) {
         cerr << "Usage: " << argv[0] << " input-file" << endl;
         return 1;
@@ -21,13 +23,27 @@ int main(int argc, char **argv) {
 
     string input_file = string(argv[1]);
 
-    double start = omp_get_wtime();
+    start = omp_get_wtime();
     Tensor<uint32_t, uint64_t> t { input_file };
-    double end = omp_get_wtime();
+    end = omp_get_wtime();
+
+    cerr << "- TIMING -------------------------------" << endl;
+    cerr << "Tensor load time: " << fixed << setprecision(5) << (end-start) << " sec" << endl;
+
+    start = omp_get_wtime();
+    auto maxes = t.max_labels();
+    end = omp_get_wtime();
+    cerr << "Compute max labels time: " << (end-start) << " sec" << endl;
+
+    cerr << endl <<"- DATASET INFOMATION -------------------" << endl;
+    cerr << "Order = " << t.order() << endl;
+    cerr << "Number non-zeros = " << t.m() << endl;
+    cerr << "Max labels =";
+    for (auto m : maxes)
+        cerr << " " << m;
+    cerr << endl;
 
     t.free();
-
-    cerr << "Tensor load time: " << (end-start) << " sec" << endl;
 
     return 0;
 }

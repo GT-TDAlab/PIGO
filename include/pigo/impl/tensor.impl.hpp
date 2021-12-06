@@ -10,24 +10,24 @@
 
 namespace pigo {
 
-    template<class L, class O, class S, bool wgt, class W, class WS>
-    Tensor<L,O,S,wgt,W,WS>::Tensor(std::string fn) : Tensor(fn, AUTO) { }
+    template<class L, class O, class S, class W, class WS, bool wgt>
+    Tensor<L,O,S,W,WS,wgt>::Tensor(std::string fn) : Tensor(fn, AUTO) { }
 
-    template<class L, class O, class S, bool wgt, class W, class WS>
-    Tensor<L,O,S,wgt,W,WS>::Tensor(std::string fn, FileType ft) {
+    template<class L, class O, class S, class W, class WS, bool wgt>
+    Tensor<L,O,S,W,WS,wgt>::Tensor(std::string fn, FileType ft) {
         // Open the file for reading
         ROFile f { fn };
 
         read_(f, ft);
     }
 
-    template<class L, class O, class S, bool wgt, class W, class WS>
-    Tensor<L,O,S,wgt,W,WS>::Tensor(File& f, FileType ft) {
+    template<class L, class O, class S, class W, class WS, bool wgt>
+    Tensor<L,O,S,W,WS,wgt>::Tensor(File& f, FileType ft) {
         read_(f, ft);
     }
 
-    template<class L, class O, class S, bool wgt, class W, class WS>
-    void Tensor<L,O,S,wgt,W,WS>::read_(File& f, FileType ft) {
+    template<class L, class O, class S, class W, class WS, bool wgt>
+    void Tensor<L,O,S,W,WS,wgt>::read_(File& f, FileType ft) {
         FileType ft_used = ft;
         // If the file type is AUTO, then try to detect it
         if (ft_used == AUTO) {
@@ -44,20 +44,20 @@ namespace pigo {
         }
     }
 
-    template<class L, class O, class S, bool wgt, class W, class WS>
-    void Tensor<L,O,S,wgt,W,WS>::allocate_() {
+    template<class L, class O, class S, class W, class WS, bool wgt>
+    void Tensor<L,O,S,W,WS,wgt>::allocate_() {
         detail::allocate_mem_<S>(c_, order_*m_);
         detail::allocate_mem_<WS,wgt>(w_, m_);
     }
 
     namespace detail {
-        template<class L, class O, class S, bool wgt, class W, class WS, bool count_only>
+        template<class L, class O, class S, class W, class WS, bool count_only, bool wgt>
         struct read_tensor_entry_i_;
 
         /** Count-only implementation of reading a coord entry without
          * flags */
-        template<class L, class O, class S, bool wgt, class W, class WS>
-        struct read_tensor_entry_i_<L,O,S,wgt,W,WS,true> {
+        template<class L, class O, class S, class W, class WS, bool wgt>
+        struct read_tensor_entry_i_<L,O,S,W,WS,wgt,true> {
             static inline void op_(O order_, S&, WS&, size_t &coord_pos, FileReader &r) {
                 for (O idx = 0; idx < order_; ++idx) {
                     if (detail::if_true_<wgt>()) {
@@ -74,8 +74,8 @@ namespace pigo {
         };
 
         /** Setting implementation of reading a coord entry without flags */
-        template<class L, class O, class S, bool wgt, class W, class WS>
-        struct read_tensor_entry_i_<L,O,S,wgt,W,WS,false> {
+        template<class L, class O, class S, class W, class WS, bool wgt>
+        struct read_tensor_entry_i_<L,O,S,W,WS,wgt,false> {
             static inline void op_(O order_, S& c_, WS& w_, size_t &coord_pos, FileReader &r) {
                 for (O idx = 0; idx < order_; ++idx) {
                     L v = r.read_int<L>();
@@ -91,14 +91,14 @@ namespace pigo {
         };
     }
 
-    template<class L, class O, class S, bool wgt, class W, class WS>
+    template<class L, class O, class S, class W, class WS, bool wgt>
     template<bool count_only>
-    void Tensor<L,O,S,wgt,W,WS>::read_coord_entry_(size_t &coord_pos, FileReader &r) {
-        detail::read_tensor_entry_i_<L,O,S,wgt,W,WS,count_only>::op_(order_, c_, w_, coord_pos, r);
+    void Tensor<L,O,S,W,WS,wgt>::read_coord_entry_(size_t &coord_pos, FileReader &r) {
+        detail::read_tensor_entry_i_<L,O,S,W,WS,wgt,count_only>::op_(order_, c_, w_, coord_pos, r);
     }
 
-    template<class L, class O, class S, bool wgt, class W, class WS>
-    void Tensor<L,O,S,wgt,W,WS>::read_el_(FileReader& r) {
+    template<class L, class O, class S, class W, class WS, bool wgt>
+    void Tensor<L,O,S,W,WS,wgt>::read_el_(FileReader& r) {
         // Get the number of threads
         omp_set_dynamic(0);
         size_t num_threads = 0;
@@ -186,8 +186,8 @@ namespace pigo {
         }
     }
 
-    template<class L, class O, class S, bool wgt, class W, class WS>
-    void Tensor<L,O,S,wgt,W,WS>::save(std::string fn) {
+    template<class L, class O, class S, class W, class WS, bool wgt>
+    void Tensor<L,O,S,W,WS,wgt>::save(std::string fn) {
         // Before creating the file, we need to find the size
         size_t out_size = 0;
         std::string cfh { tensor_file_header };
@@ -198,7 +198,7 @@ namespace pigo {
             out_size += sizeof(uint8_t);
 
         // Find the size of the entries, order
-        out_size += 2*sizeof(O);
+        out_size += 2*sizeof(O)+order_*sizeof(L);
         // Finally, find the actual Tensor sizes
         out_size += sizeof(L)*m_*order_;
         size_t w_size = detail::weight_size_<wgt, W, O>(m_);
@@ -235,8 +235,8 @@ namespace pigo {
         }
     }
 
-    template<class L, class O, class S, bool wgt, class W, class WS>
-    void Tensor<L,O,S,wgt,W,WS>::read_bin_(File& f) {
+    template<class L, class O, class S, class W, class WS, bool wgt>
+    void Tensor<L,O,S,W,WS,wgt>::read_bin_(File& f) {
         // Read and confirm the header
         f.read(tensor_file_header);
 
@@ -272,8 +272,8 @@ namespace pigo {
         }
     }
 
-    template<class L, class O, class S, bool wgt, class W, class WS>
-    void Tensor<L,O,S,wgt,W,WS>::write(std::string fn) {
+    template<class L, class O, class S, class W, class WS, bool wgt>
+    void Tensor<L,O,S,W,WS,wgt>::write(std::string fn) {
         // Writing occurs in two passes
         // First, each thread will simulate writing and compute how the
         // space taken
@@ -351,6 +351,48 @@ namespace pigo {
                 pigo::write(my_fp, '\n');
             }
         }
+    }
+
+    template<class L, class O, class S, class W, class WS, bool wgt>
+    std::vector<L> Tensor<L,O,S,W,WS,wgt>::max_labels() const {
+        // Get the number of threads
+        omp_set_dynamic(0);
+        size_t num_threads = 0;
+        #pragma omp parallel shared(num_threads)
+        {
+            #pragma omp single
+            {
+                num_threads = omp_get_num_threads();
+            }
+        }
+
+        std::vector<L*> maxes(num_threads);
+        #pragma omp parallel
+        {
+            size_t tid = omp_get_thread_num();
+            L* my_maxes = new L[order_];
+            for (O idx = 0; idx < order_; ++idx) my_maxes[idx] = 0;
+
+            const L* c = (const L*)detail::get_const_data_<S>(c_);
+            #pragma omp for
+            for (O e = 0; e < m_; ++e) {
+                for (O idx = 0; idx < order_; ++idx) {
+                    L val = c[e*order_+idx];
+                    if (val > my_maxes[idx]) my_maxes[idx] = val;
+                }
+            }
+
+            maxes[tid] = my_maxes;
+        }
+
+        std::vector<L> ret(order_);
+        for (size_t tid = 0; tid < num_threads; ++tid) {
+            for (O idx = 0; idx < order_; ++idx)
+                if (maxes[tid][idx] > ret[idx]) ret[idx] = maxes[tid][idx];
+            delete [] maxes[tid];
+        }
+
+        return ret;
     }
 
 }

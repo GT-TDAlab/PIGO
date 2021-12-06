@@ -10,6 +10,7 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 
 namespace pigo {
 
@@ -27,19 +28,19 @@ namespace pigo {
      * @tparam Storage the storage type of the Tensor. This can either be
      *         vector (std::vector<Label>), a pointer (Label*), or
      *         a shared_ptr (std::shared_ptr<Label>).
-     * @tparam weighted if true, support and use weights
      * @tparam Weight the weight data type.
      * @tparam WeightStorage the storage type for the weights. This can be
      *         a raw pointer (Weight*), a std::vector
      *         (std::vector<Weight>), or a std::shared_ptr<Weight>.
+     * @tparam weighted if true, support and use weights
      */
     template<
         class Label=uint32_t,
         class Ordinal=Label,
         class Storage=Label*,
-        bool weighted=true,
         class Weight=float,
-        class WeightStorage=Weight*
+        class WeightStorage=Weight*,
+        bool weighted=true
     >
     class Tensor {
         private:
@@ -95,12 +96,6 @@ namespace pigo {
              * @param[in,out] coord_pos the current position in the
              *                coordinate list, e.g., the edge number
              * @param[in,out] r the current file reader
-             * @param[in,out] max_row the current maxmium row label seen.
-             *                If reading a label that is larger than the
-             *                max label, this value will be updated.
-             * @param[in,out] max_col the current maxmium col label seen.
-             *                If reading a label that is larger than the
-             *                max label, this value will be updated.
              * @tparam count_only if true, will not set values and will
              *                only assist in counting by moving through
              *                what would have been read.
@@ -184,6 +179,9 @@ namespace pigo {
              * @return the order of the tensor
              */
             Ordinal order() const { return order_; }
+
+            /** @brief Compute and return the maximum label in each dimension */
+            std::vector<Label> max_labels() const;
 
             /** @brief Saves the Tensor to a binary PIGO file */
             void save(std::string fn);

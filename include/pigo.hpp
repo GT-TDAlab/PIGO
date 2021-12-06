@@ -601,6 +601,44 @@ namespace pigo {
             >::op_(v);
         }
 
+        /** The raw data retrieval implementation */
+        template<typename T, bool ptr_flag, bool vec_flag, bool sptr_flag>
+        struct get_const_data_impl_;
+
+        /** The raw pointer implementation */
+        template<typename T>
+        struct get_const_data_impl_<T, true, false, false> {
+            static const char* op_(const T& v) { return (const char*)(v); }
+        };
+
+        /** The vector implementation */
+        template<typename T>
+        struct get_const_data_impl_<T, false, true, false> {
+            static const char* op_(const T& v) { return (const char*)(v.data()); }
+        };
+
+        /** The shared_ptr implementation */
+        template<typename T>
+        struct get_const_data_impl_<T, false, false, true> {
+            static const char* op_(const T& v) { return (const char*)(v.get()); }
+        };
+
+        /** @brief Returns a pointer to the data from an allocation
+         *
+        * @tparam T the storage type
+        * @param v the storage item to get the raw data pointer of
+        * @return a pointer to the raw data
+        */
+        template<class T>
+        inline
+        const char* get_const_data_(const T& v) {
+            return get_const_data_impl_<T,
+                std::is_pointer<T>::value,
+                is_vector<T>::value,
+                is_sptr<T>::value
+            >::op_(v);
+        }
+
         /** A holder for the storage location setting implementation */
         template<class S, class T, bool ptr_flag, bool vec_flag, bool sptr_flag>
         struct set_value_impl_;

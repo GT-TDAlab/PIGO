@@ -10,7 +10,7 @@ def write_header(o):
     o.write(f'''/**
  * PIGO: a parallel graph and matrix I/O and preprocessing library
  *
- * Release <UNRELEASED>.
+ * Release <UNRELEASED VERSION FROM GIT>.
  *
  * Copyright (c) {datetime.date.today().year}, GT-TDAlab (Umit V. Catalyurek)
  * Copyright (c) {datetime.date.today().year}, Kasimir Gabert
@@ -94,7 +94,8 @@ def get_code(fn, root=True):
     return includes, code
 
 def write_includes(includes, o):
-    for i in includes:
+    si = sorted(list(includes))
+    for i in si:
         o.write(i)
     o.write('\n')
 
