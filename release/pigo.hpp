@@ -55,6 +55,11 @@
 #include <vector>
 
 namespace pigo {
+
+    #ifndef _OPENMP
+    #pragma message("NOTICE: you are compiling without OpenMP support. PIGO will not be parallel!")
+    #endif
+
     /** @brief Thrown by errors detected in PIGO */
     class Error : public ::std::runtime_error {
         public:

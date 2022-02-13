@@ -9,16 +9,17 @@
 #ifndef PIGO_HPP
 #define PIGO_HPP
 
-#ifndef _OPENMP
-#pragma message("NOTICE: you are compiling with OpenMP support. PIGO will not be parallel!")
-#endif
-
 #include <stdexcept>
 #include <memory>
 #include <vector>
 #include <string>
 
 namespace pigo {
+
+    #ifndef _OPENMP
+    #pragma message("NOTICE: you are compiling without OpenMP support. PIGO will not be parallel!")
+    #endif
+
     /** @brief Thrown by errors detected in PIGO */
     class Error : public ::std::runtime_error {
         public:
