@@ -1,6 +1,6 @@
 /**
  * PIGO: a parallel graph and matrix I/O and preprocessing library
- * Copyright (c) 2021 GT-TDALab
+ * Copyright (c) 2022 GT-TDALab
  *
  * This file contains general PIGO input and output functions, used
  * throughout the remainder of the library.
@@ -8,6 +8,10 @@
 
 #ifndef PIGO_HPP
 #define PIGO_HPP
+
+#ifndef _OPENMP
+#pragma message("NOTICE: you are compiling with OpenMP support. PIGO will not be parallel!")
+#endif
 
 #include <stdexcept>
 #include <memory>

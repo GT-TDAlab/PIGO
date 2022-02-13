@@ -1,6 +1,6 @@
 /**
  * PIGO: a parallel graph and matrix I/O and preprocessing library
- * Copyright (c) 2021 GT-TDALab
+ * Copyright (c) 2022 GT-TDALab
  */
 
 #include <cmath>
@@ -12,7 +12,9 @@
 #include <fcntl.h>
 
 #include <cstring>
+#ifdef _OPENMP
 #include <omp.h>
+#endif
 
 namespace pigo {
     inline
@@ -500,8 +502,13 @@ namespace pigo {
         WFilePos wfp = (WFilePos)(fp);
         #pragma omp parallel
         {
+            #ifdef _OPENMP
             int num_threads = omp_get_num_threads();
             int thread_id = omp_get_thread_num();
+            #else
+            int num_threads = 1;
+            int thread_id = 0;
+            #endif
 
             size_t my_data = v_size/num_threads;
             // Give the last thread the remaining data
@@ -523,8 +530,13 @@ namespace pigo {
     void parallel_read(FilePos &fp, char* v, size_t v_size) {
         #pragma omp parallel
         {
+            #ifdef _OPENMP
             int num_threads = omp_get_num_threads();
             int thread_id = omp_get_thread_num();
+            #else
+            int num_threads = 1;
+            int thread_id = 0;
+            #endif
 
             size_t my_data = v_size/num_threads;
             // Give the last thread the remaining data

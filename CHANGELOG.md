@@ -9,6 +9,7 @@ This file documents PIGO's changes.
 ### Added (minor)
 - Support for symmetrizing from a CSR to a COO
 - Support for computing the maximum label values per dimension in Tensors
+- Support for compiling into a sequential version without OpenMP
 
 ## [0.5] - 2021-09-13
 ### Added (major)

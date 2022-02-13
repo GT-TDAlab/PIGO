@@ -1,12 +1,15 @@
 /**
  * PIGO: a parallel graph and matrix I/O and preprocessing library
- * Copyright (c) 2021 GT-TDALab
+ * Copyright (c) 2022 GT-TDALab
  */
 
 #include <algorithm>
 #include <atomic>
 #include <vector>
 #include <string>
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 namespace pigo {
     template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
@@ -123,8 +126,9 @@ namespace pigo {
         // Finally, we need to go through the COO and copy memory
 
         // Get the number of threads
+        size_t num_threads = 1;
+        #ifdef _OPENMP
         omp_set_dynamic(0);
-        size_t num_threads = 0;
         #pragma omp parallel shared(num_threads)
         {
             #pragma omp single
@@ -132,6 +136,7 @@ namespace pigo {
                 num_threads = omp_get_num_threads();
             }
         }
+        #endif
 
         // Temporarily keep track of the degree for each label (this can
         // easily be computed later)
@@ -145,7 +150,11 @@ namespace pigo {
         O* all_degs = new O[n_];
         #pragma omp parallel shared(all_degs) shared(label_degs) shared(start_offsets)
         {
+            #ifdef _OPENMP
             size_t tid = omp_get_thread_num();
+            #else
+            size_t tid = 0;
+            #endif
 
             L v_start = (tid*n_)/num_threads;
             L v_end = ((tid+1)*n_)/num_threads;
@@ -246,8 +255,9 @@ namespace pigo {
     template<class L, class O, class LS, class OS, bool wgt, class W, class WS>
     void CSR<L,O,LS,OS,wgt,W,WS>::read_graph_(FileReader &r) {
         // Get the number of threads
+        size_t num_threads = 1;
+        #ifdef _OPENMP
         omp_set_dynamic(0);
-        size_t num_threads = 0;
         #pragma omp parallel shared(num_threads)
         {
             #pragma omp single
@@ -255,6 +265,7 @@ namespace pigo {
                 num_threads = omp_get_num_threads();
             }
         }
+        #endif
 
         // We have a header containing the number of vertices and edges.
         // This is used to verify and check correctness
@@ -277,7 +288,11 @@ namespace pigo {
         bool have_zero;
         #pragma omp parallel shared(have_zero) shared(have_zeros)
         {
+            #ifdef _OPENMP
             size_t tid = omp_get_thread_num();
+            #else
+            size_t tid = 0;
+            #endif
 
             // Find our offsets in the file
             size_t size = r.size();
@@ -600,8 +615,9 @@ namespace pigo {
         // Set the offsets by doing a prefix sum on the degrees
 
         // Get the number of threads
+        size_t num_threads = 1;
+        #ifdef _OPENMP
         omp_set_dynamic(0);
-        size_t num_threads = 0;
         #pragma omp parallel shared(num_threads)
         {
             #pragma omp single
@@ -609,6 +625,8 @@ namespace pigo {
                 num_threads = omp_get_num_threads();
             }
         }
+        #endif
+
         // Keep track of the starting offsets for each thread
         std::shared_ptr<O> so_storage;
         detail::allocate_mem_(so_storage, num_threads);
@@ -616,7 +634,11 @@ namespace pigo {
 
         #pragma omp parallel shared(start_offsets)
         {
+            #ifdef _OPENMP
             size_t tid = omp_get_thread_num();
+            #else
+            size_t tid = 0;
+            #endif
 
             L v_start = (tid*n_)/num_threads;
             L v_end = ((tid+1)*n_)/num_threads;

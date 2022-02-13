@@ -1,9 +1,11 @@
 /**
  * PIGO: a parallel graph and matrix I/O and preprocessing library
- * Copyright (c) 2021 GT-TDALab
+ * Copyright (c) 2022 GT-TDALab
  */
 
+#ifdef _OPENMP
 #include <omp.h>
+#endif
 #include <atomic>
 #include <vector>
 #include <type_traits>
@@ -100,8 +102,9 @@ namespace pigo {
     template<class L, class O, class S, class W, class WS, bool wgt>
     void Tensor<L,O,S,W,WS,wgt>::read_el_(FileReader& r) {
         // Get the number of threads
+        size_t num_threads = 1;
+        #ifdef _OPENMP
         omp_set_dynamic(0);
-        size_t num_threads = 0;
         #pragma omp parallel shared(num_threads)
         {
             #pragma omp single
@@ -109,6 +112,7 @@ namespace pigo {
                 num_threads = omp_get_num_threads();
             }
         }
+        #endif
 
         // Find the order by reading the first line
         auto first_line = r;
@@ -124,7 +128,11 @@ namespace pigo {
 
         #pragma omp parallel
         {
+            #ifdef _OPENMP
             size_t tid = omp_get_thread_num();
+            #else
+            size_t tid = 0;
+            #endif
 
             // Find our offsets in the file
             size_t size = r.size();
@@ -281,8 +289,9 @@ namespace pigo {
         // Second, each thread actually writes
 
         // Get the number of threads
+        size_t num_threads = 1;
+        #ifdef _OPENMP
         omp_set_dynamic(0);
-        size_t num_threads = 0;
         #pragma omp parallel shared(num_threads)
         {
             #pragma omp single
@@ -290,12 +299,17 @@ namespace pigo {
                 num_threads = omp_get_num_threads();
             }
         }
+        #endif
 
         std::vector<size_t> pos_offsets(num_threads+1);
         std::shared_ptr<File> f;
         #pragma omp parallel shared(f) shared(pos_offsets)
         {
+            #ifdef _OPENMP
             size_t tid = omp_get_thread_num();
+            #else
+            size_t tid = 0;
+            #endif
             size_t my_size = 0;
 
             #pragma omp for
@@ -356,8 +370,9 @@ namespace pigo {
     template<class L, class O, class S, class W, class WS, bool wgt>
     std::vector<L> Tensor<L,O,S,W,WS,wgt>::max_labels() const {
         // Get the number of threads
+        size_t num_threads = 1;
+        #ifdef _OPENMP
         omp_set_dynamic(0);
-        size_t num_threads = 0;
         #pragma omp parallel shared(num_threads)
         {
             #pragma omp single
@@ -365,11 +380,16 @@ namespace pigo {
                 num_threads = omp_get_num_threads();
             }
         }
+        #endif
 
         std::vector<L*> maxes(num_threads);
         #pragma omp parallel
         {
+            #ifdef _OPENMP
             size_t tid = omp_get_thread_num();
+            #else
+            size_t tid = 0;
+            #endif
             L* my_maxes = new L[order_];
             for (O idx = 0; idx < order_; ++idx) my_maxes[idx] = 0;
 
