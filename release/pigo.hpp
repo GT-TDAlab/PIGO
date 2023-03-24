@@ -1,10 +1,10 @@
 /**
  * PIGO: a parallel graph and matrix I/O and preprocessing library
  *
- * Release <UNRELEASED VERSION FROM GIT>.
+ * Release 0.6.
  *
- * Copyright (c) 2022, GT-TDAlab (Umit V. Catalyurek)
- * Copyright (c) 2022, Kasimir Gabert
+ * Copyright (c) 2023, GT-TDAlab (Umit V. Catalyurek)
+ * Copyright (c) 2023, Kasimir Gabert
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -2707,7 +2707,7 @@ namespace pigo {
             }
 
             // Read through the integer
-            while (d < end && ((*d >= '0' && *d <= '9') || *d == '.')) {  ++d; }
+            while (d < end && ((*d >= '0' && *d <= '9') || *d == '.')) { ++d; }
 
             if (*d == '\n') break;
             if (*d == '%' || *d == '#') {
@@ -2717,13 +2717,21 @@ namespace pigo {
 
             // Count this as a space
             ++space_ct;
-            if (*d == '\n') break;
+
+            // Move passed the space
+            while (*d == ' ') { ++d; };
+
+            // Check if we just counted whitespace at the end; if so,
+            // un-do the count
+            if (*d == '\n') {
+                --space_ct;
+                break;
+            }
             if (*d == '%' || *d == '#') {
+                --space_ct;
                 move_to_eol();
                 break;
             }
-
-            ++d;
         }
         return space_ct;
     }
@@ -4383,6 +4391,8 @@ namespace pigo {
         auto first_line = r;
         first_line.move_to_first_int();
         order_ = first_line.count_spaces_to_eol();
+        if (!(detail::if_true_<wgt>()))
+            ++order_;
 
         // This takes two passes:
         // first, count the number of newlines to determine how to

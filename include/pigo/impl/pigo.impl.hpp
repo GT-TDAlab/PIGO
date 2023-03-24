@@ -437,7 +437,7 @@ namespace pigo {
             }
 
             // Read through the integer
-            while (d < end && ((*d >= '0' && *d <= '9') || *d == '.')) {  ++d; }
+            while (d < end && ((*d >= '0' && *d <= '9') || *d == '.')) { ++d; }
 
             if (*d == '\n') break;
             if (*d == '%' || *d == '#') {
@@ -447,13 +447,21 @@ namespace pigo {
 
             // Count this as a space
             ++space_ct;
-            if (*d == '\n') break;
+
+            // Move passed the space
+            while (*d == ' ') { ++d; };
+
+            // Check if we just counted whitespace at the end; if so,
+            // un-do the count
+            if (*d == '\n') {
+                --space_ct;
+                break;
+            }
             if (*d == '%' || *d == '#') {
+                --space_ct;
                 move_to_eol();
                 break;
             }
-
-            ++d;
         }
         return space_ct;
     }

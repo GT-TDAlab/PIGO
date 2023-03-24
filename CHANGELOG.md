@@ -1,7 +1,7 @@
 # Changelog
 This file documents PIGO's changes.
 
-## [Unreleased]
+## [0.6] - 2022-03-24
 ### Added (major)
 - Support for reading and writing Tensors, which are coordinate lists
   where the coordinates are densely packed row by row.
@@ -10,6 +10,9 @@ This file documents PIGO's changes.
 - Support for symmetrizing from a CSR to a COO
 - Support for computing the maximum label values per dimension in Tensors
 - Support for compiling into a sequential version without OpenMP
+
+### Fixed
+- Fixed a bug in determining the order of certain tensors from ASCII files
 
 ## [0.5] - 2021-09-13
 ### Added (major)

@@ -111,6 +111,16 @@ int max_labs(string dir_path) {
     return 0;
 }
 
+int order_one_no_weight(string dir_path) {
+    Tensor<int,int,shared_ptr<int>,float,float*,false> t { dir_path + "/ord1.tns" };
+    EQ(t.m(), 20);
+    EQ(t.order(), 1);
+    int* c = t.c().get();
+    EQ(c[0], 19);
+    EQ(c[19], 18);
+    return 0;
+}
+
 int main(int argc, char **argv) {
     int pass = 0;
 
@@ -126,6 +136,7 @@ int main(int argc, char **argv) {
     TEST(write_bin, dir_path);
     TEST(no_weight, dir_path);
     TEST(max_labs, dir_path);
+    TEST(order_one_no_weight, dir_path);
 
     return pass;
 }

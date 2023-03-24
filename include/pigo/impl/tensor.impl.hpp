@@ -118,6 +118,8 @@ namespace pigo {
         auto first_line = r;
         first_line.move_to_first_int();
         order_ = first_line.count_spaces_to_eol();
+        if (!(detail::if_true_<wgt>()))
+            ++order_;
 
         // This takes two passes:
         // first, count the number of newlines to determine how to
