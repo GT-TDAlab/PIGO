@@ -1,6 +1,11 @@
 # Changelog
 This file documents PIGO's changes.
 
+## [Unreleased]
+### Added (minor)
+- Support for getting the offsets of a character in a FileReader, for example
+  to find offsets for all newlines in file
+
 ## [0.6] - 2022-03-24
 ### Added (major)
 - Support for reading and writing Tensors, which are coordinate lists

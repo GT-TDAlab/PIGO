@@ -155,6 +155,16 @@ namespace pigo {
              */
             void move_to_eol();
 
+            /** @brief Move to the next instance of the given character
+             *
+             * If this is on the starting character, it will move off first,
+             * unless it is at the very end
+             */
+            void move_to(char c) {
+                if (d < end && *d == c) ++d;
+                while (d < end && (*d != c)) ++d;
+            }
+
             /** @brief Increment the file reader by a count */
             FileReader operator+(size_t s) {
                 FileReader n {d, end};
@@ -229,6 +239,13 @@ namespace pigo {
                 if (*(d+1) >= '0' && *(d+1) <= '9') return false;
                 return true;
             }
+
+            /** @brief Computes and returns the offsets of the character
+             *
+             * @return type R with the file offsets, where R is a tensor type
+             */
+            template <class R>
+            R find_offsets(char c);
     };
 
     /** @brief Contains the supported file types */

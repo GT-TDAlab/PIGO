@@ -505,6 +505,120 @@ namespace pigo {
         return s.compare(d_str) == 0;
     }
 
+    template <class R>
+    inline
+    R FileReader::find_offsets(char c) {
+        // This is a two-pass approach
+        // First, find the number of instances of c, second populate with the
+        // offsets
+
+        // Get the number of threads
+        size_t num_threads = 1;
+        #ifdef _OPENMP
+        omp_set_dynamic(0);
+        #pragma omp parallel shared(num_threads)
+        {
+            #pragma omp single
+            {
+                num_threads = omp_get_num_threads();
+            }
+        }
+        #endif
+
+        std::vector<size_t> c_offsets(num_threads);
+        #pragma omp parallel
+        {
+            #ifdef _OPENMP
+            size_t tid = omp_get_thread_num();
+            #else
+            size_t tid = 0;
+            #endif
+
+            // Find our offsets in the file
+            size_t tsize = size();
+            size_t tid_start_i = (tid*tsize)/num_threads;
+            size_t tid_end_i = ((tid+1)*tsize)/num_threads;
+            FileReader r = *this;
+            FileReader rs = r + tid_start_i;
+            FileReader re = r + tid_end_i;
+
+            // Next, move to the 'real' starting point
+            re.move_to(c);
+            if (tid != 0)
+                rs.move_to(c);
+            rs.smaller_end(re);
+
+            FileReader rs_p1 = rs;
+
+            // Now, for pass 1, count the number of characters found
+            size_t tid_c = 0;
+            while (rs_p1.good()) {
+                rs_p1.move_to(c);
+                if (*rs_p1.d == c)
+                    ++tid_c;
+            }
+
+            c_offsets[tid] = tid_c;
+
+            // Compute a prefix sum on the offsets
+            #pragma omp barrier
+            #pragma omp single
+            {
+                size_t sum_c = 0;
+                for (size_t tid = 0; tid < num_threads; ++tid) {
+                    sum_c += c_offsets[tid];
+                    c_offsets[tid] = sum_c;
+                }
+
+            }
+        }
+
+        // Now, we can allocate the space appropriately
+        R t(1, c_offsets[num_threads-1]);
+
+        auto& t_c = t.c();
+
+        // Next, go back and populate everything
+        #pragma omp parallel
+        {
+            #ifdef _OPENMP
+            size_t tid = omp_get_thread_num();
+            #else
+            size_t tid = 0;
+            #endif
+
+            // Find our offsets in the file
+            size_t tsize = size();
+            size_t tid_start_i = (tid*tsize)/num_threads;
+            size_t tid_end_i = ((tid+1)*tsize)/num_threads;
+            FileReader r = *this;
+            FileReader rs = r + tid_start_i;
+            FileReader re = r + tid_end_i;
+
+            // Next, move to the 'real' starting point
+            re.move_to(c);
+            if (tid != 0)
+                rs.move_to(c);
+            rs.smaller_end(re);
+
+            FileReader rs_p1 = rs;
+
+            // Now, for pass 2, set the offsets for each character
+            size_t tid_c = 0;
+            if (tid > 0)
+                tid_c = c_offsets[tid-1];
+            while (rs_p1.good()) {
+                rs_p1.move_to(c);
+                if (*rs_p1.d == c) {
+                    detail::set_value_(t_c, tid_c, rs_p1.d-r.d);
+                    ++tid_c;
+                }
+            }
+        }
+
+        return t;
+    }
+
     inline
     void parallel_write(FilePos &fp, char* v, size_t v_size) {
         WFilePos wfp = (WFilePos)(fp);
