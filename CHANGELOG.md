@@ -6,6 +6,9 @@ This file documents PIGO's changes.
 - Support for getting the offsets of a character in a FileReader, for example
   to find offsets for all newlines in file
 
+### Fixed
+- Fixed a bug which caused saved binary tensor files to be too large.
+
 ## [0.6] - 2022-03-24
 ### Added (major)
 - Support for reading and writing Tensors, which are coordinate lists

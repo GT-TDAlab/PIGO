@@ -1,6 +1,7 @@
 /**
  * PIGO: a parallel graph and matrix I/O and preprocessing library
  * Copyright (c) 2021 GT-TDALab
+ * Copyright (c) 2023 Kasimir Gabert
  *
  * This contains test files for reading tensor files
  */
@@ -57,6 +58,14 @@ int write_tensor(string dir_path) {
 int write_bin(string dir_path) {
     Tensor<int,int,vector<int>> r { dir_path + "/test.tns" };
     r.save(".test.out.bin");
+
+    {
+        ROFile ro {".test.out.bin"};
+        string hdr_str { Tensor<>::tensor_file_header };
+        size_t hdr_size = hdr_str.size() + sizeof(uint8_t)*3 + sizeof(int)*2;
+        size_t dat_size = sizeof(int)*r.order() + sizeof(float);
+        EQ(ro.size(), hdr_size+dat_size*r.m());
+    }
 
     try {
         Tensor<uint64_t, uint64_t, shared_ptr<uint64_t>, double, shared_ptr<double>> r2 { ".test.out.bin" };

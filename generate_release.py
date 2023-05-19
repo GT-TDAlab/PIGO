@@ -12,7 +12,7 @@ def write_header(o):
  *
  * Release <UNRELEASED VERSION FROM GIT>.
  *
- * Copyright (c) {datetime.date.today().year}, GT-TDAlab (Umit V. Catalyurek)
+ * Copyright (c) 2021-2022, GT-TDAlab (Umit V. Catalyurek)
  * Copyright (c) {datetime.date.today().year}, Kasimir Gabert
  * All rights reserved.
  *

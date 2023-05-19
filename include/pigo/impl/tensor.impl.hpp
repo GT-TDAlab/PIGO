@@ -1,6 +1,7 @@
 /**
  * PIGO: a parallel graph and matrix I/O and preprocessing library
  * Copyright (c) 2022 GT-TDALab
+ * Copyright (c) 2023 Kasimir Gabert
  */
 
 #ifdef _OPENMP
@@ -208,7 +209,7 @@ namespace pigo {
             out_size += sizeof(uint8_t);
 
         // Find the size of the entries, order
-        out_size += 2*sizeof(O)+order_*sizeof(L);
+        out_size += 2*sizeof(O);
         // Finally, find the actual Tensor sizes
         out_size += sizeof(L)*m_*order_;
         size_t w_size = detail::weight_size_<wgt, W, O>(m_);
