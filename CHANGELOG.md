@@ -5,6 +5,8 @@ This file documents PIGO's changes.
 ### Added (minor)
 - Support for getting the offsets of a character in a FileReader, for example
   to find offsets for all newlines in file
+- Adjusted the binary tensor magic string to be one character shorter,
+  enabling better padding.
 
 ### Fixed
 - Fixed a bug which caused saved binary tensor files to be too large.

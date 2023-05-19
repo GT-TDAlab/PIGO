@@ -219,7 +219,7 @@ namespace pigo {
             }
 
             /** The output file header for reading/writing */
-            static constexpr const char* tensor_file_header = "PIGO-Tensor-v1";
+            static constexpr const char* tensor_file_header = "PIGO-Tensor-2";
     };
 
 }
