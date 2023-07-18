@@ -15,6 +15,7 @@ This file documents PIGO's changes.
   to a string, where there is a dependence on the global locale which prevents
   effective parallelism, a public domain implementation STB (from
   https://github.com/nothings/stb) was modified and is now included with PIGO.
+- Clarifying that PIGO runs with C++11 in the README.
 
 ## [0.6] - 2022-03-24
 ### Added (major)

@@ -1,14 +1,13 @@
 # PIGO: a Parallel Graph Input and Output library
 
-[![Build Status](https://app.travis-ci.com/GT-TDAlab/PIGO.svg?branch=master)](https://app.travis-ci.com/github/GT-TDAlab/PIGO)
-
 PIGO is a library built to assist you with common sparse graph or matrix
 input, output, and preprocessing. It supports easily loading a variety of
 graph formats rapidly in parallel, performing standard preprocessing, and
 saving results and intermediate representations.
 
-PIGO is built in C++ and its releases are single header-only files.  It is
-designed to be simple to integrate into many projects.
+PIGO is built in C++, compiles and runs with the C++11 standard, and its
+releases are single header-only files. It is designed to be simple to integrate
+into many projects and run across a range of compilers and systems.
 
 💻 **Source Code:** [http://github.com/GT-TDAlab/PIGO]  
 📘 **Documentation:** [http://gt-tdalab.github.io/PIGO/]
