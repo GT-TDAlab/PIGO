@@ -10,6 +10,11 @@ This file documents PIGO's changes.
 
 ### Fixed
 - Fixed a bug which caused saved binary tensor files to be too large.
+- Fixed #4, where writes with floating point values had reduced parallelism.
+  Instead of using the C++ standard library to convert a floating point number
+  to a string, where there is a dependence on the global locale which prevents
+  effective parallelism, a public domain implementation STB (from
+  https://github.com/nothings/stb) was modified and is now included with PIGO.
 
 ## [0.6] - 2022-03-24
 ### Added (major)

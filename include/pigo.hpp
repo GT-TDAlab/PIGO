@@ -803,6 +803,7 @@ namespace pigo {
 #include "pigo/tensor.hpp"
 
 // Load the implementations
+#include "pigo/impl/stb.impl.hpp"
 #include "pigo/impl/pigo.impl.hpp"
 #include "pigo/impl/coo.impl.hpp"
 #include "pigo/impl/csr.impl.hpp"

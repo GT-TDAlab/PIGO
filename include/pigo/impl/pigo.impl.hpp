@@ -1,6 +1,7 @@
 /**
  * PIGO: a parallel graph and matrix I/O and preprocessing library
  * Copyright (c) 2022 GT-TDALab
+ * Copyright (c) 2023 Kasimir Gabert
  */
 
 #include <cmath>
@@ -256,8 +257,10 @@ namespace pigo {
         >
     inline
     size_t write_size(T obj) {
-        // This can be optimized significantly by manually writing
-        return std::to_string(obj).size();
+        char buf[1024];
+        int sz = stbsp_to_chars(buf, (double)obj);
+        if (sz >= 1024) sz = 1023;
+        return (size_t)sz;
     }
 
     template<typename T,
@@ -295,7 +298,9 @@ namespace pigo {
         >
     inline
     void write_ascii(FilePos &fp, T obj) {
-        write(fp, std::to_string(obj));
+        int sz = stbsp_to_chars((char*)fp, (double)obj);
+        if (sz >= 1024) sz = 1023;
+        fp += sz;
     }
 
     inline
