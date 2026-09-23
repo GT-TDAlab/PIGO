@@ -32,7 +32,36 @@ namespace pigo {
     #endif
     #endif
 
+    // Reading/writing 4 bytes at a time through a (uint32*)cast onto a char*
+    // buffer is a misaligned access -- undefined behavior, and reported by
+    // UBSan (and a fault on strict-alignment targets). Upstream stb_sprintf
+    // guards this optimization behind STB_SPRINTF_NOUNALIGNED; that guard was
+    // dropped when the code was vendored into PIGO. Restore it, and enable the
+    // safe byte-copy fallback automatically under a sanitizer build so PIGO's
+    // own test suite is clean, while keeping the fast path for normal builds.
+    // __has_feature is a clang builtin; define a no-op fallback so the #if
+    // below is well-formed on GCC (the preprocessor does not short-circuit).
+    #ifndef __has_feature
+    #define STBSP__DEFINED_HAS_FEATURE
+    #define __has_feature(x) 0
+    #endif
+    #ifndef STB_SPRINTF_NOUNALIGNED
+    #if defined(__SANITIZE_ADDRESS__) || defined(__SANITIZE_UNDEFINED__) || \
+        __has_feature(address_sanitizer) || \
+        __has_feature(undefined_behavior_sanitizer)
+    #define STB_SPRINTF_NOUNALIGNED 1
+    #endif
+    #endif
+    #ifdef STBSP__DEFINED_HAS_FEATURE
+    #undef __has_feature
+    #undef STBSP__DEFINED_HAS_FEATURE
+    #endif
+
+    #ifdef STB_SPRINTF_NOUNALIGNED
+    #define STBSP__UNALIGNED(code)
+    #else
     #define STBSP__UNALIGNED(code) code
+    #endif
 
     // internal float utility functions
     inline stbsp__int32 stbsp__real_to_str(char const **start, stbsp__uint32 *len, char *out, stbsp__int32 *decimal_pos, double value, stbsp__uint32 frac_digits);

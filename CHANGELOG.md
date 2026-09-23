@@ -16,6 +16,16 @@ This file documents PIGO's changes.
   heap-buffer-overflow along with an incorrect `m()`; in a `COO` the last
   entry was counted but never stored, leaving it uninitialized. Added
   `FileReader::at_end()` and regression tests for both.
+- Fixed misaligned loads and stores when reading and writing binary files.
+  `read<T>`/`write<T>` dereferenced a `char*` cast to `T*` at an offset that
+  followed a variable-length header and so was not `alignof(T)`-aligned, which
+  is undefined behavior (reported by UBSan, and a fault on strict-alignment
+  targets). They now use `memcpy`, which compilers lower to a single unaligned
+  access on architectures that permit one, so the binary format is unchanged.
+  Also restored stb_sprintf's `STB_SPRINTF_NOUNALIGNED` guard (dropped when the
+  code was vendored) and auto-enabled the safe byte-copy path under sanitizer
+  builds, keeping the fast path for normal builds. The full test suite now
+  passes under `-fsanitize=address,undefined`.
 - Fixed a bug which caused saved binary tensor files to be too large.
 - Fixed #4, where writes with floating point values had reduced parallelism.
   Instead of using the C++ standard library to convert a floating point number

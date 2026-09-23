@@ -165,7 +165,14 @@ namespace pigo {
     template<class T>
     inline
     T read(FilePos &fp) {
-        T res = *(T*)fp;
+        // The binary format packs multi-byte integers directly after a
+        // variable-length header string with no padding, so fp is generally
+        // not aligned to alignof(T). Dereferencing (T*)fp would be a misaligned
+        // load: undefined behavior (and a fault on strict-alignment targets).
+        // memcpy is the well-defined way to read an unaligned value; compilers
+        // lower it to a single unaligned load on architectures that allow one.
+        T res;
+        std::memcpy(&res, fp, sizeof(T));
         fp += sizeof(T);
         return res;
     }
@@ -173,7 +180,11 @@ namespace pigo {
     template<class T>
     inline
     void write(FilePos &fp, T val) {
-        *(T*)fp = val;
+        // See read<T>: the destination is unaligned, so memcpy rather than a
+        // (T*)fp store, which would be undefined behavior. FilePos is a
+        // const char*, so cast away const to the writable buffer as the
+        // original store did.
+        std::memcpy(const_cast<char*>(fp), &val, sizeof(T));
         fp += sizeof(T);
     }
 
