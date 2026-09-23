@@ -9,6 +9,12 @@ This file documents PIGO's changes.
   enabling better padding.
 
 ### Fixed
+- Fixed the `File` move constructor, which copied only `data_` and `size_`. It
+  left `fp_` uninitialized, so reads through a moved-to `File` dereferenced a
+  garbage pointer, and it did not clear the source's `data_`, so both the source
+  and destination unmapped the same region on destruction (a double `munmap`).
+  The move now transfers `fp_`/`fn_` and nulls the source; the move-assignment
+  operator likewise now carries `fp_`/`fn_`. Added a regression test.
 - Fixed `FileReader::at_str` failing to match a string that ends exactly at
   end-of-input. The bounds check used `>=` where the comparison reads the
   half-open range `[d, d + s.size())`, so a string filling the reader to its

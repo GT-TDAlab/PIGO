@@ -91,6 +91,8 @@ namespace pigo {
                 munmap(data_, size_);
             data_ = o.data_;
             size_ = o.size_;
+            fp_ = o.fp_;
+            fn_ = std::move(o.fn_);
             o.data_ = nullptr;
         }
         return *this;

@@ -328,6 +328,11 @@ namespace pigo {
             File(File &&o) {
                 data_ = o.data_;
                 size_ = o.size_;
+                fp_ = o.fp_;
+                fn_ = std::move(o.fn_);
+                // Leave the source with no mapping so its destructor does not
+                // munmap the region now owned by this File
+                o.data_ = nullptr;
             }
 
             /** @brief Move operator */

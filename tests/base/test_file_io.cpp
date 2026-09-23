@@ -8,6 +8,8 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <cstdio>
+#include <utility>
 #include <vector>
 
 #include "tests.hpp"
@@ -89,6 +91,49 @@ int file_size(string dir_path) {
     return 0;
 }
 
+/** Moving a File must transfer the mapping, file position, and name, and must
+ * leave the source with no mapping.
+ *
+ * Regression test: the move constructor copied only data_ and size_. It left
+ * fp_ uninitialized (so a read through the moved-to File dereferenced garbage)
+ * and did not clear the source's data_ (so both the source and destination
+ * unmapped the same region on destruction -- a double munmap). The move
+ * assignment likewise did not carry fp_/fn_.
+ */
+int move_semantics() {
+    // Write a known sequence of values
+    {
+        File f(".TMP.move-test.dat", WRITE, 3*sizeof(uint32_t));
+        f.write<uint32_t>(111);
+        f.write<uint32_t>(222);
+        f.write<uint32_t>(333);
+    }
+
+    // Move-construct from a freshly opened file, then read through the
+    // destination. This requires fp_ to have been carried over.
+    {
+        File src(".TMP.move-test.dat", READ);
+        File dst(std::move(src));
+        EQ(dst.read<uint32_t>(), 111u);
+        EQ(dst.read<uint32_t>(), 222u);
+        EQ(dst.read<uint32_t>(), 333u);
+        // src.data_ must have been nulled: leaving this scope destructs both
+        // src and dst, and a double munmap of the same region would fault.
+    }
+
+    // Move-assignment path: same requirements.
+    {
+        File dst(".TMP.move-test.dat", READ);
+        File src(".TMP.move-test.dat", READ);
+        dst = std::move(src);
+        EQ(dst.read<uint32_t>(), 111u);
+        EQ(dst.read<uint32_t>(), 222u);
+    }
+
+    remove(".TMP.move-test.dat");
+    return 0;
+}
+
 int main(int argc, char **argv) {
     int pass = 0;
 
@@ -103,6 +148,7 @@ int main(int argc, char **argv) {
     TEST(file_writing);
     TEST(file_reading, dir_path);
     TEST(file_size, dir_path);
+    TEST(move_semantics);
 
     return pass;
 }
