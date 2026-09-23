@@ -9,73 +9,18 @@ This file documents PIGO's changes.
   enabling better padding.
 
 ### Fixed
-- Widened `parallel_write`'s source parameter from `char*` to `const char*`.
-  The data is only read (it is the source of the `memcpy` into the output file),
-  so the non-const parameter needlessly forced callers holding read-only data to
-  cast away `const`. Existing callers are unaffected, since `char*` converts to
-  `const char*`. Added a regression test.
-- Fixed binary reads trusting the header's declared size. `read_bin_` (for
-  `COO`, `CSR`, `DiGraph`, and `Tensor`) passed `sizeof(elem) * m_` straight to
-  `parallel_read`, which `memcpy`'d that many bytes out of the memory-mapped
-  file with no bounds check, so a corrupt or truncated header declaring more
-  data than the file holds read out of bounds (a segfault). `File::parallel_read`
-  now verifies the requested region fits within the file and throws otherwise.
-  Added a regression test.
-- Fixed the `File` move constructor, which copied only `data_` and `size_`. It
-  left `fp_` uninitialized, so reads through a moved-to `File` dereferenced a
-  garbage pointer, and it did not clear the source's `data_`, so both the source
-  and destination unmapped the same region on destruction (a double `munmap`).
-  The move now transfers `fp_`/`fn_` and nulls the source; the move-assignment
-  operator likewise now carries `fp_`/`fn_`. Added a regression test.
-- Fixed `FileReader::at_str` failing to match a string that ends exactly at
-  end-of-input. The bounds check used `>=` where the comparison reads the
-  half-open range `[d, d + s.size())`, so a string filling the reader to its
-  last byte (for example a file consisting solely of a format header) was
-  reported as absent. The guard now uses `>`. Added a regression test.
-- Fixed `Tensor::write` overrunning its output allocation for order-0 tensors
-  (a weighted single-column file). The sizing pass charged a separator after
-  every coordinate, which only balanced the unconditional trailing newline when
-  the order was at least one; with order 0 nothing accounted for the newline, so
-  the writing pass emitted one byte per entry past the mapped file -- a
-  heap-buffer-overflow of `m()` bytes. The sizing pass now mirrors the writing
-  pass exactly. Added a regression test.
-- Fixed `Tensor` order detection for files whose first line has no trailing
-  newline and for CRLF-terminated files. `count_spaces_to_eol` treated only
-  `\n`/`%`/`#` as ending a line, so it counted one separator too many at
-  end-of-file or before a `\r`, reporting one column too many (and reading a
-  single-line file as empty). End-of-file and `\r` are now treated as
-  end-of-line. Added regression tests.
-- Fixed writing the most-negative signed value (e.g. `INT8_MIN`) in ASCII.
-  The magnitude was computed by negating within the signed type, which
-  overflows for the most-negative value and left it negative; the digit loop
-  then wrote non-digit bytes and derived a length that disagreed with the
-  sizing pass, corrupting the output and overrunning the file in bulk. The
-  magnitude is now computed in the unsigned counterpart type. Added a
-  byte-exact regression test.
-- Fixed reading files whose last line has no trailing newline. The entry
-  readers treated "no input remaining" as a failed read, so the final entry
-  was handled inconsistently by the counting and setting passes. In an
-  unweighted `Tensor` this undersized the allocation and caused a
-  heap-buffer-overflow along with an incorrect `m()`; in a `COO` the last
-  entry was counted but never stored, leaving it uninitialized. Added
-  `FileReader::at_end()` and regression tests for both.
-- Fixed misaligned loads and stores when reading and writing binary files.
-  `read<T>`/`write<T>` dereferenced a `char*` cast to `T*` at an offset that
-  followed a variable-length header and so was not `alignof(T)`-aligned, which
-  is undefined behavior (reported by UBSan, and a fault on strict-alignment
-  targets). They now use `memcpy`, which compilers lower to a single unaligned
-  access on architectures that permit one, so the binary format is unchanged.
-  Also restored stb_sprintf's `STB_SPRINTF_NOUNALIGNED` guard (dropped when the
-  code was vendored) and auto-enabled the safe byte-copy path under sanitizer
-  builds, keeping the fast path for normal builds. The full test suite now
-  passes under `-fsanitize=address,undefined`.
-- Fixed a bug which caused saved binary tensor files to be too large.
-- Fixed #4, where writes with floating point values had reduced parallelism.
-  Instead of using the C++ standard library to convert a floating point number
-  to a string, where there is a dependence on the global locale which prevents
-  effective parallelism, a public domain implementation STB (from
-  https://github.com/nothings/stb) was modified and is now included with PIGO.
-- Clarifying that PIGO runs with C++11 in the README.
+- Widened `parallel_write` source parameter to `const char*`. [Details](issues/ISSUE-parallel-write-const-source.md)
+- Added bounds checking to binary reads to prevent out-of-bounds access. [Details](issues/ISSUE-binary-header-bounds.md)
+- Fixed `File` move constructor and move-assignment to prevent double-unmapping. [Details](issues/ISSUE-file-move-constructor.md)
+- Fixed `FileReader::at_str` to match strings ending at end-of-input. [Details](issues/ISSUE-at-str-off-by-one.md)
+- Fixed heap-buffer-overflow in `Tensor::write` for order-0 tensors. [Details](issues/ISSUE-tensor-write-order-zero.md)
+- Fixed `Tensor` order detection for CRLF and no-trailing-newline files. [Details](issues/ISSUE-tensor-order-eol-detection.md)
+- Fixed corruption when writing the most-negative signed integers in ASCII. [Details](issues/ISSUE-signed-min-ascii-write.md)
+- Fixed incorrect entry counting when reading files without a trailing newline. [Details](issues/ISSUE-tensor-missing-trailing-newline.md)
+- Replaced misaligned pointer dereferences with `memcpy` in binary I/O. [Details](issues/ISSUE-unaligned-binary-read-write.md)
+- Fixed a bug causing saved binary tensor files to be unnecessarily large.
+- Improved parallelism for floating point writes via a custom implementation.
+- Updated README to clarify C++11 compatibility.
 
 ## [0.6] - 2022-03-24
 ### Added (major)
