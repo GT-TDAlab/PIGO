@@ -9,6 +9,11 @@ This file documents PIGO's changes.
   enabling better padding.
 
 ### Fixed
+- Widened `parallel_write`'s source parameter from `char*` to `const char*`.
+  The data is only read (it is the source of the `memcpy` into the output file),
+  so the non-const parameter needlessly forced callers holding read-only data to
+  cast away `const`. Existing callers are unaffected, since `char*` converts to
+  `const char*`. Added a regression test.
 - Fixed binary reads trusting the header's declared size. `read_bin_` (for
   `COO`, `CSR`, `DiGraph`, and `Tensor`) passed `sizeof(elem) * m_` straight to
   `parallel_read`, which `memcpy`'d that many bytes out of the memory-mapped

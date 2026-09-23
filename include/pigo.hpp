@@ -380,7 +380,7 @@ namespace pigo {
             * @param v the region of data to write
             * @param v_size the size of the region of data to write
             */
-            void parallel_write(char* v, size_t v_size);
+            void parallel_write(const char* v, size_t v_size);
 
             /** @brief Read a binary region in parallel
             *
@@ -798,7 +798,7 @@ namespace pigo {
      * @param v the region of data to write
      * @param v_size the size of the region of data to write
      */
-    void parallel_write(FilePos &fp, char* v, size_t v_size);
+    void parallel_write(FilePos &fp, const char* v, size_t v_size);
 
     /** @brief Read a binary region in parallel
      *

@@ -134,6 +134,33 @@ int move_semantics() {
     return 0;
 }
 
+/** parallel_write must accept a read-only source buffer.
+ *
+ * Regression test: parallel_write only reads its source (it is the src of a
+ * memcpy) but declared the parameter `char*`, so a `const char*` source could
+ * not be passed without casting away const. It now takes `const char*`. This
+ * test would fail to compile against the prior signature.
+ */
+int parallel_write_const_source() {
+    const uint32_t src[4] = { 10u, 20u, 30u, 40u };
+    const char* v = reinterpret_cast<const char*>(src);
+    const size_t v_size = sizeof(src);
+
+    {
+        File f(".TMP.const-write.dat", WRITE, v_size);
+        f.parallel_write(v, v_size);
+    }
+
+    {
+        File f(".TMP.const-write.dat", READ);
+        for (size_t i = 0; i < 4; ++i)
+            EQ(f.read<uint32_t>(), src[i]);
+    }
+
+    remove(".TMP.const-write.dat");
+    return 0;
+}
+
 int main(int argc, char **argv) {
     int pass = 0;
 
@@ -149,6 +176,7 @@ int main(int argc, char **argv) {
     TEST(file_reading, dir_path);
     TEST(file_size, dir_path);
     TEST(move_semantics);
+    TEST(parallel_write_const_source);
 
     return pass;
 }

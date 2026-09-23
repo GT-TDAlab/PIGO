@@ -119,7 +119,7 @@ namespace pigo {
     }
 
     inline
-    void File::parallel_write(char* v, size_t v_size) {
+    void File::parallel_write(const char* v, size_t v_size) {
         ::pigo::parallel_write(fp_, v, v_size);
     }
 
@@ -673,7 +673,7 @@ namespace pigo {
     }
 
     inline
-    void parallel_write(FilePos &fp, char* v, size_t v_size) {
+    void parallel_write(FilePos &fp, const char* v, size_t v_size) {
         WFilePos wfp = (WFilePos)(fp);
         #pragma omp parallel
         {
