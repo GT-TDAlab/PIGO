@@ -226,15 +226,20 @@ namespace pigo {
         template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS, bool count_only>
         struct read_coord_entry_i_;
 
-        /** Count-only implementation of reading a coord entry */
+        /** Count-only implementation of reading a coord entry
+         *
+         * Note: reaching the end of the input is not a read failure, since
+         * the final line of a file needs no trailing newline. The end is
+         * instead checked on entry, which also terminates the skip-entry
+         * recursion below when the skipped entry was the last one. */
         template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
         struct read_coord_entry_i_<L,O,S,sym,ut,sl,wgt,W,WS,true> {
             static inline void op_(S& x_, S& y_, WS& w_, size_t &coord_pos, FileReader &r, L& max_row, L& max_col) {
+                if (r.at_end()) return;
                 L x = r.read_int<L>();
                 r.move_to_next_int();
                 L y = r.read_int<L>();
                 read_wgt_<wgt, W, WS, true>(coord_pos, w_, r);
-                if (!r.good()) return;
                 r.move_to_eol();
                 r.move_to_next_int();
                 if (if_true_<sl>() && x == y) {
@@ -248,15 +253,20 @@ namespace pigo {
             }
         };
 
-        /** Setting implementation of reading a coord entry */
+        /** Setting implementation of reading a coord entry
+         *
+         * Mirrors the end-of-input handling of the count-only pass above:
+         * the check happens on entry rather than after parsing, so that an
+         * entry on a final line without a trailing newline is stored, not
+         * silently left uninitialized. */
         template<class L, class O, class S, bool sym, bool ut, bool sl, bool wgt, class W, class WS>
         struct read_coord_entry_i_<L,O,S,sym,ut,sl,wgt,W,WS,false> {
             static inline void op_(S& x_, S& y_, WS& w_, size_t &coord_pos, FileReader &r, L& max_row, L& max_col) {
+                if (r.at_end()) return;
                 L x = r.read_int<L>();
                 r.move_to_next_int();
                 L y = r.read_int<L>();
                 read_wgt_<wgt, W, WS, false>(coord_pos, w_, r);
-                if (!r.good()) return;
                 r.move_to_eol();
                 r.move_to_next_int();
                 if (if_true_<sl>() && x == y) {
@@ -284,27 +294,36 @@ namespace pigo {
         };
 
         /** Count-only implementation of reading a coord entry without
-         * flags */
+         * flags
+         *
+         * Note: an entry on a final line with no trailing newline is a
+         * valid entry, so the end of input is checked on entry rather than
+         * after the coordinates have been consumed. */
         template<class L, class O, class S, bool wgt, class W, class WS>
         struct read_coord_entry_i_<L,O,S,false,false,false,wgt,W,WS,true> {
             static inline void op_(S&, S&, WS&, size_t &coord_pos, FileReader &r, L&, L&) {
+                if (r.at_end()) return;
                 r.move_to_next_int();
-                if (!r.good()) return;
                 r.move_to_eol();
                 r.move_to_next_int();
                 ++coord_pos;
             }
         };
 
-        /** Setting implementation of reading a coord entry without flags */
+        /** Setting implementation of reading a coord entry without flags
+         *
+         * Note: reaching the end of the input is not a read failure. The
+         * final line of a file needs no trailing newline, and the
+         * count-only pass above already counts such an entry, so it must be
+         * stored here as well or its slot is left uninitialized. */
         template<class L, class O, class S, bool wgt, class W, class WS>
         struct read_coord_entry_i_<L,O,S,false,false,false,wgt,W,WS,false> {
             static inline void op_(S& x_, S& y_, WS& w_, size_t &coord_pos, FileReader &r, L& max_row, L& max_col) {
+                if (r.at_end()) return;
                 L x = r.read_int<L>();
                 r.move_to_next_int();
                 L y = r.read_int<L>();
                 read_wgt_<wgt, W, WS, false>(coord_pos, w_, r);
-                if (!r.good()) return;
                 r.move_to_eol();
                 r.move_to_next_int();
                 set_value_(x_, coord_pos, x);

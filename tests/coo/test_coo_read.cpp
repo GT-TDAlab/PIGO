@@ -8,11 +8,25 @@
 #include "tests.hpp"
 #include "pigo.hpp"
 
+#include <cstdio>
+#include <fstream>
 #include <memory>
+#include <string>
 #include <vector>
 
 using namespace std;
 using namespace pigo;
+
+/** Writes contents to fn verbatim, with no newline appended
+ *
+ * Tests for missing-trailing-newline handling have to build their input at
+ * runtime: git and most editors normalize a final newline onto checked-in
+ * files, so a fixture could not be relied on to keep its exact last byte.
+ */
+static void write_exact(const string& fn, const string& contents) {
+    ofstream f { fn.c_str(), ios::out | ios::binary | ios::trunc };
+    f.write(contents.c_str(), contents.size());
+}
 
 int read_clean_el_rptr(string dir_path) {
     COO<> c { dir_path + "/clean.el", EDGE_LIST };
@@ -134,6 +148,63 @@ int read_from_csr_graph(string dir_path) {
     return 0;
 }
 
+/** A file whose last line has no trailing newline reads identically to one
+ * that does.
+ *
+ * Regression test: the last entry used to be counted but never stored,
+ * leaving its slot uninitialized (it typically read back as 0 -> 0).
+ */
+int read_no_trailing_newline(string) {
+    const string body = "0 1\n1 2\n2 3";
+    write_exact(".test.no_trail.el", body);
+    write_exact(".test.with_trail.el", body + "\n");
+
+    COO<uint64_t, uint64_t, vector<uint64_t> >
+        without { ".test.no_trail.el", EDGE_LIST };
+    COO<uint64_t, uint64_t, vector<uint64_t> >
+        with { ".test.with_trail.el", EDGE_LIST };
+
+    EQ(without.m(), 3);
+    EQ(with.m(), without.m());
+    EQ(with.n(), without.n());
+
+    // The final edge must be the real one, not an unwritten slot
+    EQ(without.x()[2], 2);
+    EQ(without.y()[2], 3);
+
+    for (size_t i = 0; i < with.m(); ++i) {
+        EQ(without.x()[i], with.x()[i]);
+        EQ(without.y()[i], with.y()[i]);
+    }
+
+    remove(".test.no_trail.el");
+    remove(".test.with_trail.el");
+    return 0;
+}
+
+/** As above, but weighted, and with a single-line file (no newline at all) */
+int read_no_trailing_newline_weighted(string) {
+    write_exact(".test.no_trail_w.el", "0 1 5\n1 2 7");
+    write_exact(".test.one_line.el", "3 4");
+
+    COO<uint64_t, uint64_t, vector<uint64_t>, false, false, false, true,
+        float, vector<float> > w { ".test.no_trail_w.el", EDGE_LIST };
+    EQ(w.m(), 2);
+    EQ(w.x()[1], 1);
+    EQ(w.y()[1], 2);
+    FEQ(w.w()[1], 7.0);
+
+    COO<uint64_t, uint64_t, vector<uint64_t> >
+        one { ".test.one_line.el", EDGE_LIST };
+    EQ(one.m(), 1);
+    EQ(one.x()[0], 3);
+    EQ(one.y()[0], 4);
+
+    remove(".test.no_trail_w.el");
+    remove(".test.one_line.el");
+    return 0;
+}
+
 int main(int argc, char **argv) {
     int pass = 0;
 
@@ -150,6 +221,8 @@ int main(int argc, char **argv) {
     TEST(read_dirty_clean, dir_path);
     TEST(read_from_csr_bin, dir_path);
     TEST(read_from_csr_graph, dir_path);
+    TEST(read_no_trailing_newline, dir_path);
+    TEST(read_no_trailing_newline_weighted, dir_path);
 
     return pass;
 }

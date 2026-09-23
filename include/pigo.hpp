@@ -203,6 +203,17 @@ namespace pigo {
              */
             size_t size() { return end - d; }
 
+            /** @brief Return whether the reader has consumed all input
+             *
+             * Note that this is the negation of good(). It is provided to
+             * make the distinction explicit at call sites: reaching the end
+             * of the input is not by itself a read failure, since a final
+             * entry needs no trailing newline.
+             *
+             * @return true if there is no input remaining
+             */
+            bool at_end() { return d >= end; }
+
             /** @brief Check whether the reader is at the string
              *
              * @param s the string to check against

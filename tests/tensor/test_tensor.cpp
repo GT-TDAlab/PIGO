@@ -9,8 +9,23 @@
 #include "tests.hpp"
 #include "pigo.hpp"
 
+#include <cstdio>
+#include <fstream>
+#include <string>
+
 using namespace std;
 using namespace pigo;
+
+/** Writes contents to fn verbatim, with no newline appended
+ *
+ * Tests for missing-trailing-newline handling have to build their input at
+ * runtime: git and most editors normalize a final newline onto checked-in
+ * files, so a fixture could not be relied on to keep its exact last byte.
+ */
+static void write_exact(const string& fn, const string& contents) {
+    ofstream f { fn.c_str(), ios::out | ios::binary | ios::trunc };
+    f.write(contents.c_str(), contents.size());
+}
 
 int read_tensor(string dir_path) {
     Tensor<> t { dir_path + "/test.tns" };
@@ -130,6 +145,67 @@ int order_one_no_weight(string dir_path) {
     return 0;
 }
 
+/** An unweighted tensor file whose last line has no trailing newline reads
+ * identically to one that does.
+ *
+ * Regression test: the counting pass used to treat "no input remaining" as
+ * a failed read and skip the final entry, while the setting pass had already
+ * written part of it. That undersized the allocation and overflowed it --
+ * a heap-buffer-overflow, and an m() one too large.
+ */
+int read_no_trailing_newline(string) {
+    const string body = "0 1 500 1600000000\n1 2 700 1600000060\n2 3 900 1600000120";
+    write_exact(".test.tns_no_trail.tns", body);
+    write_exact(".test.tns_with_trail.tns", body + "\n");
+
+    typedef Tensor<uint64_t, uint64_t, vector<uint64_t>, float, vector<float>,
+            false> UT;
+    UT without { ".test.tns_no_trail.tns", EDGE_LIST };
+    UT with { ".test.tns_with_trail.tns", EDGE_LIST };
+
+    EQ(without.order(), 4);
+    EQ(without.m(), 3);
+    EQ(with.order(), without.order());
+    EQ(with.m(), without.m());
+
+    // The final entry must be present and correct, not truncated or garbage
+    EQ(without.c()[8], 2);
+    EQ(without.c()[9], 3);
+    EQ(without.c()[10], 900);
+    EQ(without.c()[11], 1600000120);
+
+    for (size_t i = 0; i < without.order()*without.m(); ++i)
+        EQ(without.c()[i], with.c()[i]);
+
+    remove(".test.tns_no_trail.tns");
+    remove(".test.tns_with_trail.tns");
+    return 0;
+}
+
+/** As above for order-1 unweighted, and for the weighted path */
+int read_no_trailing_newline_variants(string) {
+    write_exact(".test.tns_ord1.tns", "7\n8\n9");
+    Tensor<uint64_t, uint64_t, vector<uint64_t>, float, vector<float>, false>
+        ord1 { ".test.tns_ord1.tns", EDGE_LIST };
+    EQ(ord1.order(), 1);
+    EQ(ord1.m(), 3);
+    EQ(ord1.c()[0], 7);
+    EQ(ord1.c()[2], 9);
+
+    // The weighted path was already correct; keep it covered so it stays so
+    write_exact(".test.tns_wgt.tns", "1 1 1 2.5\n2 2 2 3.5");
+    Tensor<uint64_t, uint64_t, vector<uint64_t>, double, vector<double> >
+        wgt { ".test.tns_wgt.tns", EDGE_LIST };
+    EQ(wgt.order(), 3);
+    EQ(wgt.m(), 2);
+    EQ(wgt.c()[5], 2);
+    FEQ(wgt.w()[1], 3.5);
+
+    remove(".test.tns_ord1.tns");
+    remove(".test.tns_wgt.tns");
+    return 0;
+}
+
 int main(int argc, char **argv) {
     int pass = 0;
 
@@ -146,6 +222,8 @@ int main(int argc, char **argv) {
     TEST(no_weight, dir_path);
     TEST(max_labs, dir_path);
     TEST(order_one_no_weight, dir_path);
+    TEST(read_no_trailing_newline, dir_path);
+    TEST(read_no_trailing_newline_variants, dir_path);
 
     return pass;
 }

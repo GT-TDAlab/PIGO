@@ -58,34 +58,54 @@ namespace pigo {
         struct read_tensor_entry_i_;
 
         /** Count-only implementation of reading a coord entry without
-         * flags */
+         * flags
+         *
+         * Note: running out of input is not a failure. A final entry does
+         * not need a trailing newline, so an entry is complete once all
+         * order_ coordinates have been read, whether or not input remains.
+         * This must agree exactly with the setting implementation below,
+         * since pass 1 sizes the allocation that pass 2 writes into. */
         template<class L, class O, class S, class W, class WS, bool wgt>
         struct read_tensor_entry_i_<L,O,S,W,WS,wgt,true> {
-            static inline void op_(O order_, S&, WS&, size_t &coord_pos, FileReader &r) {
-                for (O idx = 0; idx < order_; ++idx) {
+            static inline void op_(O order_, O, S&, WS&, size_t &coord_pos, FileReader &r) {
+                O idx = 0;
+                for (; idx < order_; ++idx) {
+                    if (r.at_end()) break;
                     if (detail::if_true_<wgt>()) {
                         r.move_to_next_int();
                     } else {
                         r.read_int<L>();
                     }
-                    if (!r.good()) return;
                 }
+                // A truncated trailing entry is not counted
+                if (idx < order_) return;
                 r.move_to_eol();
                 r.move_to_next_int();
                 ++coord_pos;
             }
         };
 
-        /** Setting implementation of reading a coord entry without flags */
+        /** Setting implementation of reading a coord entry without flags
+         *
+         * m_ is the entry count determined by the count-only pass, and so
+         * the extent c_ was allocated for. Writes are bounded by it: a
+         * truncated trailing entry is not counted by pass 1, so its
+         * coordinates must not be stored here either. */
         template<class L, class O, class S, class W, class WS, bool wgt>
         struct read_tensor_entry_i_<L,O,S,W,WS,wgt,false> {
-            static inline void op_(O order_, S& c_, WS& w_, size_t &coord_pos, FileReader &r) {
-                for (O idx = 0; idx < order_; ++idx) {
+            static inline void op_(O order_, O m_, S& c_, WS& w_, size_t &coord_pos, FileReader &r) {
+                bool in_bounds = (coord_pos < (size_t)m_);
+                O idx = 0;
+                for (; idx < order_; ++idx) {
+                    if (r.at_end()) break;
                     L v = r.read_int<L>();
-                    if (!r.good()) return;
-                    set_value_(c_, coord_pos*order_+idx, v);
+                    if (in_bounds)
+                        set_value_(c_, coord_pos*order_+idx, v);
                 }
-                read_wgt_<wgt, W, WS, false>(coord_pos, w_, r);
+                // Match the count-only pass: skip a truncated trailing entry
+                if (idx < order_) return;
+                if (in_bounds)
+                    read_wgt_<wgt, W, WS, false>(coord_pos, w_, r);
 
                 r.move_to_eol();
                 r.move_to_next_int();
@@ -97,7 +117,7 @@ namespace pigo {
     template<class L, class O, class S, class W, class WS, bool wgt>
     template<bool count_only>
     void Tensor<L,O,S,W,WS,wgt>::read_coord_entry_(size_t &coord_pos, FileReader &r) {
-        detail::read_tensor_entry_i_<L,O,S,W,WS,wgt,count_only>::op_(order_, c_, w_, coord_pos, r);
+        detail::read_tensor_entry_i_<L,O,S,W,WS,wgt,count_only>::op_(order_, m_, c_, w_, coord_pos, r);
     }
 
     template<class L, class O, class S, class W, class WS, bool wgt>

@@ -9,6 +9,13 @@ This file documents PIGO's changes.
   enabling better padding.
 
 ### Fixed
+- Fixed reading files whose last line has no trailing newline. The entry
+  readers treated "no input remaining" as a failed read, so the final entry
+  was handled inconsistently by the counting and setting passes. In an
+  unweighted `Tensor` this undersized the allocation and caused a
+  heap-buffer-overflow along with an incorrect `m()`; in a `COO` the last
+  entry was counted but never stored, leaving it uninitialized. Added
+  `FileReader::at_end()` and regression tests for both.
 - Fixed a bug which caused saved binary tensor files to be too large.
 - Fixed #4, where writes with floating point values had reduced parallelism.
   Instead of using the C++ standard library to convert a floating point number
