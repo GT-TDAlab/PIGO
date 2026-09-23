@@ -252,6 +252,50 @@ int read_order_eol_variants(string) {
     return 0;
 }
 
+/** Writing a weighted tensor whose entries have no coordinates (order 0)
+ * must not overrun the output allocation.
+ *
+ * Regression test: the sizing pass charged one separator byte after *every*
+ * coordinate, which happened to pay for the trailing newline only when
+ * order >= 1. For a weighted single-column file the order is 0, no coordinate
+ * loop runs, and nothing accounted for the newline -- so the writing pass
+ * emitted one byte per entry beyond the allocation (a heap-buffer-overflow of
+ * m() bytes). Enough entries are used here that the deficit exceeds a page,
+ * so the overrun faults rather than hiding inside mmap's page rounding.
+ */
+int write_order_zero(string) {
+    const size_t n = 20000;
+    {
+        ofstream f { ".test.tns_ord0.tns", ios::out | ios::binary | ios::trunc };
+        for (size_t i = 0; i < n; ++i) {
+            string line = to_string((i % 9) + 1) + "\n";
+            f.write(line.c_str(), line.size());
+        }
+    }
+
+    typedef Tensor<uint64_t, uint64_t, vector<uint64_t>, double,
+            vector<double>, true> WT;
+    WT t { ".test.tns_ord0.tns", EDGE_LIST };
+    EQ((size_t)t.order(), (size_t)0);
+    EQ((size_t)t.m(), n);
+
+    // This is the call that overran the allocation before the fix
+    t.write(".test.tns_ord0.out.tns");
+
+    // Round-trips: order and count preserved, weights intact
+    WT t2 { ".test.tns_ord0.out.tns", EDGE_LIST };
+    EQ((size_t)t2.order(), (size_t)0);
+    EQ((size_t)t2.m(), n);
+    FEQ(t2.w()[0], 1.0);
+    FEQ(t2.w()[n-1], (double)(((n-1) % 9) + 1));
+
+    t.free();
+    t2.free();
+    remove(".test.tns_ord0.tns");
+    remove(".test.tns_ord0.out.tns");
+    return 0;
+}
+
 int main(int argc, char **argv) {
     int pass = 0;
 
@@ -271,6 +315,7 @@ int main(int argc, char **argv) {
     TEST(read_no_trailing_newline, dir_path);
     TEST(read_no_trailing_newline_variants, dir_path);
     TEST(read_order_eol_variants, dir_path);
+    TEST(write_order_zero, dir_path);
 
     return pass;
 }

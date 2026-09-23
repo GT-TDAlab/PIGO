@@ -9,6 +9,13 @@ This file documents PIGO's changes.
   enabling better padding.
 
 ### Fixed
+- Fixed `Tensor::write` overrunning its output allocation for order-0 tensors
+  (a weighted single-column file). The sizing pass charged a separator after
+  every coordinate, which only balanced the unconditional trailing newline when
+  the order was at least one; with order 0 nothing accounted for the newline, so
+  the writing pass emitted one byte per entry past the mapped file -- a
+  heap-buffer-overflow of `m()` bytes. The sizing pass now mirrors the writing
+  pass exactly. Added a regression test.
 - Fixed `Tensor` order detection for files whose first line has no trailing
   newline and for CRLF-terminated files. `count_spaces_to_eol` treated only
   `\n`/`%`/`#` as ending a line, so it counted one separator too many at

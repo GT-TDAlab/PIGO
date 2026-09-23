@@ -335,13 +335,20 @@ namespace pigo {
             #endif
             size_t my_size = 0;
 
+            // The sizing here mirrors the writing pass below exactly: a
+            // separating space only *between* coordinates (idx < order_-1), a
+            // space before the weight, and one trailing newline per entry.
+            // Charging a separator after every coordinate instead happened to
+            // balance the newline only for order_ >= 1; for order_ == 0 (a
+            // weighted single-column tensor) it under-counted by one byte per
+            // entry, so the writing pass overran the allocation by m_ bytes.
             #pragma omp for
             for (O e = 0; e < m_; ++e) {
                 for (O idx = 0; idx < order_; ++idx) {
                     auto x = detail::get_value_<S, L>(c_, e*order_+idx);
                     my_size += write_size(x);
-                    // Account for the separating space or newline
-                    my_size += 1;
+                    if (idx < order_-1)
+                        my_size += 1;   // separating space
                 }
 
                 if (detail::if_true_<wgt>()) {
@@ -351,6 +358,9 @@ namespace pigo {
                     auto w = detail::get_value_<WS, W>(w_, e);
                     my_size += write_size(w);
                 }
+
+                // Account for the trailing newline
+                my_size += 1;
             }
 
             pos_offsets[tid+1] = my_size;
