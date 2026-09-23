@@ -8,11 +8,23 @@
 #include "tests.hpp"
 #include "pigo.hpp"
 
+#include <cstdint>
+#include <fstream>
 #include <memory>
+#include <sstream>
+#include <string>
 #include <vector>
 
 using namespace std;
 using namespace pigo;
+
+/** Reads a whole file back as a string, for byte-exact output checks. */
+static string read_whole(const string& fn) {
+    ifstream f { fn.c_str(), ios::in | ios::binary };
+    ostringstream ss;
+    ss << f.rdbuf();
+    return ss.str();
+}
 
 int use_shared_ptr(string dir_path) {
     COO<int, int, shared_ptr<int>> coo { dir_path + "/with-comments.el" };
@@ -87,6 +99,37 @@ int neg_weight(string dir_path) {
     return 0;
 }
 
+/** Writing the most-negative signed value must emit its correct decimal.
+ *
+ * get_positive(T_MIN) used to negate within the signed type, which overflows
+ * back to a negative value (int8_t -128 -> -128). write_ascii then took
+ * `obj % 10` of a negative number -- emitting non-digit bytes -- and derived a
+ * digit count that disagreed with the sizing pass, so the file was both
+ * corrupt and, in bulk, overrun. Here the write is checked byte-for-byte.
+ */
+int signed_min_ascii(string) {
+    // int8_t: -128 is the most-negative value; -1 exercises an ordinary
+    // negative alongside it.
+    COO<int8_t, int, vector<int8_t> > coo(1, 1, 2, 2);
+    coo.x()[0] = (int8_t)-128; coo.y()[0] = (int8_t)-128;
+    coo.x()[1] = (int8_t)-1;   coo.y()[1] = (int8_t)-1;
+
+    coo.write(".tmp.test_coo_write_negmin.out");
+    EQ(read_whole(".tmp.test_coo_write_negmin.out"), string("-128 -128\n-1 -1\n"));
+    coo.free();
+
+    // int16_t and int32_t most-negative values, read back through PIGO.
+    COO<int32_t, int, vector<int32_t> > c32(1, 1, 2, 2);
+    c32.x()[0] = (int32_t)(-2147483647 - 1); c32.y()[0] = 0;
+    c32.x()[1] = -1;                         c32.y()[1] = 1;
+    c32.write(".tmp.test_coo_write_negmin32.out");
+    EQ(read_whole(".tmp.test_coo_write_negmin32.out"),
+       string("-2147483648 0\n-1 1\n"));
+    c32.free();
+
+    return 0;
+}
+
 int main(int argc, char **argv) {
     int pass = 0;
 
@@ -101,6 +144,7 @@ int main(int argc, char **argv) {
     TEST(use_def, dir_path);
     TEST(weights, dir_path);
     TEST(neg_weight, dir_path)
+    TEST(signed_min_ascii, dir_path)
 
     return pass;
 }

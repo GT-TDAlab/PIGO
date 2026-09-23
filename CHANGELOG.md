@@ -9,6 +9,13 @@ This file documents PIGO's changes.
   enabling better padding.
 
 ### Fixed
+- Fixed writing the most-negative signed value (e.g. `INT8_MIN`) in ASCII.
+  The magnitude was computed by negating within the signed type, which
+  overflows for the most-negative value and left it negative; the digit loop
+  then wrote non-digit bytes and derived a length that disagreed with the
+  sizing pass, corrupting the output and overrunning the file in bulk. The
+  magnitude is now computed in the unsigned counterpart type. Added a
+  byte-exact regression test.
 - Fixed reading files whose last line has no trailing newline. The entry
   readers treated "no input remaining" as a failed read, so the final entry
   was handled inconsistently by the counting and setting passes. In an

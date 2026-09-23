@@ -231,9 +231,17 @@ namespace pigo {
         }
         template<typename T, typename std::enable_if<std::is_signed<T>::value, bool>::type = true>
         inline
-        T get_positive(T obj) {
-            if (obj < 0) return -obj;
-            return obj;
+        typename std::make_unsigned<T>::type get_positive(T obj) {
+            // Return the magnitude in the *unsigned* counterpart type. Negating
+            // within the signed type (`-obj`) overflows for the most-negative
+            // value (e.g. int8_t -128 -> still -128), which is undefined
+            // behavior and leaves a negative value whose `% 10` yields
+            // non-digit bytes and a digit count that disagrees with
+            // write_size. Computing 0 - (unsigned)obj is well-defined modular
+            // arithmetic and gives the true magnitude for every value.
+            typedef typename std::make_unsigned<T>::type U;
+            if (obj < 0) return (U)0 - (U)obj;
+            return (U)obj;
         }
     }
 
@@ -290,16 +298,26 @@ namespace pigo {
         >
     inline
     void write_ascii(FilePos &fp, T obj) {
+        // Write the sign (if any) first, then emit the magnitude. The
+        // magnitude must be held in the *unsigned* counterpart type: assigning
+        // it back into the signed T would re-truncate the most-negative value
+        // (e.g. uint8_t 128 -> int8_t -128), reintroducing the negative-modulo
+        // corruption this guards against.
         detail::write_neg_ascii(fp, obj);
-        obj = detail::get_positive(obj);
+        typename std::make_unsigned<T>::type mag = detail::get_positive(obj);
 
-        size_t num_size = write_size(obj);
+        // write_size on the unsigned magnitude counts digits only (no sign),
+        // exactly matching the digits emitted below. The separate sizing pass
+        // in COO/Tensor::write calls write_size on the original signed value,
+        // which adds one for the sign -- so the total there (sign + digits)
+        // equals what is written here (write_neg_ascii + digits).
+        size_t num_size = write_size(mag);
         size_t pos = num_size-1;
         // Write out each digit
         do {
-            *((char*)fp+pos--) = (obj%10)+'0';
-            obj /= 10;
-        } while (obj != 0);
+            *((char*)fp+pos--) = (mag%10)+'0';
+            mag /= 10;
+        } while (mag != 0);
         fp += num_size;
     }
 
