@@ -206,6 +206,52 @@ int read_no_trailing_newline_variants(string) {
     return 0;
 }
 
+/** Order detection must be right when the very first line ends the file (no
+ * trailing newline) and when lines are CRLF-terminated.
+ *
+ * The other no-trailing-newline tests all have a '\n' on the *first* line, so
+ * they never exercise count_spaces_to_eol, which reads only the first line to
+ * determine the order. It counted a separator after the last integer and only
+ * un-counted it before '\n', '%' or '#' -- not before end-of-file or '\r'. So
+ * a single-line file with no trailing newline reported one column too many
+ * (and then read as empty), and every line of a CRLF file was miscounted.
+ */
+int read_order_eol_variants(string) {
+    typedef Tensor<uint64_t, uint64_t, vector<uint64_t>, float, vector<float>,
+            false> UT;
+
+    // A whole file that is one line with no trailing newline. Order comes from
+    // this line alone, so it is the exact case count_spaces_to_eol got wrong.
+    write_exact(".test.tns_1line.tns", "1 2 3 4");
+    UT one { ".test.tns_1line.tns", EDGE_LIST };
+    EQ(one.order(), 4);
+    EQ(one.m(), 1);
+    EQ(one.c()[0], 1);
+    EQ(one.c()[3], 4);
+
+    // CRLF line endings: '\r' must be treated as end-of-line, both for the
+    // order count and so it does not leak into the last coordinate.
+    write_exact(".test.tns_crlf.tns", "10 20 30\r\n40 50 60\r\n");
+    UT crlf { ".test.tns_crlf.tns", EDGE_LIST };
+    EQ(crlf.order(), 3);
+    EQ(crlf.m(), 2);
+    EQ(crlf.c()[2], 30);
+    EQ(crlf.c()[3], 40);
+    EQ(crlf.c()[5], 60);
+
+    // CRLF with no final newline exercises both conditions at once.
+    write_exact(".test.tns_crlf_notrail.tns", "10 20 30\r\n40 50 60");
+    UT crlf2 { ".test.tns_crlf_notrail.tns", EDGE_LIST };
+    EQ(crlf2.order(), 3);
+    EQ(crlf2.m(), 2);
+    EQ(crlf2.c()[5], 60);
+
+    remove(".test.tns_1line.tns");
+    remove(".test.tns_crlf.tns");
+    remove(".test.tns_crlf_notrail.tns");
+    return 0;
+}
+
 int main(int argc, char **argv) {
     int pass = 0;
 
@@ -224,6 +270,7 @@ int main(int argc, char **argv) {
     TEST(order_one_no_weight, dir_path);
     TEST(read_no_trailing_newline, dir_path);
     TEST(read_no_trailing_newline_variants, dir_path);
+    TEST(read_order_eol_variants, dir_path);
 
     return pass;
 }

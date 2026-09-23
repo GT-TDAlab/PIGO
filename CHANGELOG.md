@@ -9,6 +9,12 @@ This file documents PIGO's changes.
   enabling better padding.
 
 ### Fixed
+- Fixed `Tensor` order detection for files whose first line has no trailing
+  newline and for CRLF-terminated files. `count_spaces_to_eol` treated only
+  `\n`/`%`/`#` as ending a line, so it counted one separator too many at
+  end-of-file or before a `\r`, reporting one column too many (and reading a
+  single-line file as empty). End-of-file and `\r` are now treated as
+  end-of-line. Added regression tests.
 - Fixed writing the most-negative signed value (e.g. `INT8_MIN`) in ASCII.
   The magnitude was computed by negating within the signed type, which
   overflows for the most-negative value and left it negative; the digit loop

@@ -473,7 +473,14 @@ namespace pigo {
             // Read through the integer
             while (d < end && ((*d >= '0' && *d <= '9') || *d == '.')) { ++d; }
 
-            if (*d == '\n') break;
+            // End of the line: a newline, a carriage return (CRLF files), the
+            // end of the file (a last line with no trailing newline), or a
+            // comment. In every one of these the integer just read was the
+            // last on the line, so there is no following separator to count.
+            // Treating end-of-file and '\r' as end-of-line here is what keeps
+            // the separator count correct for files that lack a trailing
+            // newline and for CRLF-terminated files.
+            if (d >= end || *d == '\n' || *d == '\r') break;
             if (*d == '%' || *d == '#') {
                 move_to_eol();
                 break;
@@ -483,11 +490,11 @@ namespace pigo {
             ++space_ct;
 
             // Move passed the space
-            while (*d == ' ') { ++d; };
+            while (d < end && *d == ' ') { ++d; };
 
-            // Check if we just counted whitespace at the end; if so,
-            // un-do the count
-            if (*d == '\n') {
+            // Check if we just counted whitespace at the end of the line; if
+            // so, un-do the count (same set of end-of-line conditions).
+            if (d >= end || *d == '\n' || *d == '\r') {
                 --space_ct;
                 break;
             }
