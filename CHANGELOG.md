@@ -9,6 +9,13 @@ This file documents PIGO's changes.
   enabling better padding.
 
 ### Fixed
+- Fixed binary reads trusting the header's declared size. `read_bin_` (for
+  `COO`, `CSR`, `DiGraph`, and `Tensor`) passed `sizeof(elem) * m_` straight to
+  `parallel_read`, which `memcpy`'d that many bytes out of the memory-mapped
+  file with no bounds check, so a corrupt or truncated header declaring more
+  data than the file holds read out of bounds (a segfault). `File::parallel_read`
+  now verifies the requested region fits within the file and throws otherwise.
+  Added a regression test.
 - Fixed the `File` move constructor, which copied only `data_` and `size_`. It
   left `fp_` uninitialized, so reads through a moved-to `File` dereferenced a
   garbage pointer, and it did not clear the source's `data_`, so both the source

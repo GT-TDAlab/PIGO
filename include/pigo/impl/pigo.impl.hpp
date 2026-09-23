@@ -125,6 +125,13 @@ namespace pigo {
 
     inline
     void File::parallel_read(char* v, size_t v_size) {
+        // Guard against a corrupt or truncated binary header declaring more
+        // data than the file holds: the read below is an unchecked memcpy from
+        // the mapped region, so an oversized size_ would read out of bounds.
+        // fp_ is within [data_, data_+size_]; ensure the whole region fits.
+        size_t remaining = (size_t)(data_ + size_ - fp_);
+        if (v_size > remaining)
+            throw Error("File is too small for the data it declares");
         ::pigo::parallel_read(fp_, v, v_size);
     }
 
