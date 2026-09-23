@@ -183,6 +183,31 @@ int move_in_comment() {
     return 0;
 }
 
+/** at_str must match a string that ends exactly at end-of-input.
+ *
+ * Regression test: at_str compares the half-open range [d, d+s.size()), which
+ * is in-bounds when d + s.size() == end. The bounds check used >= instead of
+ * >, so a string filling the reader to its exact end was reported as absent --
+ * e.g. a file whose entire content is a format header would fail detection.
+ */
+int at_str_exact_end() {
+    string in {"PIGO"};
+
+    FilePos in_start = in.c_str();
+    FilePos in_end = in_start + in.size();
+
+    FileReader r {in_start, in_end};
+
+    // The whole input is exactly the string: it must match.
+    EQ(r.at_str("PIGO"), true);
+    // A longer string cannot fit and must not match.
+    EQ(r.at_str("PIGONE"), false);
+    // A prefix that leaves input remaining still matches.
+    EQ(r.at_str("PIG"), true);
+
+    return 0;
+}
+
 int main() {
     int pass = 0;
 
@@ -194,6 +219,7 @@ int main() {
     TEST(copying);
     TEST(good);
     TEST(move_in_comment);
+    TEST(at_str_exact_end);
 
     return pass;
 }

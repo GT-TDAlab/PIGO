@@ -9,6 +9,11 @@ This file documents PIGO's changes.
   enabling better padding.
 
 ### Fixed
+- Fixed `FileReader::at_str` failing to match a string that ends exactly at
+  end-of-input. The bounds check used `>=` where the comparison reads the
+  half-open range `[d, d + s.size())`, so a string filling the reader to its
+  last byte (for example a file consisting solely of a format header) was
+  reported as absent. The guard now uses `>`. Added a regression test.
 - Fixed `Tensor::write` overrunning its output allocation for order-0 tensors
   (a weighted single-column file). The sizing pass charged a separator after
   every coordinate, which only balanced the unconditional trailing newline when

@@ -3527,8 +3527,11 @@ namespace pigo {
 
     inline
     bool FileReader::at_str(std::string s) {
-        // Ensure the size is suitable for comparison
-        if (d + s.size() >= end) return false;
+        // Ensure the size is suitable for comparison. The comparison reads the
+        // half-open range [d, d+s.size()), so it is in-bounds exactly when
+        // d + s.size() <= end; using >= here rejected a string that ends
+        // precisely at end-of-input.
+        if (d + s.size() > end) return false;
         std::string d_str { d, d+s.size() };
         return s.compare(d_str) == 0;
     }
